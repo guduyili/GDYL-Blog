@@ -1,0 +1,189 @@
+# Hexo Configuration
+## Docs: https://hexo.io/docs/configuration.html
+## Source: https://github.com/hexojs/hexo/
+
+# Site
+title: GuDu-Blog
+subtitle: ''
+description: ''
+keywords:
+# author: John Doe
+language: en
+timezone: ''
+
+# URL
+## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
+url: http://example.com
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+pretty_urls:
+  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
+  trailing_html: true # Set to false to remove trailing '.html' from permalinks
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link:
+  enable: true # Open external links in new tab
+  field: site # Apply to the whole site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+
+# Home page setting
+# path: Root path for your blogs index page. (default = '')
+# per_page: Posts displayed per page. (0 = disable pagination)
+# order_by: Posts order. (Order by date descending by default)
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -date
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Metadata elements
+## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
+meta_generator: true
+
+# Date / Time format
+## Hexo uses Moment.js to parse and display date
+## You can customize the date format as defined in
+## http://momentjs.com/docs/#/displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+## updated_option supports 'mtime', 'date', 'empty'
+updated_option: 'mtime'
+
+# Pagination
+## Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+
+# Include / Exclude file(s)
+## include:/exclude: options only apply to the 'source/' folder
+include:
+exclude:
+ignore:
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+## Themes: https://hexo.io/themes/
+theme: flexblock
+
+# Deployment
+## Docs: https://hexo.io/docs/one-command-deployment
+deploy:
+  type: ''
+
+
+#Header
+menu:
+  Home:/
+
+#主页banner图
+banner:
+
+#站点通知信息
+notice:
+
+#作者信息
+author: 
+  name: Guduyili
+  avatar:
+  description:
+
+toc:
+  max_depth: 3 #生成TOC的最大深度
+  min_depth: 2 #生成TOC的最小深度
+
+comments:
+  enable: true
+  use: 'valine' # valine || disqus
+  # valine 评论
+  # docs: https://valine.js.org
+  # You can get your appid and appkey from https://leancloud.cn
+  # 这里appId和appKey一定一定要改成自己的，没有的话去https://leancloud.cn这个网站注册创建一个
+  valine:
+    appId:
+    appKey:
+    avatar: mm
+    placeholder: 随便说点什么叭～
+    notify: true
+    visitor: true
+    pageSize: 10
+  # disqus 评论
+  # docs: https://disqus.com/
+  disqus:
+    website:
+    error: 如果你看不到评论，那么就真的看不到评论 w(゜Д゜)w
+
+# dplayer 视频播放
+# docs: http://dplayer.js.org/#/zh-Hans/
+dplayer:
+  enable: true
+  theme: "#b7daff"
+  autoplay: false
+  loop: false
+  mutex: true
+
+# aplayer 音频播放
+# docs: https://aplayer.js.org/#/zh-Hans/
+aplayer:
+  enable: true
+  theme: "#b7daff"
+  autoplay: false
+  loop: false
+  mutex: true
+  lrcType: 3
+
+# 国内备案信息
+beian: 
+
+# 谷歌分析
+google_analytics: UA-165681463-1
+# gauges分析
+gauges_analytics: 
+# 百度分析
+baidu_analytics: 77cce6624f1114785af5e77d00cbf93c
+# 腾讯分析
+tencent_analytics: 66537616
+# 站点ico
+favicon: /favicon.ico
+
+# Social Icon
+social_icon:
+  enable: true
+  icons:
+    ins     :
+    zhihu   :
+    weibo   :  
+    github  : https://github.com/guduyili
+    twitter : 
