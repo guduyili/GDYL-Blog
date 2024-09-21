@@ -16,16 +16,16 @@
   ],
   "homepage": "https://kyori.xyz",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/miiiku/hexo-theme-flexblock.git"
+    "type": "git",
+    "url": "https://github.com/miiiku/hexo-theme-flexblock.git"
   },
   "bugs": {
     "url": "https://github.com/miiiku/hexo-theme-flexblock/issues"
   },
   "author": {
-      "name": "miiiku",
-      "email": "guanquanhong@163.com",
-      "url": "https://github.com/miiiku"
+    "name": "miiiku",
+    "email": "guanquanhong@163.com",
+    "url": "https://github.com/miiiku"
   },
   "contributors": [
     {
@@ -46,6 +46,7 @@
   ],
   "dependencies": {
     "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-stylus": "^2.1.0"
+    "hexo-renderer-stylus": "^2.1.0",
+    "hexo-theme-flexblock": "file:"
   }
 }

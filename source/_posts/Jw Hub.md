@@ -6,17 +6,17 @@ title: Jw Hub
 
 ### github link : [JwHub](https://github.com/guduyili/Jw-Hub)
 
-![1](https://github.com/guduyili/Jw-Hub/blob/master/src/img/1.png?raw=true)
+![1](https://img.picui.cn/free/2024/09/21/66ee74dd9acb6.png)
 
 
-![2](https://github.com/guduyili/Jw-Hub/blob/master/src/img/2.png?raw=true)
+![2](https://img.picui.cn/free/2024/09/21/66ee74ddc57eb.png)
 
-![3](https://github.com/guduyili/Jw-Hub/blob/master/src/img/3.png?raw=true)
+![3](https://img.picui.cn/free/2024/09/21/66ee74dd83db2.png)
 
-![4](https://github.com/guduyili/Jw-Hub/blob/master/src/img/4.png?raw=true)
+![4](https://img.picui.cn/free/2024/09/21/66ee74ddab9d9.png)
 
-![5](https://github.com/guduyili/Jw-Hub/blob/master/src/img/5.png?raw=true)
+![5](https://img.picui.cn/free/2024/09/21/66ee74ddae6dc.png)
 
-![6](https://github.com/guduyili/Jw-Hub/blob/master/src/img/6.png?raw=true)
+![6](https://img.picui.cn/free/2024/09/21/66ee74e445caf.png)
 
-![7](https://github.com/guduyili/Jw-Hub/blob/master/src/img/7.png?raw=true)
+![7](https://img.picui.cn/free/2024/09/21/66ee74e49b478.png)

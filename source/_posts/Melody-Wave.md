@@ -8,4 +8,4 @@ title: Melody Wave
 ### github link : [MW](https://github.com/guduyili/Melody-Wave)
 
 
-![8](https://github.com/guduyili/Jw-Hub/blob/master/src/img/8.png?raw=true)
+![8](https://img.picui.cn/free/2024/09/21/66ee74e6b511f.png)
