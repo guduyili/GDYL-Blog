@@ -55,10 +55,10 @@ title: Linux指令
 ```
 
 ## 其他实用命令：
-```bash
+```bash 
 # grep: 文件搜索
 # find: 文件查抄
 # tar: 文件压缩和解压
 # wget: 下载文件
-# wget: 查看命令历史
+# history: 查看命令历史
 ```
