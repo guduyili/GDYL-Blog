@@ -11,7 +11,7 @@ title: TCP/IP
 
 
 ## TCP/IP 对等模型
-- 应用层     br   数据DATA
+- 应用层        数据DATA
 - 传输层        段Segment
 - 网络层        包Packet
 - 数据链路层     帧Frame
