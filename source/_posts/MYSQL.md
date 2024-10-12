@@ -1,5 +1,10 @@
 ---
 title: MYSQL
+date: 2024-09-24
+categories: 
+- Learn
+tag:
+- learning
 ---
 
 ## MYSQL

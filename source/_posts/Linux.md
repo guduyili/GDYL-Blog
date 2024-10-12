@@ -1,5 +1,10 @@
 ---
 title: Linux指令
+date: 2024-09-30
+categories: 
+- Learn
+tag:
+- learning
 ---
 
 ## 文件和目录操作：

@@ -1,5 +1,10 @@
 ---
 title: TCP/IP
+date: 2024-10-8
+categories: 
+- HCIA
+tag:
+- learning
 ---
 
 ## TCP/IP 标准模型

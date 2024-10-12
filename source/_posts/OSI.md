@@ -1,5 +1,9 @@
 ---
 title: OSI
+categories: 
+- HCIA
+tag:
+- learning
 ---
 
 ```bash

@@ -1,5 +1,10 @@
 ---
 title: Melody Wave
+date: 2024-09-20
+categories: 
+- My Project
+tag:
+- music
 ---
 
 ## A simple and beautiful music player

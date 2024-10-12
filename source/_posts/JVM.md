@@ -1,5 +1,8 @@
 ---
 title: JVM
+date: 2024-09-25
+tag:
+- learning
 ---
 
 # 1.字节码文字
