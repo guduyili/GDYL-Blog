@@ -12,4 +12,6 @@ tag:
 ### github link : [JwHub](https://github.com/guduyili/Jw-Hub)
 
 
-![1](/source/_posts/images/2.png)
+![1](images/2.png)
+
+
