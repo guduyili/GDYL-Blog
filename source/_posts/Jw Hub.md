@@ -12,11 +12,4 @@ tag:
 ### github link : [JwHub](https://github.com/guduyili/Jw-Hub)
 
 
-![1](images/image.png)
 
-
-![alt text](https://hexo.io/icon/favicon-196x196.png "Logo Title Text 1")
-
-![凌波丽](http://46.3.104.237/lbl2.jpg)
-![凌波丽](http://46.3.104.237/lbl2.jpg)
-![23](https://i-blog.csdnimg.cn/direct/5665a12dc1634b328fd054ed4a9727d6.png)
