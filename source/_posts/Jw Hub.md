@@ -12,6 +12,8 @@ tag:
 ### github link : [JwHub](https://github.com/guduyili/Jw-Hub)
 
 
-![1](images/2.png)
+![1](images/image.png)
 
+
+![alt text](https://hexo.io/icon/favicon-196x196.png "Logo Title Text 1")
 
