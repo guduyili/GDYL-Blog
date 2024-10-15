@@ -2,7 +2,7 @@
 title: iptables learning
 date: 2024-10-13
 categories: 
-- Learn
+- Linux
 tag:
 - learning
 ---

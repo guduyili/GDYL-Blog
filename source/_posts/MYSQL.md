@@ -2,7 +2,7 @@
 title: MYSQL
 date: 2024-09-24
 categories: 
-- Learn
+- SQL
 tag:
 - learning
 ---
