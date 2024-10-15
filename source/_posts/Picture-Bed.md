@@ -1,5 +1,5 @@
 ---
-title:Picture Bed
+title: Picture Bed
 ---
 
 
