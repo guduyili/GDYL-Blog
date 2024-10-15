@@ -1,5 +1,9 @@
 ---
 title: Picture Bed
+categories: 
+- Picture Bed
+tag:
+- learning
 ---
 
 
