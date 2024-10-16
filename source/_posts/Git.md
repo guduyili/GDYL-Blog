@@ -34,6 +34,10 @@ tag:
 
 ## 2.合并分支提交（rebase）
 
+ ***current-branch 的更改合并到 feature-branch 中***
+
+
+
 1. **获取所有远程分支的最新状态**：
 
    ```sh
@@ -85,21 +89,9 @@ tag:
 git rebase current-branch
 ```
 
-
-
-7.**切换回 `current-branch`：**
-
-```sh
-git checkout current-branch
-```
-
-
-
-8.**将 `feature-branch` 的内容合并回来：**
-
-```sh
-git merge feature-branch
-```
+- 暂时保存 feature-branch 的所有新提交
+- 将 feature-branch 的基础点移到 current-branch 的最新提交
+- 然后重新应用 feature-branch 的提交
 
 
 
