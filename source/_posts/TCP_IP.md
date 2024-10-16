@@ -1,6 +1,7 @@
 ---
 title: TCP/IP
 date: 2024-10-8
+update: 2024-10-10
 categories: 
 - HCIA
 tag:
