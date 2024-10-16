@@ -105,3 +105,10 @@ social_icon:
     weibo   : 
     github  : https://github.com/guduyili
     twitter :  
+
+
+    
+  post_asset_folder: true;
+  marked:
+    prependRoot: true;
+    postAsset: true;

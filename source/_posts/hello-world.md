@@ -41,7 +41,3 @@ More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 
 
 ![1](https://pic3.zhimg.com/v2-5fb13110e1de13d4c11e6e7f5b8026da_r.jpg)
-
-
-
-![213](images/2.png)
