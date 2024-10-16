@@ -2,7 +2,7 @@
 title: Git Branch
 categories: git
 tag: 
--learning
+- learning
 ---
 
 ## 1.分支创建
