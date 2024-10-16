@@ -197,3 +197,9 @@ lazyload:
   field: post # site/post
   loadingImg: /img/friend_404.gif
   preloadRatio: 1 #设置懒加载的范围
+
+
+  post_asset_folder: true;
+  marked:
+    prependRoot: true;
+    postAsset: true;
