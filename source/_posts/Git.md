@@ -137,3 +137,17 @@ git rebase current-branch
    ```
 
    这不会影响GitHub上的远程分支，只会删除你本地对该远程分支的引用。
+
+## 4.克隆特定分支
+
+```bash
+git clone --branch <branch_name> <repository_url>
+```
+
+
+
+或者使用缩写形式：
+
+```bash
+git clone -b <branch_name> <repository_url>
+```
