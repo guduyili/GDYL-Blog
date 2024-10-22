@@ -1,5 +1,6 @@
 ---
 title: Git Branch
+date: 2024-10-15
 categories: git
 tag: 
 - learning
