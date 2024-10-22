@@ -1,5 +1,6 @@
 ---
 title: Picture Bed
+date: 2024-10-15
 categories: 
 - Picture Bed
 tag:
