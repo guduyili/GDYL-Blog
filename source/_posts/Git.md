@@ -41,7 +41,7 @@ tag:
 1. **获取所有远程分支的最新状态**：
 
    ```sh
-   git fetch
+   git pull
    ```
 
    
