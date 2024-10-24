@@ -1,6 +1,7 @@
 ---
 title: iptables learning
 date: 2024-10-13
+updated: 2024-10-13
 categories: 
 - Linux
 tag:

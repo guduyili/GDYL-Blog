@@ -1,6 +1,7 @@
 ---
 title: Linux指令
 date: 2024-09-30
+updated: 2024-09-30
 categories: 
 - Linux
 tag:

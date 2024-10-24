@@ -1,6 +1,7 @@
 ---
 title: MYSQL
 date: 2024-09-24
+updated: 2024-09-24
 categories: 
 - SQL
 tag:

@@ -1,6 +1,7 @@
 ---
 title: Highlight
 date: 2024-10-24
+updated: 2024-10-24
 categories: 
 - Hexo
 tag:

@@ -1,6 +1,7 @@
 ---
 title: Gizoms
 date: 2024-10-22
+updated: 2024-10-22
 categories: 
 - Unity
 tag:
