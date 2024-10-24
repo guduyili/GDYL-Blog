@@ -6,7 +6,7 @@ tag:
 ---
 
 # 1.字节码文字
-```bash
+```java
 public class Demo1 {
     public static void main(String[] args) {
         int i = 0;  // 初始化 i 为 0

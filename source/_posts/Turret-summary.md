@@ -13,7 +13,7 @@ tag:
 
 
 
-```c#
+```csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -78,7 +78,7 @@ public class Waypoint : MonoBehaviour
 
 #### 1.Waypoint设置
 
-```c#
+```csharp
  private void OnDrawGizmos()
     {
         if(!_gameStarted && transform.hasChanged)
@@ -109,7 +109,7 @@ public class Waypoint : MonoBehaviour
 
 #### 2.WaypointEditor设置
 
-```c#
+```csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -193,7 +193,7 @@ public class WaypointEdit : Editor
 
 #### 3.Spawner Class设置
 
-```c#
+```csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -343,7 +343,7 @@ public class Spawner : MonoBehaviour
 
 #### 4.Object Pooler设置
 
-```c#
+```csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
