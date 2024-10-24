@@ -1,6 +1,7 @@
 ---
 title: Turret summary
 date: 2024-10-22
+update: 2024-10-29
 categories: 
 - Unity
 tag:
