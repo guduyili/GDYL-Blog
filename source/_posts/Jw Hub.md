@@ -6,6 +6,7 @@ categories:
 - My Project
 tag:
 - blog
+cover: https://gdlypc.us.kg/mrx/mrx2.jpg
 ---
 
 ## A concise blog

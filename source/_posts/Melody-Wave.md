@@ -6,6 +6,7 @@ categories:
 - My Project
 tag:
 - music
+cover: https://gdlypc.us.kg/linux/lbl2.jpg
 ---
 
 ## A simple and beautiful music player
@@ -16,4 +17,4 @@ tag:
 
 ![1](https://gdlypc.us.kg/linux/8.png)
 
-![lbl](https://gdlypc.us.kg/linux/lbl2.jpg)
+<!-- ![lbl](https://gdlypc.us.kg/linux/lbl2.jpg) -->
