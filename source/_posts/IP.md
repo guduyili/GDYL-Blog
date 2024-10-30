@@ -1,7 +1,7 @@
 ---
 title: IP 
 date: 2024-10-15
-updated: 2024-10-15
+updated: 2024-10-30
 categories: 
 - HCIA
 tag:

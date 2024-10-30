@@ -1,7 +1,7 @@
 ---
 title: VLAN
-date: 2024-10-29
-updated: 2024-10-29
+date: 2024-10-30
+updated: 2024-10-30
 categories: 
 - HCIA
 tag:
