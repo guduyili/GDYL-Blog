@@ -1,7 +1,7 @@
 ---
 title: Picture Bed
 date: 2024-10-15 
-updated: 2024-10-15 
+updated: 2024-11-6 
 categories: 
 - Picture Bed
 tag:
@@ -131,10 +131,10 @@ sudo systemctl restart nginx
 **8.创建符号链接**
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/image_hosting /etc/nginx/sites-enabled
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled
 
 #检查符号链接
- ls -l /etc/nginx/sites-enabled/image_hosting
+ ls -l /etc/nginx/sites-enabled/default
 ```
 
 **9.测试 Nginx 配置**
