@@ -8,6 +8,8 @@ tag:
 - learning
 ---
 
+[TOC]
+
 ## MYSQL
 
 ### 1.打开命令提示符

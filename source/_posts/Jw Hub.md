@@ -9,6 +9,8 @@ tag:
 cover: https://gdlypc.us.kg/mrx/mrx2.jpg
 ---
 
+[TOC]
+
 ## A concise blog
 
 ### github link : [JwHub](https://github.com/guduyili/Jw-Hub)

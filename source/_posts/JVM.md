@@ -6,6 +6,8 @@ tag:
 - learning
 ---
 
+[TOC]
+
 # 1.字节码文字
 ```java
 public class Demo1 {

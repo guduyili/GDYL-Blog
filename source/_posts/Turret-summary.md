@@ -9,6 +9,8 @@ tag:
 cover: https://gdlypc.us.kg/mrx/mrx1.jpg
 ---
 
+[TOC]
+
 ## 前言
 
 **Gizmos**实时渲染辅助工具，下文为在塔防游戏中的敌人巡逻点使用
