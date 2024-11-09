@@ -6,7 +6,7 @@ tag:
 - learning
 ---
 
-[TOC]
+<!-- toc -->
 
 # 1.字节码文字
 ```java

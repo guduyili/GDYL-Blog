@@ -8,7 +8,7 @@ tag:
 - learning
 ---
 
-[TOC]
+<!-- toc -->
 
 ## Hexo中更改代码highlight
 

@@ -9,7 +9,7 @@ tag:
 - learning
 ---
 
-[TOC]
+<!-- toc -->
 
 ```bash
 $ 7. 应用层             对应用程序提供接口

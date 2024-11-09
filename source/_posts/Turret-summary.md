@@ -9,7 +9,7 @@ tag:
 cover: https://gdlypc.us.kg/mrx/mrx1.jpg
 ---
 
-[TOC]
+<!-- toc -->
 
 ## 前言
 

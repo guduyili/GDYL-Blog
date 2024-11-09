@@ -9,7 +9,7 @@ tag:
 cover: https://gdlypc.us.kg/mrx/mrx2.jpg
 ---
 
-[TOC]
+<!-- toc -->
 
 ## A concise blog
 

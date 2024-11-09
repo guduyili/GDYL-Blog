@@ -8,7 +8,7 @@ tag:
 - learning
 ---
 
-[TOC]
+<!-- toc -->
 
 ## 文件和目录操作：
 ```bash

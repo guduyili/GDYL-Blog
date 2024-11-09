@@ -8,7 +8,7 @@ tag:
 - music
 cover: https://gdlypc.us.kg/linux/lbl2.jpg
 ---
-[TOC]
+<!-- toc -->
 
 ## A simple and beautiful music player
 

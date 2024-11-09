@@ -8,7 +8,7 @@ tag:
 - learning
 ---
 
-[TOC]
+<!-- toc -->
 
 在 Unity 中，Gizmos 是一种2D图形工具，主要用于在 Unity 编辑器中可视化游戏对象或其他游戏元素的某些属性。开发者可以使用 Gizmos 来帮助调试和设计。与 Gizmos 相关的常用函数包括以下几种，它们通常在 Unity 的`OnDrawGizmos`或`OnDrawGizmosSelected`方法中被调用：
 

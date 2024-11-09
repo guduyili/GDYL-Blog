@@ -122,6 +122,7 @@ author:
 
 # 目录
 toc:
+  enable: true
   max_depth: 3 # 生成目录的最大深度
   min_depth: 2 # 生成目录的最小深度
 
@@ -200,7 +201,9 @@ lazyload:
   preloadRatio: 1 #设置懒加载的范围
 
 
-  post_asset_folder: true;
+  post_asset_folder: true
   marked:
-    prependRoot: true;
-    postAsset: true;
+    prependRoot: true
+    postAsset: true
+
+

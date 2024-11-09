@@ -8,7 +8,7 @@ tag:
 - learning
 ---
 
-[TOC]
+<!-- toc -->
 
 ## MYSQL
 
