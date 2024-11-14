@@ -215,7 +215,7 @@ IPv6报文头的字段包括：
 ### IPv4报文头的字段
 
 - **Version（版本）**：4位，指定IP协议的版本号（IPv4的值为4）。
-- **IHL（Internet Header Length，头部长度）**：4位，表示IP头部的长度，以32位字为单位。最小值是5，表示20字节。
+- **IHL（Internet Header Length，头部长度）**：4位，表示IP头部的长度，以32位字为单位。最小值是5，表示20字节，最大值是15，表示60字节。
 - **Type of Service（服务类型）**：8位，用于指定数据包的优先级和QoS要求。现已被重定义为“Differentiated Services”。
 - **Total Length（总长度）**：16位，表示整个IP数据包（包括数据和头部）的长度，以字节为单位。
 - **Identification（标识）**：16位，用于唯一标识主机发送的每一个数据包，通常用于数据包分片。
