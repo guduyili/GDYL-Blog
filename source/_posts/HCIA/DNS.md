@@ -8,7 +8,7 @@ tag:
 - learning
 ---
 
-
+<!-- toc -->
 
 **DNS（Domain Name System）** 是一种互联网服务，用于将人类可读的域名（如 [www.example.com）转换为机器可读的IP地址（如](http://www.example.xn--com)ip(-i73kf83b34f7kcrf120a7l1b0bmlt3d8i8d66m/) 192.0.2.1）。这种转换过程称为域名解析。DNS协议使用户可以使用易记的域名访问网站，而不需要记住复杂的IP地址。
 
