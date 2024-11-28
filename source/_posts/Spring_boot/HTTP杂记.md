@@ -135,3 +135,69 @@ public class ResponseController {
 }
 ```
 
+------
+
+## 三层架构
+
+- controller：控制层，接受前端发送的请求，对请求进行处理，并响应数据
+- service： 业务逻辑层，处理具体的业务逻辑
+- dao： 数据访问层（Data Access Object）(持久层)，包括数据的增，删，查，改
+
+------
+
+
+
+## 分层耦合
+
+- 耦合： 衡量软件中各个层/各个模块的依赖关联程度
+- 内聚： 软件中各个功能模块内部的功能联系
+
+
+
+**控制反转**：Inversion Of Control 简称为IOC。对象的创建控制权由程序自身转移到外部（容器），这种思想称为控制反转
+
+
+
+**依赖注入**： Dependency Injection 简称DI。容器为应用程序提供运行时，所依赖的资源，称之为依赖注入。
+
+
+
+**Bean对象**： IOC容器中创建，管理的对象称之为Bean。
+
+
+
+1. 如何将一个类交给IOC容器管理？ 
+   - @Component（注意：是加在实现类impl上，而不是加在接口上）
+2. 如何从IOC容器中找到该类型的bean，然后完成依赖注入？
+   - @Autowired
+
+​	
+
+## IOC详解
+
+| 注解        | 说明                 | 位置                                            |
+| ----------- | -------------------- | ----------------------------------------------- |
+| @Component  | 声明bean的基础注解   | 不属于以下三类，用此注解                        |
+| @Controller | @Component的衍生注解 | 标注在控制层上                                  |
+| @Service    | @Component的衍生注解 | 标注在业务层上                                  |
+| @Repository | @Component的衍生注解 | 标注在数据访问层上（由于与mybatis整合，用的少） |
+
+## DI详解
+
+1.依赖注入的注解
+
+- @Autowired ： 默认按照类型自动装配
+- 如果同类型的bean存在多个：
+  - @Primary
+  - @Autowired + @Qualifier
+  - @Resource
+
+2.@Resource 与 @Autowired区别
+
+- @Autowired是Spring框架提供的注解，而@Resource是JavaEE规范提供的
+- @Autowired默认是按照类型注入，而@Resource默认是按照名称注入
+
+
+
+
+
