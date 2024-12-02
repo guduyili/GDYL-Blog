@@ -41,6 +41,7 @@ create database [if not exists] 数据库名 [default charset utf8mb4];
 --删除数据库
 drop database [if exists] 数据库名;
 
+
 ```
 
 - 创建表的语法：
@@ -113,4 +114,92 @@ drop database [if exists] 数据库名;
   drop table [if exists] 表名; -- 删除表
   ```
 
+
+## DML
+
+- DEL英文全称Data Manipulation Language(数据操作语言)，用来对数据库中表的数据记录进行增，删，改。
+
+
+
+### DML-insert
+
+```sql
+-- 指定字段添加数据
+insert into 表名（字段名1，字段名2） values （值1，值2）;
+
+-- 全部字段添加数据
+insert into 表名 values （值1，值2....）;
+
+-- 批量删除数据（指定字段）
+insert into 表名（字段名1，字段名2） values （值1，值2）, （值1，值2）;
+
+-- 批量添加数据（全部字段）
+insert into 表名 values （值1，值2....）,（值1，值2....）;
+```
+
+### DML-update
+
+````sql
+-- 修改数据
+update 表名 set 字段名1 = 值1,字段名2 = 值2, ...[where 条件];
+````
+
+###  DML-update
+
+```sql
+-- 删除数据
+delete from 表名 [where 条件];
+```
+
+
+
+## DQL
+
+- DQL英文全称为Data Query Language (数据查询语言)，用来查询数据库表中的记录
+- 关键字：SELECT
+
+
+
+- 完整的DQL语句语法：
+
+  ```sql
+  select		字段列表
   
+  from		表名列表
+  
+  where		条件列表
+  
+  group by	分组字段列表
+  
+  having		分组后条件列表
+  
+  order by	排序字段列表
+  
+  limit		分页参数
+  ```
+
+  
+
+### DQL-基本查询
+
+```sql
+-- 查询多个字段
+select 字段1,字段2,字段3, from 表名;
+
+-- 查询所有字段（通配符）
+select * from 表名;
+
+-- 为查询字段设置别名，as关键字可以省略
+select 字段1 [as 别名1], 字段2 [as 别名2] from 表名;
+
+-- 去除重复记录
+select distinct 字段列表 from 表名;
+```
+
+### DQL-条件查询
+
+```sql
+-- 条件查询
+select 字段列表 from 表名 where 条件列表;
+```
+
