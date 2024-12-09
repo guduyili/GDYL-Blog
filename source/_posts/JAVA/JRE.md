@@ -515,3 +515,124 @@ public class Demo {
 }
 ```
 
+## Junit简易框架
+
+```java
+public class AnnotaionDemo3 {
+    public static void main(String[] args) throws Exception {
+            AnnotaionDemo3 annotaionDemo3 = new AnnotaionDemo3();
+
+            Class tmp = AnnotaionDemo3.class;
+
+            Method[] methods = tmp.getDeclaredMethods();
+
+            for(Method tmps : methods){
+                //如果存在注解
+                if(tmps.isAnnotationPresent(MyTest.class)){
+                    //便执行方法
+                    // MyTest myTest = tmps.getDeclaredAnnotation(MyTest.class);
+                    tmps.invoke(annotaionDemo3);
+                }
+            }
+    }
+
+    @MyTest()
+    public void t1(){
+        System.out.println("执行t1");
+    }
+    public void t2(){
+        System.out.println("执行t2");
+    }
+    public void t3(){
+        System.out.println("执行t3");
+    }
+    public void t4(){
+        System.out.println("执行t4");
+    }
+}
+```
+
+```java
+@Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface MyTest {
+    int num() default 114;
+}
+```
+
+
+
+# 动态代理
+
+```java
+public interface StarService {
+    void contrast(String name);
+    String play();
+}
+```
+
+```java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Star implements StarService{
+private String  name;
+
+
+    @Override
+    public void contrast(String name) {
+        System.out.println(this.name + "是不是" + name);
+    }
+
+    @Override
+    public String play() {
+        System.out.println(this.name + "发动挑衅与志继");
+        return "伯约纵横沙场";
+    }
+}
+```
+
+```java
+public class Test {
+    public static void main(String[] args) {
+        //创建对象Star
+        Star jw = new Star("伯约");
+
+        StarService proxy = ProxyUtil.createProxy(jw);
+        proxy.contrast("姜维");
+        System.out.println(proxy.play());
+    }
+}
+```
+
+```java
+public class ProxyUtil {
+    public static StarService createProxy(Star star){
+        //参数一： 用于执行用哪个类加载器去加载生成的代理类
+        //参数二： 用于指定代理类需要实现的接口：Star类中实现了哪些接口 代理类中同理
+        //参数三： 用于指定代理类需要如何去代理（代理要做的事情）
+
+        StarService proxy = (StarService) Proxy.newProxyInstance(ProxyUtil.class.getClassLoader(),
+                star.getClass().getInterfaces(), new InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        //参数一： proxy接收到代理对象本身
+                        //参数二： method代表正在被代理的方法
+                        //参数三： args代表正在被代理的方法的参数
+                        String methodName = method.getName();
+                        if("contrast".equals(methodName)){
+                            System.out.println("准备执行contrast");
+                        } else if ("play".equals(methodName)) {
+                            System.out.println("准备执行play");
+                        }
+
+                        //找到Star对象执行被代理的行为 method方法
+                        Object ret = method.invoke(star,args);
+                        return ret;
+                    }
+                });
+        return proxy;
+    }
+}
+```
+
