@@ -144,7 +144,7 @@ insert into 表名 values （值1，值2....）,（值1，值2....）;
 update 表名 set 字段名1 = 值1,字段名2 = 值2, ...[where 条件];
 ````
 
-###  DML-update
+###  DML-delete
 
 ```sql
 -- 删除数据
@@ -254,3 +254,168 @@ select 字段列表 from 表名 [where 条件] [group by 分组字段名 having 
 1. 起始索引从0开始。
 2. 分页查询是数据库的方言，不同数据库有不同的实现，MYSQL中是LIMIT。
 3. 如果起始索引为0，起始索引可以省略，直接简写为limit 10。
+
+## JDBC
+
+- 连接和操作数据库的一种API
+
+```java
+public class jdbcTest {
+    /**
+     * JDBC入门程序
+      */
+    @Test
+    public void testUpdate() throws Exception {
+        //1.注册驱动
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        //2.获取数据库的链接
+        String url = "jdbc:mysql://localhost:3306/db1";
+        String username = "root";
+        String password = "1412";
+        Connection connection = DriverManager.getConnection(url,username,password);
+
+        //3.获取SQL语句执行对象
+        Statement statement = connection.createStatement();
+
+        //4.执行SQL
+        int tmp = statement.executeUpdate("update employee set NAME = \"姜维伯约\" WHERE id= 1");//DML
+        System.out.println("SQL执行记录" + tmp);
+
+        //5.释放资源
+        statement.close();
+        connection.close();
+    }
+}
+
+```
+
+```xml
+<!--pom.xml--> 
+<dependencies>
+
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.3</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+        </dependency>
+    </dependencies>
+```
+
+## MyBatis
+
+### 数据库连接池
+
+- 容器，负责分配，管理数据库连接（Connection）
+- 优势：资源复用，提升系统响应速度
+- 接口：DataSource
+
+### 删除用户-delete
+
+| 符号      | 说明                                                         | 场景                                                         | 优缺点                            |
+| --------- | ------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------------- |
+| **`#{}`** | `#` 用于将参数作为**预编译的占位符**处理，底层会将参数值绑定为 SQL 语句中的参数 | 将参数值安全地插入到 SQL 语句中，MyBatis 会在执行时将 `#{}` 替换为对应的占位符（如 `?`），然后通过 JDBC 将实际的值绑定进去。 | 这种方式能够有效防止 SQL 注入问题 |
+| **`${}`** | 参数会以字符串形式直接拼接到 SQL 中                          | 动态传递表名、列名等非值的 SQL 片段                          | 不安全，容易导致 SQL 注入         |
+
+```java
+@Delete("delete from user where id = #{id}")
+```
+
+### 新增用户-insert
+
+- 添加新用户
+
+```java
+ @Insert("insert into user(id, username, NAME, age,gender) VALUE (#{id},#{username},#{name},#{age},#{gender})")
+```
+
+
+
+### 修改用户-update
+
+- 根据id更新用户信息
+
+```java
+  @Update("update user set username = #{username} , NAME = #{name} ,age = #{age} where id = #{id}")
+```
+
+### 查询用户-select
+
+- 根据用户名和密码查询用户信息
+
+```java
+    @Select("select * from user where username = #{username} and name = #{name}")
+    public User select(@Param("username")String username,@Param("name")String name);
+```
+
+- @Param注解的作用是为接口的方法形参起名字
+- 基于官方骨架创建的springboot项目中，接口编译时会保留方法形参名，@Param注解可以省略
+
+### XML
+
+- 在Mybatis中，既可以通过配置SQL语句，也可以通过XML配置文件配置SQL语句
+
+- 默认规则：
+
+  1. XML映射文件的名称和Mapper接口名称一致，并且将XML映射文件和Mapper接口放置在想同包下（**同包同名**）
+  2. XML映射文件的namespace属性为Mapper接口全限定名一致
+  3. XML映射文件中sql语句的id与Mapper接口中的方法名一致，并保持返回类型一致
+
+  
+
+### application.properties
+
+```properties
+spring.application.name=spring-boot-mybatis-quickstart
+
+
+#配置数据库连接信息
+spring.datasource.url=jdbc:mysql://localhost:3306/db1
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.username =root
+spring.datasource.password = 1412
+
+
+#配置mybatis的日志输出
+mybatis.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
+
+```
+
+### application.xml
+
+```java
+spring:
+  application:
+    name: spring-boot-mybatis-quickstart
+
+
+
+  datasource:
+    type: com.zaxxer.hikari.util.DriverDataSource
+    url: jdbc:mysql://localhost:3306/db1
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1412
+
+#Mybatis
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mapper/*.xml
+
+```
+
