@@ -1,5 +1,5 @@
 ---
-title: Springboot_Fir
+title: Springboot
 date: 2024-11-28
 updated: 2024-11-28
 categories: 
@@ -9,7 +9,7 @@ tag:
 ---
 <!-- toc -->
 
-## **一个Springboot的初始项目**
+# **一个Springboot的初始项目**
 
 项目的src\main结构
 
@@ -317,5 +317,69 @@ public class UserServiceImpl implements UserService {
 }
 ```
 
+# Meituan
 
+##  字段名与实体类属性名不一致
+
+```java
+/**
+     * 方式一：手动映射
+     * @return
+     */
+    @Results({
+            @Result(column = "create_time", property = "createTime"),
+            @Result(column = "update_time", property = "updateTime"),
+    })
+
+    /**
+     * 方式二：在SQL语句中，对不一样的列名起别名，别名和实体类属性名一样
+     */
+    @Select("select id,name,create_time createTime,update_time updateTime from meituan order by update_time desc")
+
+    /**
+     * 方式三：开启驼峰命名
+     * @return
+     */
+        map-underscore-to-camel-case: true
+```
+
+## 删除
+
+```java
+   /**
+     * 方式一：HttpServletRequest 获取请求参数
+     * @param request
+     * @return
+     */
+    @DeleteMapping("/depts")
+    public Result delete(HttpServletRequest request){
+        String idStr = request.getParameter("id");
+        int id = Integer.parseInt(idStr);
+        System.out.println("根据ID删除部门" + id);
+        return Result.success();
+    }
+
+
+    /**
+     * 方式二：@RequestParam
+     * 注意事项：一旦声明了@RequestParam 该参数在请求时必须传递 如果不船体将会报错 （默认required为true）
+     * @param deptId
+     * @return
+     */
+    @DeleteMapping("/depts")
+    public Result delete(@RequestParam("id") Integer deptId){
+            System.out.println("根据ID删除部门" + deptId);
+            return Result.success();
+    }
+
+    /**
+     * 方式三：省略@RequestParam（前端传递的请求参数名与服务端方法形参名一致）[推荐]
+     */
+    @DeleteMapping("/depts")
+    public Result delete(Integer id){
+        System.out.println("根据ID删除部门" + id);
+        meituanService.deleteById(id);
+        return Result.success();
+    }
+```
 
