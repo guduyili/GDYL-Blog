@@ -383,3 +383,72 @@ public class UserServiceImpl implements UserService {
     }
 ```
 
+## 配置文件详解
+
+- 配置文件名：logback.xml
+
+- 该配置文件是对Logback日志框架输出的日志进行控制的，可以来配置输出的格式，位置及日志开关等
+
+- 常用的两种输出日志的位置：控制台，系统文件
+
+  ```xml
+      <!--    控制台输出-->
+      <appender name="STDOUT" class = "ch.qos.logback.core.ConsoleAppender">
+          ......
+  </appender>
+  
+      <!--系统文件输出-->
+      <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      ......
+  </appender>
+  
+  ```
+
+- 开启日志（ALL），关闭日志（OFF）
+
+  ```xml
+      <root level="off">
+          <appender-ref ref="STDOUT" />
+          <appender-ref ref="FILE" />
+      </root>
+  ```
+
+## 日志级别
+
+- 日志级别指的是日志信息的类型，日志都会分级别，常见的日志级别如下（级别由低到高）：
+
+  | 日志级别 | 说明                                                         | 记录方式         |
+  | -------- | ------------------------------------------------------------ | ---------------- |
+  | trace    | 追踪，记录程序运行轨迹【使用很少】                           | log.trace("...") |
+  | debug    | 调试，记录程序调试过程中的信息，实际应用中一般将其视为最低级别【使用很多】 | log.debug("...") |
+  | info     | 记录一般信息，描述程序运行的关键事件，如：网络连接，io操作【使用很多】 | log.info("...")  |
+  | warn     | 警告信息：记录潜在有害的情况【使用很多】                     | log.warn("...")  |
+  | error    | 错误信息【使用很多】                                         | log.error("...") |
+
+- 大于等于配置的日志级别的日志才会输出
+
+
+
+# 多表关系
+
+## 一对多
+
+### 外键约束
+
+- 可以在创建表时 或 表结构创建完成后，为字段添加外键约束
+
+  ```mysql
+  -- 创建表时限定
+  create table 表名{
+  		字段名 数据类型,
+  		....
+  		[constraint] [外键名称] foreign key (外键字段名) references 主表(字段名)
+  };
+  ```
+
+  ```mysql
+  -- 建完表后，添加外键
+  alter table 表名 add constraint 外键名称 foreign key (外键字段名) references 主表 (字段名);
+  ```
+
+  
