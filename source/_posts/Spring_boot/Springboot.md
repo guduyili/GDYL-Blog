@@ -452,3 +452,20 @@ public class UserServiceImpl implements UserService {
   ```
 
   
+
+## 一对一
+
+- 实现：在任意一方加入外键，关联另外一方的主键，并且设置外键为唯一的（UNIQUE）
+
+
+
+
+
+## 多对多
+
+- 实现：建立第三张中间表，中间表至少包含两个外键，分别关联两方主键
+
+  
+
+# 多表查询
+
