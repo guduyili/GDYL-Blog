@@ -9,6 +9,10 @@ tag:
 ---
 <!-- toc -->
 
+[toc]
+
+
+
 # **一个Springboot的初始项目**
 
 项目的src\main结构
@@ -469,3 +473,57 @@ public class UserServiceImpl implements UserService {
 
 # 多表查询
 
+- 连接查询
+  - 内连接：相当于查询A，B交集部分数据
+  - 外连接
+    - 左外连接：查询**左表**所有数据（包括两张表交集部分数据）
+    - 右外连接：查询**右表**所有数据（包括两张表交集部分数据）
+- 子查询
+
+​	
+
+## 内连接
+
+```mysql
+-- 1.隐式内连接
+select 字段列表 from 表1，表2 where 连接条件 ...;
+
+-- 2.显式内连接
+select 字段列表 from 表1 [inner] join 表2 on 连接条件 ...;
+```
+
+```mysql
+-- 给表起别名，简化书写
+select 字段列表 from 表1 [as] 别名1 , 表名2 [as] 别名2 where 条件 ...;
+```
+
+## 外连接
+
+```mysql
+-- 左外连接
+select 字段列表 from 表1 left [outer] join 表2 on 连接条件;
+
+
+-- 右外连接
+select 字段列表 from 表1 right [outer] join 表2 on 连接条件;
+```
+
+## 子查询
+
+- SQL语句中嵌套select语句，称为嵌套查询，又称为子查询
+
+- select * from t1 where column1 = (select column2 from t2 ...);
+
+- 子查询外部的语句可以是insert update delete select 的任何一个
+
+- 分类：
+
+  - 标量子查询：子查询返回的结果为单个值
+
+  - 列子查询：子查询返回的结果为一列
+
+  - 行子查询：子查询返回的结果为一行
+
+  - 表子查询：子查询返回的结果为多行多列
+
+    
