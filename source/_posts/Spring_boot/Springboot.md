@@ -533,3 +533,19 @@ select 字段列表 from 表1 right [outer] join 表2 on 连接条件;
 - 随着用户的输入或外部条件而变化的SQL语句
 - <if>: 判断条件是否成立
 - <where>:根据查询条件，来生成where关键字，并会自动去除条件前面多余的and或or
+- <foreach>
+  - collection: 集合名称
+  - item：集合遍历出来的元素/项
+  - separator：每一次遍历使用的分隔符
+  - open： 遍历开始前拼接的片段
+  - close： 遍历结束后拼接的片段
+
+# 事务
+
+- 事务是一组操作的集合，是一个不可分割的工作单位。这组操作要么全部成功，要么失败
+
+## 控制事务
+
+1. 开始事务： start transaction/begin；
+2. 提交事务： commit;(全部成功)
+3. 回滚事务： rollback; (只要有一项失败）
