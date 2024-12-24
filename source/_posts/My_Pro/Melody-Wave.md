@@ -6,7 +6,7 @@ categories:
 - My Project
 tag:
 - music
-cover: https://gdlypc.us.kg/linux/lbl2.jpg
+cover: 
 ---
 <!-- toc -->
 
@@ -16,6 +16,6 @@ cover: https://gdlypc.us.kg/linux/lbl2.jpg
 ### github link : [MW](https://github.com/guduyili/Melody-Wave)
 
 
-![1](https://gdlypc.us.kg/linux/8.png)
+
 
 <!-- ![lbl](https://gdlypc.us.kg/linux/lbl2.jpg) -->

@@ -6,7 +6,7 @@ categories:
 - Unity
 tag:
 - learning
-cover: https://gdlypc.us.kg/mrx/mrx1.jpg
+cover: 
 ---
 
 <!-- toc -->

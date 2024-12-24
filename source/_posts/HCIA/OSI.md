@@ -2,7 +2,7 @@
 title: OSI
 date: 2024-10-13
 updated: 2024-10-13
-cover: https://gdlypc.us.kg/mrx/mrx3.jpg
+cover: 
 categories: 
 - HCIA
 tag:
