@@ -9,6 +9,10 @@ tag:
 ---
 <!-- toc -->
 
+[toc]
+
+
+
 ## HTTP协议-请求数据格式
 
 - 请求行：请求数据第一行（请求方式，资源路径，协议）
@@ -197,7 +201,135 @@ public class ResponseController {
 - @Autowired是Spring框架提供的注解，而@Resource是JavaEE规范提供的
 - @Autowired默认是按照类型注入，而@Resource默认是按照名称注入
 
+## Cookie
+
+## 响应头
+
+- Set-Cookie
+
+```java
+    @GetMapping("/c1")
+    public Result cookie1(HttpServletResponse response){
+        response.addCookie(new Cookie("login_name","guduyili"));//设置Cookie/响应Cookie
+        return Result.success();
+    }
+```
 
 
 
+### 请求头
+
+- Cookie
+
+```java
+    @GetMapping("/c2")
+    public Result cookie12(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        for(Cookie cookie : cookies){
+            if(cookie.getName().equals("login_name")){
+                System.out.println("login_name: " + cookie.getValue());//输出name为login_username的cookie
+            }
+        }
+        return Result.success();
+    }
+```
+
+- 优点：HTTP协议中支持的技术
+- 缺点：
+  - 移动端App无法使用Cookie
+  - 不安全，用户可以自己禁用Cookie
+  - Cookie不能跨域
+
+## Session
+
+- Session的底层是基于Cookie的(Set-Cookie,Cookie)
+
+```java
+    @GetMapping("/s1")
+    public Result session1(HttpSession session){
+        log.info("HttpSession-s1: {}",session.hashCode());
+
+        session.setAttribute("loginUser","伯约");
+        return Result.success();
+    }
+
+    @GetMapping("/s2")
+    public Result session2(HttpSession session){
+        log.info("HttpSession-s2: {}",session.hashCode());
+
+        Object loginUser = session.getAttribute("loginUser");
+        log.info("loginUser:{}",loginUser);
+        return Result.success();
+    }
+}
+```
+
+- 优点：存储在服务端，安全
+- 缺点：
+  - 服务器集群环境下无法直接使用Session
+  - Cookie的缺点
+
+## 令牌
+
+### JWT令牌
+
+- JSON Web Token（https://jwt.io/）
+- 组成：
+  - 第一部分：Header(头),记录令牌类型，签名算法等，
+  - 第二部分：Payload（有效载荷），携带一些自定义信息，默认信息等
+  - 第三部分：Signature（签名），防止Token被篡改，确保安全性，将header，payload融入，并加入指定密钥，通过指定签名算法计算而来
+
+## 过滤器（Filter）
+
+- Filter过滤器，是JavaWeb三大组件（）之一。
+- 过滤器可以把对资源的请求**拦截**下来，从而实现一些特殊功能
+- 过滤器一般完成一些**通用**的操作，比如：登录校验，统一编码处理，敏感字符处理等
+
+```java
+package com.jw.filter;
+
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+
+/***
+ *@title DemoFilter
+ *@description <TODO description class purpose>
+ *@author lzy33
+ *@version 1.0.0
+ *@create 29/12/2024 下午 9:38
+ **/
+@Slf4j
+@WebFilter(urlPatterns = "/*")//拦截所有请求
+public class DemoFilter implements Filter {
+    //初始化方法，web服务器启动时执行，只执行一次
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        /*Filter.super.init(filterConfig);*/
+        log.info("init 初始化方法...");
+    }
+
+    //拦截到请求之后，会执行多次
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        log.info("拦截到请求...");
+        //放行
+        filterChain.doFilter(servletRequest,servletResponse);
+    }
+
+    //销毁方法，web服务器关闭的时候执行，只执行一次
+    @Override
+    public void destroy() {
+        // Filter.super.destroy();
+        log.info("destroy 销毁方法...");
+    }
+}
+
+
+@WebFilter(urlPatterns = "/*")//拦截所有请求
+@ServletComponentScan//开启SpringBoot对Servlet组件的支持
+放行 ：chain.doFilter(request,response)
+```
 

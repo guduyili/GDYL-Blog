@@ -259,7 +259,66 @@ select 字段列表 from 表名 [where 条件] [group by 分组字段名 having 
 2. 分页查询是数据库的方言，不同数据库有不同的实现，MYSQL中是LIMIT。
 3. 如果起始索引为0，起始索引可以省略，直接简写为limit 10。
 
-## JDBC
+## Case函数
+
+```sql
+-- 1.case 函数： case 表达式 when val1 then res1
+--                       when val2 then res2
+--                       else ...  end,
+SELECT 
+     (CASE job when 1 then '学工部'
+			when 2 then '创新部'
+			when 3 then '咨询部'
+			when 4 then '就业部'
+			when 5 then '人事部'
+			else '其他' end) pos,
+		 COUNT(*) num
+from emp GROUP BY job ORDER BY num;
+
+
+
+-- 2.case 函数： case 表达式 when 条件表达式1 then res1
+--                        when 条件表达式1 then res2
+--                        else ...  end,
+
+SELECT 
+     (CASE  when job=1 then '学工部'
+			when job=2 then '创新部'
+			when job=3 then '咨询部'
+			when job=4 then '就业部'
+			when job=5 then '人事部'
+			else '其他' end) pos,
+		 COUNT(*) num
+from emp GROUP BY job ORDER BY num
+```
+
+## if函数
+
+```sql
+-- if(expr,val1,val2): 如果表达式expr成立，取val1，否则去val2
+
+-- ifnull(expr,val1): 如果expr不为null，取自身，否则取val1
+
+SELECT
+if(gender=1,'男','女')as name,
+COUNT(*) as VALUE
+from emp GROUP BY gender;
+```
+
+## 封装回显
+
+```sql
+  <result column="entry_date" property="entryDate"/>
+```
+
+- **`column`属性：**
+  - 这里的`column="entryDate"`指的是SQL查询结果中的列名。这个列名应该与数据库表中的列名匹配，或者是SQL查询中指定的别名。
+  - 在SQL查询中，如果使用了`SELECT e.entryDate AS entryDate`，那么`entryDate`就是列名。
+- **`property`属性：**
+  - `property="entryDate"`指的是Java对象中的属性名。MyBatis会将数据库中的`entryDate`列的值设置到Java对象的`entryDate`属性中。
+  - 这个属性名应该与Java对象（比如`Emp`类）中的字段名一致，并且该字段应该有对应的getter和setter方法。
+
+## JDBCs
 
 - 连接和操作数据库的一种API
 

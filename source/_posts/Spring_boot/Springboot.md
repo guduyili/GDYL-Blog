@@ -549,3 +549,33 @@ select 字段列表 from 表1 right [outer] join 表2 on 连接条件;
 1. 开始事务： start transaction/begin；
 2. 提交事务： commit;(全部成功)
 3. 回滚事务： rollback; (只要有一项失败）
+
+## Spring事务管理
+
+### @Transactional
+
+1. @Transactional：会在方法运行之前，开启事务，运行完毕后，根据运行结果，来提交或回滚事务
+
+2. 位置：方法上，类上，接口上
+
+   
+
+   #### rollbackFor
+
+   rollbackFor 属性用于控制出现何种异常类型，回滚事务（默认情况下，只有出现RuntimeException才会回滚）
+
+		####       propagation
+
+​		事务传播行为：指的是当一个事务方法被另一个事务方法调用时，这个事务方法应该如何进行事务控制
+
+​		![image-20241225102034863](https://s2.loli.net/2024/12/25/UY4zKEPH1VDLyvi.png)
+
+# 封装回显
+
+- 如果查询返回的字段名与实体的属性名可以直接对应上，用**resultType**
+- 如果查询返回的字段名与实体的属性名对应不上，或实体属性比较复杂，可以通过**resultMap**手动封装
+
+# 全局异常处理器
+
+- @RestControllerAdvice  = @ControllerAdvice + @ResponseBody
+- @ExceptionHandler
