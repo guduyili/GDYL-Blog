@@ -333,3 +333,257 @@ public class DemoFilter implements Filter {
 放行 ：chain.doFilter(request,response)
 ```
 
+```java
+package com.jw.filter;
+
+import com.jw.utils.JwtUtils;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+
+/***
+ *@title TokenFilter
+ *@description <TODO description class purpose>
+ *@author lzy33
+ *@version 1.0.0
+ *@create 29/12/2024 下午 9:58
+ **/
+@Slf4j
+@WebFilter(urlPatterns = "/*")//拦截所有请求
+public class TokenFilter implements Filter {
+
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest request  = (HttpServletRequest) servletRequest;
+        HttpServletResponse response  = (HttpServletResponse) servletResponse;
+
+        //1.路径
+        String requestURI = request.getRequestURI();
+
+        //2.判断是否为login
+        if(requestURI.contains("/login")){
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        //获取token
+        String token = request.getHeader("token");
+
+        //判断token是否存在
+        if(token == null || token.isEmpty()){
+            log.info("令牌为空,响应401");
+            response.getWriter().write("用户未登录，请先登录");
+        }
+
+        //如果token存在。校验令牌，弱国校验失败 -> 返回错误信息(401)
+        try{
+            JwtUtils.parseToken(token);
+        }catch (Exception e){
+            log.info("令牌非法，响应401");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        //校验通过 放行
+        log.info("令牌合法，放行");
+        filterChain.doFilter(request,response);
+    }
+}
+
+```
+
+
+
+
+
+## 拦截器（Interceptor）
+
+- 拦截请求，在指定的方法调用之前，根据业务需要这姓预先设定的代码
+
+### 过滤器
+
+```java
+package com.jw.interceptor;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+/***
+ *@title DemoInterceptor
+ *@description <TODO description class purpose>
+ *@author lzy33
+ *@version 1.0.0
+ *@create 30/12/2024 下午 2:52
+ **/
+@Slf4j
+@Component
+public class DemoInterceptor implements HandlerInterceptor {
+
+    //在目标资源方法运行之前运行 返回值：false：不放行   true：放行
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception {
+        log.info("preHandle ...");
+        return true;
+    }
+
+    //在目标资源方法运行之后放行
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception{
+        log.info("postHandle ...");
+    }
+
+
+    //视图渲染完毕后放行
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,Object handler,Exception ex) throws Exception{
+        log.info("afterCompletion ...");
+    }
+
+
+}
+
+```
+
+```java
+package com.jw.config;
+
+import com.jw.interceptor.DemoInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/***
+ *@title WebConfig
+ *@description <TODO description class purpose>
+ *@author lzy33
+ *@version 1.0.0
+ *@create 30/12/2024 下午 3:04
+ **/
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Autowired
+    public DemoInterceptor demoInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+        registry.addInterceptor(demoInterceptor).addPathPatterns("/**");
+    }
+}
+
+```
+
+### 拦截
+
+```java
+package com.jw.interceptor;
+
+import com.jw.utils.JwtUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+/***
+ *@title DemoInterceptor
+ *@description <TODO description class purpose>
+ *@author lzy33
+ *@version 1.0.0
+ *@create 30/12/2024 下午 2:52
+ **/
+@Slf4j
+@Component
+public class TokenInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //1.路径
+        String requestURI = request.getRequestURI();
+
+        //2.判断是否为login
+        if(requestURI.contains("/login")){
+            return true;
+        }
+
+        //获取token
+        String token = request.getHeader("token");
+
+        //判断token是否存在
+        if(token == null || token.isEmpty()){
+            log.info("令牌为空,响应401");
+            response.getWriter().write("用户未登录，请先登录");
+            return false;
+        }
+
+        //如果token存在。校验令牌，弱国校验失败 -> 返回错误信息(401)
+        try{
+            JwtUtils.parseToken(token);
+        }catch (Exception e){
+            log.info("令牌非法，响应401");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return false;
+        }
+
+        //校验通过 放行
+        log.info("令牌合法，放行");
+        return true;
+    }
+}
+
+```
+
+```java
+package com.jw.config;
+
+import com.jw.interceptor.TokenInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/***
+ *@title WebConfig
+ *@description <TODO description class purpose>
+ *@author lzy33
+ *@version 1.0.0
+ *@create 30/12/2024 下午 3:04
+ **/
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+/*    @Autowired
+    public DemoInterceptor demoInterceptor;*/
+
+    @Autowired
+    public TokenInterceptor tokenInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry){
+/*        registry.addInterceptor(demoInterceptor).addPathPatterns("/**");*/
+         registry.addInterceptor(tokenInterceptor).addPathPatterns("/**");
+    }
+}
+
+```
+
+![image-20241230154304234](https://s2.loli.net/2024/12/30/ArWjg3YO7FZUqXl.png)
+
+
+
+
+
+## Filter与Interceptor区别
+
+![image-20241230155033634](https://s2.loli.net/2024/12/30/sdmO2qrQIiVZ3Fv.png)
+
+1. 接口规范不同：过滤器需要是按Filter接口，而拦截器需要实现HandlerInterceptor接口
+2. 拦截范围不同：过滤器Filter会拦截所有的资源，而Interceptor只会拦截Spring环境中的资源
