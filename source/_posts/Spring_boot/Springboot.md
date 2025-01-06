@@ -579,3 +579,73 @@ select 字段列表 from 表1 right [outer] join 表2 on 连接条件;
 
 - @RestControllerAdvice  = @ControllerAdvice + @ResponseBody
 - @ExceptionHandler
+
+# HttpClient
+
+- 发送请求的步骤：
+  - 创建HttpClient对象
+  - 创建Http请求对象
+  - 调用HttpClient的execute方法发送请求
+
+```java
+//Get
+ @SpringBootTest
+public class HttpClientTest {
+    @Test
+    public void testGet() throws Exception{
+        //创建httpclient对象
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+
+
+        //创建请求对象
+        HttpGet httpGet  = new HttpGet("http://localhost:8080/user/shop/status");
+
+        //发送请求，接受响应结果
+        CloseableHttpResponse response = httpClient.execute(httpGet);
+
+        //获取服务端返回的状态码
+        int statusCode = response.getStatusLine().getStatusCode();
+        System.out.println("服务端返回的状态码为："+statusCode);
+
+        HttpEntity httpEntity = response.getEntity();
+        String body= EntityUtils.toString(httpEntity);
+        System.out.println("服务端返回的数据为："+body);
+        //关闭资源
+        httpClient.close();
+        response.close();
+    }
+}
+```
+
+```java
+//Post
+    @Test
+    public void testPost() throws  Exception{
+
+        CloseableHttpClient client = HttpClients.createDefault();
+
+        HttpPost httpPost = new HttpPost("http://localhost:8080/admin/employee/login");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username","admin");
+        jsonObject.put("password","123456");
+
+        StringEntity entity = new StringEntity(jsonObject.toString());
+
+        //指定请求与编码方式
+        entity.setContentEncoding("utf-8");
+        //数据格式
+        entity.setContentType("application/json");
+        httpPost.setEntity(entity);
+
+        CloseableHttpResponse response = client.execute(httpPost);
+
+        int statusCode = response.getStatusLine().getStatusCode();
+        System.out.println("服务端返回的状态码为："+statusCode);
+
+        HttpEntity httpEntity = response.getEntity();
+        String body= EntityUtils.toString(httpEntity);
+        System.out.println("服务端返回的数据为："+body);
+    }
+```
+
