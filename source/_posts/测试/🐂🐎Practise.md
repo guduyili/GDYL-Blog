@@ -49,7 +49,7 @@ tag:
 
 ### Xmind初学
 
-< img >
+![cc5eda01c2af3d6a8e45ef9dce9295eb](https://s2.loli.net/2025/03/20/fMHCh5O3pdYoj8R.jpg)
 
 1. 项目名称
 
@@ -71,7 +71,7 @@ tag:
 
 ### 性能测试
 
-< img >
+![da581321a4f68900d751cfe99ae7aea](https://s2.loli.net/2025/03/20/3ncI4eBEKAqzRmy.png)
 
 |              |      |                                                              |
 | ------------ | ---- | ------------------------------------------------------------ |
