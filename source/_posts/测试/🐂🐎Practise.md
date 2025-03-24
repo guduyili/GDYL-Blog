@@ -157,3 +157,14 @@ tag:
 
 ### Xmind go on
 
+## Day5
+
+学操作系统，自动化selenium，RDMS
+
+### DI
+
+- DI是Defect Index的简写，意思是缺陷指数，依据处于“打开”状态的BUG的严重程度计算得出的分值
+- 计算公式：
+
+DI = 10*致命bug个数 + 3 * 严重bug个数 + 0.2*一般bug个数 + 0.1 * 提问bug个数
+
