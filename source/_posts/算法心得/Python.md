@@ -107,3 +107,47 @@ for i in range(m,1,-1):
         break
 ```
 
+## 一元二次方程
+
+```python
+import math
+
+
+def greater_than_zero(a, b, discriminant):
+    x1 = (-b + math.sqrt(discriminant)) / (2 * a)
+    x2 = (-b - math.sqrt(discriminant)) / (2 * a)
+    return f"x1={x1:.3f} x2={x2:.3f}"
+
+
+def equal_to_zero(a, b):
+    x = -b /(2 *a)
+    return f"x1={x:.3f} x2={x:.3f}"
+
+
+def less_than_zero(a, b, discriminant):
+    real_part = -b /(2 *a)
+    imaginary_part = math.sqrt(-discriminant) /(2 *a)
+    return f"x1={real_part:.3f}+{imaginary_part:.3f}i x2={real_part:.3f}-{imaginary_part:.3f}i"
+
+
+def solve_quadratic_equation():
+    # 输入系数
+    a, b, c = map(float, input().split())
+
+    # 计算判别式
+    discriminant = b ** 2 - 4 * a * c
+
+    # 根据判别式值选择不同的函数求解
+    if discriminant > 0:
+        print(greater_than_zero(a, b, discriminant))
+    elif discriminant == 0:
+        print(equal_to_zero(a, b))
+    else:
+        print(less_than_zero(a, b, discriminant))
+
+
+# 调用主函数
+solve_quadratic_equation()
+
+```
+
