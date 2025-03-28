@@ -95,6 +95,79 @@ driver.get('https://www.baidu.com/')
 
 ​		CSS_SELECTOR（1.语法比较复杂，2.定位比较长，3.不能覆盖LINK_TEXT和PARTIAL_LINK_TEXT）
 
+### 三大定位
+
+- **`隐式等待：`**指定一个时间，Selenium将在查找元素时等待一定时间，如果在指定的时间内找到了元素，则继续执行，如果超过了指定是见仍未找到元素，则抛出NoSuchElementException异常。
+
+```python
+browser.implicately_wait（秒数）
+```
+
+- **`显示等待：`**在查找元素时，根据条件等待一定的时间，等待条件成立后再继续执行，可以指定等待的最长时间和轮询周期
+
+```python
+from telnetlib import EC
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.devtools.v131 import browser
+from selenium.webdriver.support.ui import WebDriverWait
+
+
+#最多等待10秒直到元素出现
+#等待时间内没有找到元素超时会抛出TimeoutException
+WebDriverWait(browser,10).until(EC.presence_of_element_located((By.XPATH,'')))
+
+
+#还可以等待这个元素不出现
+WebDriverWait(browser,10).until_not(EC.presence_of_element_located((By.XPATH,'')))
+#等地时间内找到元素超时会抛出TimeoutException
+
+#二者唯一区别为until和until_not
+```
+
+- **`强制等待：`**比较稳定，线程停止，等待固定时间之后再执行脚本
+
+```python
+time.sleep(秒数)
+```
+
+### 多窗口事件
+
+1. 获取当前窗口句柄：在打开新窗口之前，先获取当前窗口的句柄。
+
+```java
+String parentWindowHandle = driver.getWindowHandle()
+```
+
+​	2.打开新窗口：执行打开新窗口的操作，例如点击连接或按钮，打开一个新的窗口
+
+​	3.获取所有窗口句柄：获取所有窗口的句柄，包括当前窗口和新打开的窗口。
+
+```java
+Set<String> allWindowHandles = driver.getWindowHandles()
+```
+
+​	4.切换到新窗口，遍历所有窗口句柄，判断哪个窗口句柄不等于当前窗口句柄，然后切换到该窗口
+
+```java
+for(String windowHandle : allWindowHandles){
+    if (!windowHanle.equals(parentWindowHandle)){
+		driver.switchTo().window(windowHandle);
+        break;
+	}
+}
+```
+
+​	5.在新窗口中执行操作：切换到新窗口后，可以执行在新窗口中需要的操作
+
+​	6.切换回原窗口：操作完成后，切换回原来的窗口
+
+```java
+driver.switchTo().window(parentWindowHandle);
+```
+
+
+
 ### XPATH
 
 1.绝对路径，以/开头
