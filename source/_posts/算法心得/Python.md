@@ -52,6 +52,39 @@ class Solution:
 #那么当一同走了c步后head到循环入口为(k-1)(b+c)而慢指针已经走到路口，它们总会在入口相遇
 ```
 
+## 随机链表的复制
+
+```python
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head: return
+        dic = {}
+        # 复制各节点
+        cur = head
+        while cur:
+            dic[cur] = Node(cur.val)
+            cur  = cur.next
+        cur = head
+        # 构建random指向
+        while cur:
+            dic[cur].next = dic.get(cur.next)
+            dic[cur].random = dic.get(cur.random)
+            cur  = cur.next
+        return dic[head]
+
+```
+
+
+
 ## 自定义函数值通用位移
 
 
@@ -149,5 +182,55 @@ def solve_quadratic_equation():
 # 调用主函数
 solve_quadratic_equation()
 
+```
+
+### 神奇闹钟（时间格式处理）
+
+```python
+import sys
+from datetime import datetime,timedelta
+
+
+def find_last_alarm(time_str, x):
+    # 解析输入时间为datetime对象
+    given_time = datetime.strptime(time_str, "%Y-%m-%d %H:%M:%S")
+    # 纪元时间
+    epoch = datetime(1970, 1, 1, 0, 0, 0)
+    # 计算时间差
+    delta = given_time - epoch
+    # 将时间差转换为总秒数
+    total_seconds = int(delta.total_seconds())
+    # // 表示整数除法（向下取整）
+    total_minutes = total_seconds // 60
+    # 计算完整的间隔周期数量
+    # * x 得到最后一个完整周期结束时的分钟数
+    # total_minutes=100, x=15 → 100//15=6 → 6*15=90
+    last_alarm_minutes = (total_minutes // x) * x
+    # 计算对应的闹铃时间
+    last_alarm_time = epoch + timedelta(minutes=last_alarm_minutes)
+    # 格式化为字符串
+    return last_alarm_time.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def main():
+    # sys.stdin：标准输入流，用于读取用户输入。
+    # line.strip()：移除每行首尾的空白字符（如空格、换行符等）。
+    # if line.strip()：过滤掉空行，确保列表中只包含有效的输入行。
+    input_lines = [line.strip() for line in sys.stdin if line.strip()]
+    T = int(input_lines()[0])
+    for i in range(1,T+1):
+        # 将当前行按空格分割成列表
+        parts = input_lines[i].split()
+        # 将parts中除最后一个元素外的所有元素用空格连接成一个字符串
+        # [:-1] 是 Python 的切片操作，表示取从开始到倒数第一个元素（不包含最后一个元素）。
+        # join() 是字符串方法，用于将列表中的字符串元素用指定的分隔符连接成一个新字符串。
+        # 这里的分隔符是空格 ' '。
+        # ' '.join(['2016-09-07', '18:24:33']) → "2016-09-07 18:24:33"
+        time_str = ' '.join(parts[:-1])
+        # 将最后一个元素转换成整数
+        x = int(parts[-1])
+        print(find_last_alarm(time_str,x))
+if __name__ == "__main__":
+    main()
 ```
 
