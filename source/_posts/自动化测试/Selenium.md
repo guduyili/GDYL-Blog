@@ -295,3 +295,91 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
+### python + selenium +unittest + HTMLTestRunner
+
+百度搜索：
+
+文件结构树
+
+```
+├─test_case
+│  │  LeapYear.py
+│  │  test_baidu.py
+│  │  test_leap_year.py
+│  │  __init__.py
+│  │
+│
+└─test_report
+        result.html
+        __init__.py
+│
+└─run_tests.py
+```
+
+test_baidu.py
+
+```python
+import unittest
+from time import sleep
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+
+class TestBaidu(unittest.TestCase):
+    """ 百度搜索测试 """
+
+    @classmethod
+    def setUpClass(cls) :
+        cls.driver = webdriver.Chrome()
+        cls.base_url = "https://www.baidu.com"
+
+    def baidu_search(self,search_key):
+        self.driver.get(self.base_url)
+        self.driver.find_element(By.ID, "kw").send_keys(search_key)
+        self.driver.find_element(By.ID, "su").click()
+        sleep(2)
+    def test_search_key_jwby(self):
+        """" 搜索关键字：姜维伯约 """
+        search_key = "姜维伯约"
+        self.baidu_search(search_key)
+        self.assertEqual(self.driver.title,search_key+"_百度搜索")
+
+    def test_search_key_unitest(self):
+        """" 搜索关键字：unittest """
+        search_key = "unittest"
+        self.baidu_search(search_key)
+        self.assertEqual(self.driver.title,search_key+"_百度搜索")
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+```
+
+run_tests.py
+
+```python
+import  unittest
+from XTestRunner import  HTMLTestRunner
+import time
+test_dir = './test_case'
+suites = unittest.defaultTestLoader.discover(test_dir, pattern='test*.py')
+
+if __name__ == '__main__':
+    # runner = unittest.TextTestRunner(verbosity=2)  # 增加详细程度
+    # runner.run(suites)
+
+    # 获取当前日期时间
+    now_time = time.strftime("%Y-%m-%d %H_%M_%S")
+
+    #生成HTML格式报告
+    fp = open('./test_report/' + now_time + 'result.html', 'wb')
+    runner = HTMLTestRunner(stream=fp,
+                            title="百度搜索测试报告",
+                            description="运行环境: Windows 10, Chromr 浏览器"
+                            )
+    runner.run(suites)
+    fp.close()
+```
+

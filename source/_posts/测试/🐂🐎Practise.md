@@ -3,7 +3,7 @@ title: 🐂🐎Practise
 date: 2025-3-17
 updated: 2025-3-25
 categories: 
-- 测试
+- 软件测试
 tag:
 - learning
 
