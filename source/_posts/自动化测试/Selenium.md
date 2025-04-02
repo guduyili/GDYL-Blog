@@ -226,7 +226,7 @@ driver.switch_to.frame("main-frame")
 
 ## Demo
 
-## Python + Selenium实现百度搜索脚本
+# Python + Selenium实现百度搜索脚本
 
 ```python
 import os
@@ -296,7 +296,7 @@ if __name__ == '__main__':
     main()
 ```
 
-## python + selenium +unittest + HTMLTestRunner
+# python + selenium +unittest + HTMLTestRunner
 
 百度搜索：
 
