@@ -1,5 +1,5 @@
 ---
-title: Seelenium自动化测试       
+title: Selenium自动化测试       
 date: 2025-03-03
 updated: 2025-03-03
 categories: 
@@ -380,5 +380,47 @@ if __name__ == '__main__':
                             )
     runner.run(suites)
     fp.close()
+```
+
+## Parameterized
+
+通过Parameterized实现参数化
+
+```python
+@parameterized.expand([
+    ("case1", "selenium"),
+    ("case1", "unittest"),
+    ("case1", "parameterized"),
+])
+def test_search(self, name, search_key):
+    self.baidu_search(search_key)
+    self.assertEqual(self.driver.title, search_key+"_百度搜索")
+```
+
+## DDT
+
+```python
+# 参数化使用方式一
+ @data(["case1", "selenium"], ["case2", "ddt"], ["case3", "python"])
+ @unpack
+ def test_search1(self, case, search_key):
+ print("第一组测试用例：", case)
+ self.baidu_search(search_key)
+ self.assertEqual(self.driver.title, search_key + "_百度搜索")
+ # 参数化使用方式二
+ @data(("case1", "selenium"), ("case2", "ddt"), ("case3", "python"))
+ @unpack
+ def test_search2(self, case, search_key):
+ print("第二组测试用例：", case)
+ self.baidu_search(search_key)
+ self.assertEqual(self.driver.title, search_key + "_百度搜索")
+ # 参数化使用方式三
+ @data({"search_key": "selenium"}, {"search_key": "ddt"}, {"search_key":
+ "python"})
+ @unpack
+ def test_search3(self, search_key):
+ print("第三组测试用例：", search_key)
+ self.baidu_search(search_key)
+ self.assertEqual(self.driver.title, search_key + "_百度搜索")
 ```
 
