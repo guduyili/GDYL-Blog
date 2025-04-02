@@ -1,7 +1,7 @@
 ---
 title: Py刷题有感       
 date: 2025-03-07
-updated: 2025-03-07
+updated: 2025-04-01
 categories: 
 - 算法
 tag:
@@ -232,5 +232,91 @@ def main():
         print(find_last_alarm(time_str,x))
 if __name__ == "__main__":
     main()
+```
+
+## 连连看
+
+```python
+# 导入defaultdict， 用于创建自动初始化默认值的字典（避免键不存在时的KeyError）
+from collections import  defaultdict
+
+# 遍历每条对角线
+n, m = map(int, input().split())
+# 按行输入数据
+grid = [list(map(int,input().split())) for _ in range(n)]
+# 创建字典，键为数值，值为该数值在网格中的所有位置（i,j)的列表
+# value_positions = {
+#     1: [(0, 0)],       # 数值1在(0,0)
+#     2: [(0, 1), (1, 0), (2, 1)],  # 数值2在(0,1)、(1,0)、(2,1)
+#     3: [(1, 1), (2, 0)] # 数值3在(1,1)、(2,0)
+# }
+value_positions = defaultdict(list)
+
+# 遍历网格
+for i in range(n):
+    for j in range(m):
+        value_positions[grid[i][j]].append((i, j))
+
+ret = 0
+for v in value_positions:
+    positions = value_positions[v]
+    # 初始化两个字典，分别统计同一数值在主对角线和副对角线上出现的次数
+    main_diag = defaultdict(int)
+    anti_diag = defaultdict(int)
+    for i, j in positions:
+        main_diag[i - j] += 1  # 主对角线分组（左上到右下）
+        anti_diag[i + j] += 1  # 副对角线分组（右上到左下）
+    for cnt in main_diag.values():
+        ret += cnt * (cnt - 1)
+    for cnt in anti_diag.values():
+        ret += cnt * (cnt - 1)
+
+print(ret)
+
+
+# 测试数据
+# 3 2
+# 1 2
+# 2 3
+# 3 2
+
+```
+
+## 魔法巡游
+
+```python
+# 这道题目属于 动态规划（Dynamic Programming, DP） 结合 贪心优化 的序列问题
+# 1. 核心算法类型
+# 最长交替序列问题：
+# 需要找到小蓝和小桥交替选择符文石的最长序列，且相邻元素满足特定条件（存在共鸣数字 0, 2, 4）。
+#
+# 动态规划（DP）：
+# 状态转移依赖于前一个选择的符文石及其类型（小蓝或小桥的石头），通常用 dp_s[i] 和 dp_t[j] 分别表示以 s[i] 或 t[j] 结尾的最长序列长度。
+n = int(input())
+arr1 = [0] + list(map(int, input().split()))
+arr2 = [0] + list(map(int, input().split()))
+
+
+# 检查数字的各位是否由是偶数且小于5的数 即为 0 2 4
+def check(x):
+    while x > 0:
+        tmp = x % 10    # 取最后一位
+        if tmp % 2 == 0 and tmp < 5:
+            return True
+        x = x // 10     # 去掉最后一位
+    return False
+
+turn = 0  # 切换标志（0: arr1, 1: arr2）
+ret = 0
+for i in range(1,n+1):
+    if turn == 0: # 查询arr1
+        if check(arr1[i]):
+            ret += 1
+            turn = 1
+    else:
+        if check(arr2[i]):
+            ret += 1
+            turn = 0
+print(ret)
 ```
 

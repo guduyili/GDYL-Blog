@@ -3,7 +3,7 @@ title: Seelenium自动化测试
 date: 2025-03-03
 updated: 2025-03-03
 categories: 
-- 测试
+- 自动化测试
 tag:
 - learning
 ---
