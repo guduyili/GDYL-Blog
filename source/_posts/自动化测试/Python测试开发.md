@@ -189,3 +189,199 @@ A,B中相同的元素：print(set(A) & set(B))
 A,B中不同的元素：print(set(A) ^ set(B))
 ```
 
+## python如何实现单例模式，请写出两种实现方式
+
+### **参数说明**
+
+#### 1. `*args`
+
+- **含义**：接收任意数量的**位置参数**（Positional Arguments）。
+
+- **作用**：在实例化类时，传递构造函数的非关键字参数（如 `MyClass(1, 2, name="test")` 中的 `1` 和 `2`）。
+
+- **示例**：
+
+  python
+
+  复制
+
+  ```
+  a = MyClass(10, 20)  # args = (10, 20)
+  ```
+
+#### 2. `**kwargs`
+
+- **含义**：接收任意数量的**关键字参数**（Keyword Arguments）。
+
+- **作用**：在实例化类时，传递构造函数的命名参数（如 `MyClass(name="Alice", age=25)` 中的 `name` 和 `age`）。
+
+- **示例**：
+
+  python
+
+  复制
+
+  ```
+  b = MyClass(name="Bob", role="admin")  # kwargs = {"name": "Bob", "role": "admin"}
+  ```
+
+
+
+**使用装饰器**
+
+```python
+def singleton(cls):
+    instances = {}
+    def get_instance(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
+    return get_instance
+
+@singleton
+class MyClass:
+    def __int__(self):
+        print("MyClass 实例已创建")
+
+a = MyClass()
+b = MyClass()
+print(a is b) # 输出 True（a 和 b 是同一个实例）
+```
+
+**重写基类的 __new__ 方法**
+
+```python
+class SingletonClass:
+    _instance = None # 类变量保存唯一实例
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            # 调用父类 __new__ 创建实例
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    def __int__(self):
+        print("SingletonClass 实例已创建")
+# 测试
+x = SingletonClass()  # 输出 "SingletonClass 实例已创建"
+y = SingletonClass()
+print(x is y)         # 输出 True（x 和 y 是同一个实例）
+```
+
+**元类**，元类是用于创建类对象的类，类对象创建实例对象的时一定要调用call方法，因此再调用call时候保证始终只创建一个实例既可，type
+
+```python
+# SingletonMeta 元类
+# 
+# 继承自 type，通过 __call__ 拦截类的实例化过程（即 MyClass() 的调用）。
+# 
+# _instances 字典保存每个类的唯一实例。
+# 
+# __call__ 方法的作用
+# 
+# 当调用 MyClass() 时，实际触发的是 SingletonMeta.__call__。
+# 
+# 检查是否已有实例：
+# 
+# 若无，调用父类 type.__call__ 创建实例并保存。
+# 
+# 若有，直接返回现有实例。
+class SingletonMeta(type):
+    """
+    单例元类，通过 __call__ 控制实例化逻辑
+    """
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class MyClass(metaclass=SingletonMeta):
+    def __init__(self, name):
+        self.name = name
+        print(f"初始化 MyClass，name={name}")
+
+# 测试
+a = MyClass("实例A")  # 输出：初始化 MyClass，name=实例A
+b = MyClass("实例B")  # 无输出（实例已存在）
+print(a is b)       # 输出：True
+print(a.name)       # 输出：实例A（注意：b.name 也是 "实例A"！）
+```
+
+## 反转一个整数，例如-123 --> -321
+
+```python
+class Solution(object):
+    def reverse(self,x):
+        if -10 < x < 10:
+            return x
+        str_x = str(x)
+        if str_x[0] != '-':
+            return int(str_x[::-1])
+        else:
+            str_x = str_x[1:][::-1]
+            x = int(str_x)
+            x = -x
+        return x if -2147483648<x<2147483648 else 0
+
+num = int(input())
+ret = Solution().reverse(num)
+print(ret)
+```
+
+## 设计实现遍历目录与子目录，抓取.py文件
+
+```python
+import os
+
+def get_files(dir, suffix):
+    res = []  # 存储结果列表
+    for root, dirs, files in os.walk(dir):  # 遍历目录树
+        for filename in files:  # 检查每个文件
+            name, ext = os.path.splitext(filename)  # 分离文件名和扩展名
+            if ext == f'.{suffix}':  # 判断扩展名是否匹配
+                res.append(os.path.join(root, filename))  # 拼接完整路径
+
+    print(res)  # 打印结果
+
+
+get_files("./", 'py')  # 调用示例：查找当前目录所有.py文件
+```
+
+## Python遍历列表是删除元素的正确做法
+
+复制做法
+
+```python
+a = [1, 2, 3, 4, 5, 7, 89, 56, 23]
+print(id(a))
+print(id(a[:]))
+for i in a[:]:
+    if i > 5:
+        pass
+    else:
+        a.remove(i)
+    print(a)
+print('--------------')
+print(id(a))
+```
+
+倒序删除
+
+因为列表总是"向前移"，所以可以倒序遍历，即使后面的元素被修改了，还没有被遍历的元素和其坐标还是保持不变的
+
+倒序删除时，被删除元素**之后**（在内存中其实是"之前"）的索引都不会改变，因为处理顺序和删除方向一致。
+
+```python
+a = [1, 2, 3, 4, 5, 7, 89, 56, 23]
+print(id(a))
+for i in range(len(a)-1,-1,-1):
+    if a[i] > 5:
+        pass
+    else:
+        a.remove(a[i])
+print(id(a))
+print('--------------')
+print(a)
+```
+
