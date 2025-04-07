@@ -385,3 +385,252 @@ print('--------------')
 print(a)
 ```
 
+## 字符串的操作
+
+实现一个方法 `get_missing_letter`，功能是：
+
+1. 接收一个字符串参数
+2. 返回将该字符串补全为全字母句（PANGRAM）所缺失的字母
+   - 全字母句指包含所有26个英文字母的句子
+   - 例如："A quick brown fox jumps over the lazy dog"
+
+#### 具体要求
+
+- 忽略输入字符串的大小写（统一视为小写）
+- 返回结果应为小写字母
+- 按字母顺序排序
+- 忽略所有非ASCII字符（只处理字母）
+
+#### 示例说明
+
+1. 输入："A quick brown fox jumps over the lazy dog"
+   输出：""
+   （因为已包含所有字母）
+2. 输入："A slow yellow fox crawls under the proactive dog"
+   输出："bjkmqz"
+   （缺失字母b、j、k、m、q、z）
+3. 输入："Lions, and tigers, and bears, oh my!"
+   输出："cfjkpquvwxz"
+   （缺失多个字母）
+4. 输入：""
+   输出："abcdefghijklmnopqrstuvwxyz"
+   （空字符串缺失全部字母）
+
+```python
+def get_missing_letter(a):
+    # 创建包含所有字母的集合
+    s1 = set("abcdefghijklmnopqrstuvwxyz")
+    # 将输入字符串转为小写并去除非字母字符
+    s2 = set(a.lower())
+    ret = "".join(sorted(s1-s2))
+    return ret
+
+ret = get_missing_letter("guofujw")
+print(ret)
+
+# 其他方法生成字母
+import string
+# 方法1：使用string模块
+letters1 = string.ascii_lowercase
+print(letters1)
+
+# 方法2：使用ord()/chr()函数
+letters2 = "".join(map(chr,range(ord('a'),ord('z') +1)))
+print(letters2)
+
+```
+
+```python
+#（1）ord() 函数
+
+- 功能：返回字符的Unicode码点（整数）
+
+- 示例：
+  ord('a')  # 返回 97
+  ord('z')  # 返回 122
+
+
+# （2）range() 函数
+
+- 功能：生成整数序列
+- 参数：
+  - start=ord('a')（97）
+  - stop=ord('z')+1（123，包含122）
+- 实际生成序列： 97,98,99, ..., 122
+
+#（3）map(chr, ...)
+
+- 功能：将整数序列转换为字符序列
+
+- 作用：
+
+  chr(97) → 'a'
+  chr(98) → 'b'
+  ...
+  chr(122) → 'z'
+
+
+- 输出：生成器对象，包含字符 'a'到 'z'
+
+# （4）"".join()
+
+- 功能：将字符序列拼接成字符串
+- 结果：'abcdefghijklmnopqrstuvwxyz'
+```
+
+
+
+## 可变类型和不可变类型
+
+1. 可变类型有`list`，`dict`,不可变类型有`string`，`number`,`tuple`
+2. 当进行修改操作时，可变类型传递的是内存中的地址，也就是说，直接修改内存中的值，并没有开辟新的内存。
+3. 不可变类被更改时，并没有改变原内存地址中的值，而是开辟一块新的内存，将原地址中的值复制过去，对这块新开辟的内存中的值进行操作
+
+## is和==的区别
+
+#### 1. 核心区别
+
+| 操作符 | 比较内容             | 调用方法   | 本质                 |
+| :----- | :------------------- | :--------- | :------------------- |
+| `is`   | 对象标识（内存地址） | 无         | 判断是否为同一个对象 |
+| `==`   | 对象值/内容是否相等  | `__eq__()` | 判断逻辑意义上的相等 |
+
+is：比较的是两个对象的id值是否相等，也就是比较两对象是否为同一实例对象，是否指向同一个内存地址
+
+==：比较的是两个对象的内容/值是否相等，默认会调用对象的eq（）方法
+
+## 使用一行python代码写出1+2+3+10248
+
+```python
+from functools import reduce
+#1.使用sum内置求和函数
+num = sum([1, 2, 3, 10248])
+print(num)
+#2.reduce函数
+num1 = reduce(lambda x,y :x+y,[1, 2, 3, 10248])
+print(num1)
+```
+
+## Python中变量的作用域？（变量查找顺序）
+
+函数作用域的LEGB顺序
+
+|            |              |                        |                  |
+| ---------- | ------------ | ---------------------- | ---------------- |
+| **作用域** | **英文全称** | **说明**               | **生命周期**     |
+| Local      | 局部作用域   | 函数内部定义的变量     | 函数执行期间     |
+| Enclosing  | 闭包作用域   | 嵌套函数的外层函数变量 | 外层函数执行期间 |
+| Global     | 全局作用域   | 模块级别定义的变量     | 模块存活期间     |
+| Built-in   | 内置作用域   | Python内置名称         | 解释器存活期间   |
+
+## 字符串"123"转换成123，不使用内置api
+
+方法一：利用`str`函数
+
+```python
+def atoi(s):
+    num  = 0
+    for v in s:
+        for j in range(10):
+            if v == str(j):
+                num = num *10 +j
+    return num
+```
+
+方法二：利用`ord`函数
+
+```python
+def atoi(s):
+    num  = 0
+    for v in s:
+        num = num *10 + ord(v) - ord('0')
+    return num
+```
+
+方法三：利用`eval`函数
+
+```python
+def atoi(s):
+    num = 0                     # 初始化结果为0
+    for v in s:                 # 遍历字符串每个字符
+        t = "%s *1" % v         # 生成如"5 *1"的表达式字符串
+        n = eval(t)             # 执行字符串表达式得到数字值
+        num = num * 10 + n      # 十进制左移并累加
+    return num                  # 返回最终结果
+# 字符转数字技巧：
+# eval("%s *1" % v) 等效于 int(v)，但：
+# 
+# 利用字符串拼接生成表达式
+# 
+# 通过eval执行数学运算
+# 
+# 实际上等同于 n = 1 * int(v)
+```
+
+方法四：结合方法二，使用`reduce`，一行解决
+
+## 两数之和
+
+```python
+class Solution:
+    def twoSum(self,nums,target):
+        ret = {}
+        tmp_num = nums[:]
+        print(len(nums))
+        for i in range(len(nums)):
+            tmp = target - nums[i]
+            if tmp in nums[i+1:]:
+                # 从i+1开始查找，确保找到正确的配对索引
+                return [i,nums.index(tmp,i+1)]
+```
+
+# 元类
+
+## Python中类方法，类实例方法，静态方法有何区别
+
+类方法：是类对象的方法，在定义时需要在上方使用@classmethod进行装饰，形参为cls，标识类对象，类对象和实例对象都可调用
+
+类实例方法：是类实例化对象的方法，只有实例对象可以调用，形参为self，指代对象本身
+
+静态方法：是一个任意函数，在其上方使用@staticmethod进行装饰，可以用对象直接调用，静态方法实际上跟该类没有太大关系
+
+#### 1. 三种方法对比表
+
+| 方法类型     | 装饰器          | 第一个参数 | 调用方式                 | 访问权限                       |             典型用途             |
+| :----------- | :-------------- | :--------- | :----------------------- | :----------------------------- | :------------------------------: |
+| **实例方法** | 无              | `self`     | 实例.方法()              | 可访问实例和类属性             |           对象行为操作           |
+| **类方法**   | `@classmethod`  | `cls`      | 类.方法() 或 实例.方法() | 只能访问类属性                 |       工厂模式、类状态操作       |
+| **静态方法** | `@staticmethod` | 无         | 类.方法() 或 实例.方法() | 不能访问实例或类属性（需传参） | 工具函数、与类逻辑相关的辅助功能 |
+
+## 遍历一个object的所有属性，并print每一个属性名
+
+```python
+class Car:
+    def __init__(self, name, loss):
+        self.name = name
+        self.loss = loss
+
+    def getName(self):
+        return self.name
+
+    def getPrice(self):
+        return self.loss[0]  # 返回loss列表第一个元素
+
+    def getLoss(self):
+        return self.loss[1] * self.loss[2]  # 计算后两个元素的乘积
+
+
+# 实例化
+Bmw = Car("奔驰", [114, 514, 19])
+
+# 属性访问测试
+print(getattr(Bmw, "name"))  # 输出: 奔驰
+print(Bmw.getName())  # 输出: 奔驰
+print(Bmw.getPrice())  # 输出: 114
+print(Bmw.getLoss())  # 输出: 514*19=9766
+
+# 查看对象成员
+print(dir(Bmw))
+# ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'getLoss', 'getName', 'getPrice', 'loss', 'name']
+
+```
