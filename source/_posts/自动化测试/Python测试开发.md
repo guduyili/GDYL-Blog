@@ -1,7 +1,7 @@
 ---
 title: Python测试开发       
 date: 2025-04-01
-updated: 2025-04-01
+updated: 2025-04-08
 categories: 
 - 自动化测试
 tag:
@@ -584,6 +584,56 @@ class Solution:
                 return [i,nums.index(tmp,i+1)]
 ```
 
+## 统计一个文本中单词频次最高的10个单词
+
+```python
+def test(filepath):
+    distone = {}
+
+    with open(filepath,'r',encoding='utf-8') as f:
+        for line in f:
+            line  = re.sub("\w", " ", line)
+            lineone = line.split()
+            for keyone in lineone:
+                if not distone.get(keyone):
+                    distone[keyone] = 1
+                else:
+                    distone[keyone] += 1
+    num_ten = sorted(distone.items(),key=lambda x:x[1], reverse=True)[:10]
+    num_ten = [x[0] for x in num_ten]
+    return num_ten
+
+def test2(filepath):
+    with open(filepath) as f:
+        return list(map(lambda c:c[0], Counter(re.sub("\w+", " ", f.read()).split()).most_common(10)))
+    
+```
+
+## 偶数和index偶数
+
+1. 该元素是偶数
+
+2. 该元素在原list中是在偶数的位置（index是偶数）
+
+```python
+
+
+def num_list(num):
+    return [i for i in num if i% 2 ==0 and num.index(i) % 2 ==0]
+num = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ret = num_list(num)
+print(ret)
+```
+
+## 使用单一的列表生成式来产生一个新的列表
+
+```python
+list_data = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ret = [x for x in list_data[::2] if x%2 == 0]
+print(ret)
+print(list_data)
+```
+
 # 元类
 
 ## Python中类方法，类实例方法，静态方法有何区别
@@ -633,4 +683,115 @@ print(Bmw.getLoss())  # 输出: 514*19=9766
 print(dir(Bmw))
 # ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'getLoss', 'getName', 'getPrice', 'loss', 'name']
 
+```
+
+## 实现支持多操作符的类
+
+```python
+class Array:
+    def __init__(self, data=None):
+        self.__list = list(data) if data else {}
+        print("constructor")
+
+    def __del__(self):
+        print("destructor")
+
+    def __str__(self):
+        return f"Array({self.__list}"
+
+    #容器协议
+    def __setitem__(self, key, value):
+        self.__list[key] = value
+
+    def __len__(self):
+        return len(self.__list)
+
+    def __contains__(self, item):
+        return item in self.__list
+
+    # 算术运算符
+    def __add__(self, other):
+        return Array(self.__list + list(other))
+
+    def __mul__(self, n):
+        return Array(self.__list * n)
+
+    #比较运算符
+    def __eq__(self, other):
+        return Array(self.__list == list(other))
+
+    #迭代协议
+    def __iter__(self):
+        return iter(self.__list)
+
+    #自定义方法
+    def append(self, vaule):
+        self.__list.append(vaule)
+
+    def append(self, index):
+        del self.__list[index]
+
+    def DisplayItems(self):
+        print ("show all items---")
+        for item in self.__list:
+            print(item)
+        
+```
+
+| **类型**   | **方法**             | **操作符/行为**          |
+| :--------- | :------------------- | :----------------------- |
+| 初始化     | `__init__`           | `arr = Array([1,2])`     |
+| 字符串表示 | `__str__`            | `print(arr)`             |
+| 索引访问   | `__getitem__`        | `arr[0]`                 |
+| 长度查询   | `__len__`            | `len(arr)`               |
+| 算术运算   | `__add__`, `__mul__` | `arr1 + arr2`, `arr * 3` |
+| 比较       | `__eq__`             | `arr1 == arr2`           |
+| 迭代       | `__iter__`           | `for x in arr:`          |
+
+## Cython/PyPy/CPython/Numba 的缺点
+
+| **工具**    | **用途**          | **主要缺点**                                                 |
+| :---------- | :---------------- | :----------------------------------------------------------- |
+| **CPython** | 官方Python解释器  | 执行速度慢，全局解释器锁（GIL）限制多线程性能                |
+| **Cython**  | Python转C编译器   | 需要学习额外语法（如类型注解），调试复杂，不适合纯Python动态特性 |
+| **PyPy**    | JIT加速解释器     | 内存占用高，对C扩展兼容性差，启动时间慢                      |
+| **Numba**   | 数值计算JIT编译器 | 仅支持NumPy和有限Python特性，首次运行编译耗时，不适合通用代码 |
+
+# 函数
+
+## 实现了一个时间检查装饰器
+
+```python
+import datetime
+
+
+class TimeException(Exception):
+    def __init__(self, exception_info):
+        super().__init__()
+        self.info = exception_info  # 存储异常信息
+
+    def __str__(self):
+        return self.info  # 定义异常打印时的输出
+def timecheck(func):
+    def wrapper(*args, **kwargs):
+        if datetime.datetime.now().year == 2019:
+            func(*args, **kwargs)  # 允许执行
+        else:
+            raise TimeException("函数已过时")  # 阻止执行
+    return wrapper
+
+@timecheck
+def test(name):
+    print("Hello {}, 2019 Happy".format(name))
+
+
+if __name__ == "__main__":
+    test("backbp")
+    
+# Traceback (most recent call last):
+#   File "C:\Users\stllc\PycharmProjects\Pro_fir\algorithm\Py测开学习.py", line 471, in <module>
+#     test("backbp")
+#   File "C:\Users\stllc\PycharmProjects\Pro_fir\algorithm\Py测开学习.py", line 462, in wrapper
+#     raise TimeException("函数已过时")  # 阻止执行
+# __main__.TimeException: 函数已过时
 ```
