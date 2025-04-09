@@ -757,6 +757,31 @@ class Array:
 | **PyPy**    | JIT加速解释器     | 内存占用高，对C扩展兼容性差，启动时间慢                      |
 | **Numba**   | 数值计算JIT编译器 | 仅支持NumPy和有限Python特性，首次运行编译耗时，不适合通用代码 |
 
+# 内存管理与垃圾回收机制
+
+## 哪些操作会导致Python内存溢出，怎么处理？
+
+- 导致内存溢出的操作
+  - 处理超大文件（如一次性读取整个大文件到内存）。
+  - 无限循环创建对象（如在循环中不断生成大量对象且不释放）。
+  - 深度递归（每层递归都占用栈内存，深度过深耗尽内存）。
+  - 加载超大数据结构（如创建包含海量元素的列表、字典）。
+- 处理方法
+  - 优化算法，减少内存占用（如用生成器 `(x for x in range(...))` 代替列表存储大量数据，按需生成而非一次性加载）。
+  - 及时释放不再使用的对象（使用 `del` 语句删除变量引用，加速垃圾回收）。
+  - 分块处理数据（如大文件分块读取：`with open('file.txt') as f: while True: data = f.read(1024); if not data: break`）。
+  - 避免无限制的递归，改用迭代等方式实现功能。
+  - 监控内存使用（利用 `memory_profiler` 等工具定位内存消耗点）。
+
+## 内存泄漏是什么？如何避免？
+
+- **内存泄露定义**：程序中已分配的内存不再使用，但因疏忽或错误（如循环引用且含`__del__`方法。长期持有大对象引用等）无法释放，导致内存逐渐耗尽。它不是内存物理上的消失，而是程序失去对该内存段的控制，造成内存浪费
+- 避免方法
+  - 不用对象时及时使用 `del` 删除引用（如 `del large_list`，减少引用计数）。
+  - 避免含 `__del__` 函数对象的循环引用（此类循环引用无法被引用计数机制处理，易导致内存泄露）。
+  - 借助 `gc` 模块检查：`gc.garbage` 可查看程序中未被回收的对象，辅助定位泄露点。
+  - 使用弱引用（`weakref` 模块）：在需要保持对象引用但又不希望影响其生命周期时，使用弱引用替代强引用，避免循环引用导致的泄露。例如：`import weakref; obj = [1, 2, 3]; weak_obj = weakref.ref(obj)`，`weak_obj` 不会增加 `obj` 的引用计数。
+
 # 函数
 
 ## 实现了一个时间检查装饰器
@@ -794,4 +819,130 @@ if __name__ == "__main__":
 #   File "C:\Users\stllc\PycharmProjects\Pro_fir\algorithm\Py测开学习.py", line 462, in wrapper
 #     raise TimeException("函数已过时")  # 阻止执行
 # __main__.TimeException: 函数已过时
+```
+
+## map函数和reduce函数的区别
+
+```python
+def fun():
+    ret1 = list(map(lambda x: x * x, [1, 2, 3, 4]))
+    ret2 = reduce(lambda x, y: x * y, [1, 2, 3, 4])
+    print(ret1)
+    print(ret2)
+
+fun()
+#[1, 4, 9, 16]
+#24
+```
+
+## hasattr() getattr() setattr()函数使用详解
+
+- `hasattr(object, name)`
+
+用于判断对象 `object` 是否包含名为 `name` 的属性或方法，返回 `bool` 值。若存在，返回 `True`；否则，返回 `False`。
+
+```python
+class function_demo(object):
+    name = 'demo'
+    def run(self):
+        return "hello function"
+functiondemo  = function_demo()
+print(hasattr(functiondemo, "name"))  # True，存在 name 属性
+print(hasattr(functiondemo, "run"))    # True，存在 run 方法
+print(hasattr(functiondemo, "age"))    # False，不存在 age 属性
+```
+
+- `getattr(object, name[, default])`
+
+用于获取对象 `object` 的属性或方法。
+
+
+
+- 若 `name` 存在，返回对应属性值或方法（返回方法时是方法的内存地址，如需执行方法需添加 `()`）。
+- 若 `name` 不存在且提供了 `default`，返回 `default`。
+- 若 `name` 不存在且未提供 `default`，抛出 `AttributeError` 异常。
+
+```python
+print(getattr(functiondemo, "name"))  # 输出 "demo"，获取存在的属性
+print(getattr(functiondemo, "run"))    # 输出方法内存地址，如 "<bound method function_demo.run of <__main__.function_demo object at 0x...>>"
+print(getattr(functiondemo, "age", 18)) # 输出 18，无 age 属性但有默认值
+print(getattr(functiondemo, "age"))    # 报错，无 age 属性且无默认值
+```
+
+- `setattr(object, name, value)`
+
+用于给对象 `object` 的属性赋值。若属性 `name` 不存在，先创建该属性再赋值。
+
+```python
+setattr(functiondemo, "age", 20)  # 给对象添加 age 属性并赋值 20
+print(functiondemo.age)           # 输出 20
+setattr(functiondemo, "name", "new_demo")  # 修改已存在的 name 属性值
+print(functiondemo.name)          # 输出 "new_demo"
+```
+
+## 什么是lambda函数？有什么好处？
+
+**`lambda`**函数是一种匿名函数，可接受任意多个参数（含可选参数），并返回单个表达式的值，无复杂的函数定义结构
+
+**好处：**
+
+1. **轻便简洁**：即用即弃，适用于仅一处使用、功能简单且无需专门命名的场景。
+2. **服务函数式编程**：作为匿名函数，常为 `filter`、`map` 等函数式编程工具服务，简化代码逻辑。
+3. **灵活的回调应用**：可作为回调函数传递给某些应用（如消息处理），快速定义临时功能。
+
+## 闭包的含义
+
+**闭包(Closure)**是编程中的一个重要概念，指在一个函数内部定义另一个函数时，内部函数引用了外部函数的变量或参数，且外部函数返回内部函数后，这些被引用的变量或参数的作用域依然被保留，不会因外部函数执行结束而被销毁。
+
+### 一、定义与构成条件
+
+- **定义**：闭包是由函数和与其相关的引用环境（即外部函数的变量作用域）组合而成的实体。
+- 构成条件
+  1. 存在嵌套函数（内部函数在外部函数内定义）。
+  2. 内部函数引用了外部函数的变量或参数。
+  3. 外部函数返回内部函数。
+
+### 二、核心作用
+
+- **保留变量作用域**：外部函数执行完毕后，其变量不会被垃圾回收，供内部函数持续使用。
+- **数据封装与隐藏**：通过闭包可将变量隐藏在外部函数内，避免全局变量污染，同时通过内部函数提供受控的访问接口。
+- **实现函数功能扩展**：如装饰器、工厂函数等场景中，闭包可动态绑定参数或状态，增强函数灵活性。
+
+```python
+def outer(x):  # 外部函数
+    def inner(y):  # 内部函数，引用外部函数的变量x
+        return x + y
+    return inner  # 外部函数返回内部函数
+
+closure_func = outer(5)  # 调用outer，传入x=5
+print(closure_func(3))  # 输出8（5 + 3）
+```
+
+- 调用 `outer(5)` 时，外部函数的变量 `x` 被赋值为 `5`。
+- 外部函数返回 `inner` 函数后，`x=5` 的作用域被保留。
+- 调用 `closure_func(3)` 时，内部函数 `inner` 利用保留的 `x=5` 与新参数 `y=3` 计算，返回 `8`。
+
+## 闭包延迟
+
+```python
+def multpliers():
+    return [lambda x:i * x for i in range(4)]
+print([m(2) for m in multpliers()])
+#[6, 6, 6, 6]
+```
+
+- **`multipliers` 函数**：
+  通过列表推导式 `[lambda x: i * x for i in range(4)]` 创建包含 4 个 `lambda` 函数的列表。这里的 `lambda` 函数直接引用循环变量 `i`，但由于 Python 闭包的延迟绑定特性，**`i` 的值不会在列表推导式创建 `lambda` 函数时立即绑定**，而是在 `lambda` 函数被调用时才去查找 `i` 的值。
+
+正常：
+
+```python
+def multpliers():
+    return [lambda x, i = i: i * x for i in range(4)]
+    # for i in range(4):
+    #     yield lambda x: i *x
+
+print([m(2) for m in multpliers()])
+
+#[0, 2, 4, 6]
 ```
