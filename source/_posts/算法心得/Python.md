@@ -320,3 +320,66 @@ for i in range(1,n+1):
 print(ret)
 ```
 
+## 近似 GCD
+
+```python
+import sys
+import math
+from functools import reduce  # 用于将多个元素的GCD计算函数进行折叠
+
+# 定义计算列表元素最大公约数的函数
+def list_gcd(lst):
+    if not lst:  # 如果列表为空（理论上子数组长度≥2，此处处理边界情况）
+        return 0
+    # 使用reduce将math.gcd函数应用到列表的所有元素，计算整体GCD
+    return reduce(math.gcd, lst)
+
+def main():
+    # 读取输入：n为数组长度，g为目标近似GCD值
+    n, g = map(int, sys.stdin.readline().split())
+    # 读取数组元素
+    a = list(map(int, sys.stdin.readline().split()))
+    count = 0  # 统计满足条件的子数组数量
+
+    # 遍历所有可能的子数组起始位置L（从0到n-2，确保子数组长度≥2）
+    for L in range(n):
+        # 遍历所有可能的子数组结束位置R（R > L，保证子数组长度≥2）
+        for R in range(L + 1, n):
+            # 提取当前子数组（包含L到R的所有元素，左闭右闭区间）
+            sub = a[L:R+1]
+            # 子数组长度（可通过R-L+1计算，此处暂未使用）
+            len_sub = R - L + 1
+            # 计算当前子数组的原始最大公约数
+            all_gcd = list_gcd(sub)
+
+            # 条件1：原始GCD直接等于g，满足近似GCD条件
+            if all_gcd == g:
+                count += 1  # 计数加一
+                continue  # 跳过后续检查，处理下一个子数组
+
+            # 条件2：检查是否可以通过修改一个元素使GCD为g
+            found = False  # 标记是否找到符合条件的修改位置
+            # 遍历子数组中的每个元素，尝试删除当前元素后计算剩余元素的GCD
+            for i in range(len_sub):
+                # 分割子数组：左边是i之前的元素，右边是i之后的元素
+                left = sub[:i]       # 左半部分（不包含i位置元素）
+                right = sub[i+1:]    # 右半部分（不包含i位置元素）
+                # 合并左右部分，计算删除i位置元素后的GCD
+                h = list_gcd(left + right)
+                # 如果删除后的GCD是g的倍数（修改i位置元素为g的倍数后，整体GCD可能为g）
+                # 注意：这里实际逻辑应为删除该元素后剩余元素的GCD能被g整除，因为修改该元素为g的倍数后，新元素与剩余元素的GCD至少为g的因数
+                if h % g == 0:  # 正确逻辑：剩余元素的GCD必须是g的倍数，这样修改当前元素为g的倍数后，整体GCD至少为g
+                    found = True  # 找到符合条件的位置
+                    break  # 无需检查其他位置，跳出循环
+
+            # 如果存在至少一个位置修改后满足条件
+            if found:
+                count += 1  # 计数加一
+
+    # 输出最终结果
+    print(count)
+
+if __name__ == "__main__":
+    main()  # 调用主函数
+```
+
