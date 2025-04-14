@@ -14,60 +14,49 @@ jobs:
     name: Build Hexo Site & Deploy to GitHub Pages
     runs-on: ubuntu-latest
     steps:
-      # 1. 检出代码（含子模块）
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          submodules: recursive  # 递归拉取主题等子模块
-          fetch-depth: 0          # 获取完整提交历史
+          submodules: recursive
+          fetch-depth: 0
 
-      # 2. 使用 Node.js 18（满足所有依赖的最高要求）
       - name: Use Node.js 18
         uses: actions/setup-node@v4
         with:
-          node-version: 18       # 最新 LTS 版本，兼容所有依赖
+          node-version: 18
 
-      # 3. 安装依赖（全局 + 项目依赖）
       - name: Install Hexo CLI
-        run: npm install -g hexo-cli@latest  # 安装最新 Hexo CLI
+        run: npm install -g hexo-cli@latest
 
       - name: Install Project Dependencies
-        run: npm ci  # 严格按 package-lock.json 安装依赖
+        run: npm ci
 
-      # 4. 生成静态文件（解决权限问题：明确写入路径）
       - name: Generate Static Files
         run: |
-          mkdir -p ./public  # 手动创建输出目录（避免权限问题）
-          hexo generate      # 生成文件到 public 目录
+          mkdir -p ./public
+          hexo generate
 
-      # 5. 部署到 GitHub Pages（手动配置 SSH 密钥）
       - name: Deploy to GitHub Pages
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}  # GitHub 部署密钥
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
         run: |
-          # 配置 SSH 密钥（确保有权写入仓库）
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" | tee ~/.ssh/id_rsa > /dev/null
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-          # 配置 Git 用户信息（与 GitHub Pages 仓库一致）
-          git config --global user.name "guduyili"
-          git config --global user.email "LZY3376163189@163.com"
-
-          # 切换到生成的静态文件目录并推送
           cd public
           git init
+          git config --global user.name "guduyili"
+          git config --global user.email "LZY3376163189@163.com"
           git add .
           git commit -m "Update site: ${{ github.sha }}"
-          git push -f git@github.com:guduyili/GDYL-Blog.git main  # 强制推送（避免分支问题）
+          git push -f git@github.com:guduyili/GDYL-Blog.git main
 
   sync_to_gitee:
     name: Sync to Gitee Repository
     needs: build_and_deploy
     runs-on: ubuntu-latest
     steps:
-      # 1. 镜像同步 GitHub 到 Gitee（使用原生 Git 命令）
       - name: Clone Bare Repository
         run: git clone --bare git@github.com:guduyili/GDYL-Blog.git
 
@@ -80,11 +69,10 @@ jobs:
     needs: sync_to_gitee
     runs-on: ubuntu-latest
     steps:
-      # 1. 触发 Gitee Pages 重建（使用官方 Action，确保环境兼容）
       - name: Deploy to Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
-          gitee-username: 后藤一里     # Gitee 英文用户名
-          gitee-password: ${{ secrets.GITEE_PASSWORD }}  # Gitee 密码或令牌
-          gitee-repo: 后藤一里/GDYL-Blog         # Gitee 英文仓库名
-          branch: master                    # 部署分支
+          gitee-username: 后藤一里
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          gitee-repo: 后藤一里/GDYL-Blog
+          branch: master
