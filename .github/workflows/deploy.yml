@@ -1,6 +1,6 @@
-name: Hexo deploy
+name: Hexo Deploy & Sync
 
-on: 
+on:
   push:
     paths-ignore:
       - 'source/_GoNotes/**'
@@ -10,84 +10,77 @@ on:
       - '.github/**'
 
 jobs:
-  build:
+  build_and_deploy:
+    name: Build & Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    name: A job to deploy blog.
     steps:
-      - name: Checkout code
+      # 1. 检出代码（包括子模块）
+      - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          submodules: true  # 拉取子模块（如主题仓库）
+          submodules: recursive  # 递归拉取子模块（如主题仓库）
+          fetch-depth: 0          # 获取完整提交历史
 
-      - name: Use Node.js 16 
+      # 2. 设置 Node.js 16（Hexo CLI 要求 >=14）
+      - name: Use Node.js 16
         uses: actions/setup-node@v4
         with:
-          node-version: 16  # Hexo CLI 要求 Node.js >=14，推荐使用 LTS 版本
+          node-version: 16       # 选择 LTS 版本，确保兼容性
 
-      - name: Verify Node.js version
-        run: |
-          node -v  # 验证版本是否为 v16.x.x
-          npm -v
-
-      - name: Cache node modules (带 Node.js 版本的缓存键)
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: node_modules  # 缓存依赖目录
-          # 缓存键包含 Node.js 版本，避免不同版本共享缓存
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}-${{ env.NODE_VERSION }}
-          restore-keys: |
-            ${{ runner.os }}-node-  # 按系统和 Node.js 版本恢复缓存
-
-      - name: Install dependencies (缓存未命中时安装)
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          echo "Cache miss, installing dependencies..."
-          npm ci  # 使用 ci 进行干净安装（需 package-lock.json）
-
-      # 手动部署 Hexo（替代第三方 Action，避免 Docker 镜像的 Node.js 版本问题）
+      # 3. 安装依赖（全局 + 项目依赖）
       - name: Install Hexo CLI
-        run: npm install -g hexo-cli@latest  # 安装最新版 Hexo 命令行工具
+        run: npm install -g hexo-cli@latest  # 安装最新 Hexo 命令行工具
 
-      - name: Hexo generate
-        run: hexo generate  # 生成静态文件（等同于 hexo g）
+      - name: Install Project Dependencies
+        run: npm ci  # 基于 package-lock.json 干净安装依赖
 
-      - name: Hexo deploy
+      # 4. 生成静态文件
+      - name: Generate Hexo Static Files
+        run: hexo generate  # 等同于 hexo g
+
+      # 5. 部署到 GitHub Pages（手动部署，避免第三方 Action 限制）
+      - name: Deploy to GitHub Pages
         env:
-          # 部署密钥通过环境变量传递（需在仓库 Secrets 中设置 HEXO_DEPLOY_KEY）
-          SSH_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}  # GitHub 部署密钥
         run: |
-          # 添加 SSH 密钥到代理
-          echo "$SSH_KEY" | ssh-add -
-          # 配置 Git 用户信息（与 GitHub Pages 仓库匹配）
+          # 配置 SSH 密钥
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tee ~/.ssh/id_rsa > /dev/null
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts  # 信任 GitHub 主机
+
+          # 配置 Git 用户信息（与 GitHub Pages 仓库一致）
           git config --global user.name "guduyili"
           git config --global user.email "LZY3376163189@163.com"
-          # 执行 Hexo 部署（需在 _config.yml 中配置 deploy 字段）
+
+          # 执行部署（需在 _config.yml 中配置正确的 deploy 字段）
           hexo deploy  # 等同于 hexo d
 
-      - name: Get deploy output 
-        run: echo "Hexo deployment completed."
-
-  sync:
-    needs: build
+  sync_to_gitee:
+    name: Sync to Gitee
+    needs: build_and_deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Sync to Gitee 
-        uses: wearerequired/git-mirror-action@v1.3.1
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}  # 使用与 GitHub 相同的部署密钥
-        with:
-          source-repo: git@github.com:guduyili/GDYL-Blog.git
-          destination-repo: git@gitee.com:Absolutelynothing/GDYL-Blog.git
+      # 1. 镜像同步 GitHub 到 Gitee（使用原生 Git 命令，避免第三方工具）
+      - name: Clone Bare Repository
+        run: git clone --bare git@github.com:guduyili/GDYL-Blog.git
 
-  reload-pages:
-    needs: sync
+      - name: Push to Gitee Mirror
+        working-directory: GDYL-Blog.git
+        run: git push --mirror git@gitee.com:Absolutelynothing/GDYL-Blog.git
+
+  build_gitee_pages:
+    name: Build Gitee Pages
+    needs: sync_to_gitee
     runs-on: ubuntu-latest
     steps:
-      - name: Build Gitee Pages 
+      # 1. 触发 Gitee Pages 重建（使用官方 Action，确保配置正确）
+      - name: Deploy to Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
-          gitee-username: 后藤一里  # 建议使用英文用户名（如 "guduyili"）
-          gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          gitee-repo: 后藤一里/GDYL-Blog    # 建议使用英文仓库名（如 "GDYL-Blog"）
-          branch: master
+          gitee-username: 后藤一里     # Gitee 用户名（英文，与账户一致）
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}  # Gitee 密码或令牌
+          gitee-repo: 后藤一里/GDYL-Blog          # Gitee 仓库名（英文）
+          branch: master                    # 部署分支（通常为 master 或 gitee-pages）
+          # 可选：指定构建目录（Hexo 默认为 public，若自定义需修改）
+          # build-dir: public
