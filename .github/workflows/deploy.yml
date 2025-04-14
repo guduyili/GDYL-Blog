@@ -14,12 +14,12 @@ jobs:
     name: A job to deploy blog.
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v3
       with:
         submodules: true
         
     - name: Cache node modules
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       id: cache
       with:
         path: node_modules
@@ -28,7 +28,9 @@ jobs:
           ${{ runner.os }}-node-
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
-      run: npm ci
+      run: |
+        echo "Cache not hit, installing dependencies..."
+        npm ci
         
     # Deploy hexo blog website.
     - name: Deploy
@@ -38,7 +40,7 @@ jobs:
         deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
         user_name: guduyili
         user_email: LZY3376163189@163.com
-        commit_msg: ${{ github.event.head_commit.message }}ion)
+        commit_msg: ${{ github.event.head_commit.message }}
     - name: Get the output
       run: |
         echo "${{ steps.deploy.outputs.notify }}"
@@ -47,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sync to Gitee
-        uses: wearerequired/git-mirror-action@master
+        uses: wearerequired/git-mirror-action@v1.3.1  # 可根据实际情况替换为最新稳定版本
         env:
           SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
         with:
@@ -62,7 +64,7 @@ jobs:
       - name: Build Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
-          gitee-username: 后藤一里
+          gitee-username: 后藤一里 # 替换为实际的 Gitee 用户名
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          gitee-repo: 后藤一里/GDYL-Blog
+          gitee-repo: 后藤一里/GDYL-Blog # 替换为实际的 Gitee 仓库名
           branch: master
