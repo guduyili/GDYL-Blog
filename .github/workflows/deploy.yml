@@ -8,68 +8,86 @@ on:
       - 'source/_PythonNotes/**'
       - 'source/_drafts/**'
       - '.github/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: A job to deploy blog.
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        submodules: true
-        
-    - name: Use Node.js 16
-      uses: actions/setup-node@v4
-      with:
-        node-version: 16  # 指定 Node.js 16（满足 hexo-cli >=14 的要求
-    
-    - name: Cache node modules
-      uses: actions/cache@v3
-      id: cache
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install Dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        echo "Cache not hit, installing dependencies..."
-        npm ci
-        
-    # Deploy hexo blog website.
-    - name: Deploy
-      id: deploy
-      uses: sma11black/hexo-action@v1.0.3
-      with:
-        deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
-        user_name: guduyili
-        user_email: LZY3376163189@163.com
-        commit_msg: ${{ github.event.head_commit.message }}
-    - name: Get the output
-      run: |
-        echo "${{ steps.deploy.outputs.notify }}"
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          submodules: true  # 拉取子模块（如主题仓库）
+
+      - name: Use Node.js 16 (强制指定版本)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16  # Hexo CLI 要求 Node.js >=14，推荐使用 LTS 版本
+
+      - name: Verify Node.js version
+        run: |
+          node -v  # 验证版本是否为 v16.x.x
+          npm -v
+
+      - name: Cache node modules (带 Node.js 版本的缓存键)
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules  # 缓存依赖目录
+          # 缓存键包含 Node.js 版本，避免不同版本共享缓存
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}-${{ env.NODE_VERSION }}
+          restore-keys: |
+            ${{ runner.os }}-node-  # 按系统和 Node.js 版本恢复缓存
+
+      - name: Install dependencies (缓存未命中时安装)
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "Cache miss, installing dependencies..."
+          npm ci  # 使用 ci 进行干净安装（需 package-lock.json）
+
+      # 手动部署 Hexo（替代第三方 Action，避免 Docker 镜像的 Node.js 版本问题）
+      - name: Install Hexo CLI
+        run: npm install -g hexo-cli@latest  # 安装最新版 Hexo 命令行工具
+
+      - name: Hexo generate
+        run: hexo generate  # 生成静态文件（等同于 hexo g）
+
+      - name: Hexo deploy
+        env:
+          # 部署密钥通过环境变量传递（需在仓库 Secrets 中设置 HEXO_DEPLOY_KEY）
+          SSH_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+        run: |
+          # 添加 SSH 密钥到代理
+          echo "$SSH_KEY" | ssh-add -
+          # 配置 Git 用户信息（与 GitHub Pages 仓库匹配）
+          git config --global user.name "guduyili"
+          git config --global user.email "LZY3376163189@163.com"
+          # 执行 Hexo 部署（需在 _config.yml 中配置 deploy 字段）
+          hexo deploy  # 等同于 hexo d
+
+      - name: Get deploy output 
+        run: echo "Hexo deployment completed."
+
   sync:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Sync to Gitee
-        uses: wearerequired/git-mirror-action@v1.3.1  # 可根据实际情况替换为最新稳定版本
+      - name: Sync to Gitee 
+        uses: wearerequired/git-mirror-action@v1.3.1
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}  # 使用与 GitHub 相同的部署密钥
         with:
-          # 源仓库
           source-repo: git@github.com:guduyili/GDYL-Blog.git
-          # 目标仓库
           destination-repo: git@gitee.com:Absolutelynothing/GDYL-Blog.git
+
   reload-pages:
     needs: sync
     runs-on: ubuntu-latest
     steps:
-      - name: Build Gitee Pages
+      - name: Build Gitee Pages 
         uses: yanglbme/gitee-pages-action@main
         with:
-          gitee-username: 后藤一里 # 替换为实际的 Gitee 用户名
+          gitee-username: 后藤一里  # 建议使用英文用户名（如 "guduyili"）
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          gitee-repo: 后藤一里/GDYL-Blog # 替换为实际的 Gitee 仓库名
+          gitee-repo: 后藤一里/GDYL-Blog     # 建议使用英文仓库名（如 "GDYL-Blog"）
           branch: master
