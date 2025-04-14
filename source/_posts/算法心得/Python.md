@@ -383,3 +383,62 @@ if __name__ == "__main__":
     main()  # 调用主函数
 ```
 
+## 管道
+
+```python
+def check(t):
+    ls = []
+    for i, (x, y) in enumerate(vle):
+        if t >= y:
+            # 计算阀门在时间 t 时的覆盖区间：中心 x，半径 (t - y)，区间为 [x - r, x + r]
+            r = t - y
+            ls.append((x - r, x + r))    # 将阀门展开为区间
+    ls.sort()  # 按区间左端点排序
+    if len(ls) == 0:
+        return False  # 没有任何有效区间，无法覆盖
+    if ls[0][0] > 1:
+        return False  # 第一个区间的左端点超过 1，无法覆盖起点
+    r = ls[0][1]  # 初始化当前覆盖的最右端点
+    for i in range(1, len(ls)):             # 判断是否能够覆盖区间
+        # 当前区间的左端点 <= 前一个区间的右端点 + 1（允许相邻不重叠，如 [1,3] 和 [4,5] 无法覆盖 [1,5]）
+        if ls[i][0] - r <= 1:
+            r = max(r, ls[i][1])  # 合并区间，更新最右端点
+        else:
+            break  # 区间不连续，无法覆盖
+    return r >= lon  # 判断最终覆盖是否到达或超过 lon
+n, lon = map(int, input().split())  # 输入阀门数量和目标长度
+vle = []
+for i in range(n):
+    vle.append(list(map(int, input().split())))  # 存储每个阀门的 (x, y)
+l, r = 0, 10**10  # 二分搜索的左右边界，右边界足够大以覆盖所有可能情况
+while l < r:                                 # 二分搜索时间，右边界需要开大一些
+    mid = (l + r) // 2  # 取中间值
+    if check(mid):  # 若 mid 时间能覆盖，尝试更小的时间
+        r = mid
+    else:  # 若不能覆盖，需要更大的时间
+        l = mid + 1
+print(l)  # 输出最小的满足条件的时间
+```
+
+## 取模
+
+```python
+n = int(input())
+vle = []
+for i in range(n):
+    vle.append(list(map(int, input().split())))
+for i ,(n, m) in enumerate(vle):
+    seen = set()
+    found = False
+    for j in range(1, m+1):
+        tmp = n % j
+        if tmp not in seen:
+            seen.add(tmp)
+        else:
+            print("Yes")
+            found = True
+            break
+    if found:
+        break
+    print("No")
+```
