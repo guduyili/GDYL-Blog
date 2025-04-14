@@ -90,4 +90,8 @@ jobs:
           gitee-username: 后藤一里  # 建议使用英文用户名（如 "guduyili"）
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
           gitee-repo: 后藤一里/GDYL-Blog     # 建议使用英文仓库名（如 "GDYL-Blog"）
+<<<<<<< HEAD
           branch: master
+=======
+          branch: master
+>>>>>>> 1a825d29d31e6e8fa3520cacb4a82f8aa51187e9
