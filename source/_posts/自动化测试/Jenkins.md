@@ -95,6 +95,4 @@ if jk.has_job(job_name):
                 
 # Finished
 # build_num:12
-
-
 ```
