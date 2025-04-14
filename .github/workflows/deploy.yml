@@ -18,6 +18,11 @@ jobs:
       with:
         submodules: true
         
+    - name: Use Node.js 16
+      uses: actions/setup-node@v4
+      with:
+        node-version: 16  # 指定 Node.js 16（满足 hexo-cli >=14 的要求
+    
     - name: Cache node modules
       uses: actions/cache@v3
       id: cache
