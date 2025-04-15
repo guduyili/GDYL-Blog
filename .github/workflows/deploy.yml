@@ -61,6 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone Bare Repository
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
         run: git clone --bare git@github.com:guduyili/GDYL-Blog.git
 
       - name: Push to Gitee Mirror
