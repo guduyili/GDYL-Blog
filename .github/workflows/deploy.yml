@@ -13,66 +13,62 @@ jobs:
   build_and_deploy:
     name: Build Hexo Site & Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Use Node.js 18
+      - name: Setup Node.js 20.x
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20.x
+          cache: 'npm'
 
-      - name: Install Hexo CLI
-        run: npm install -g hexo-cli@latest
-
-      - name: Install Project Dependencies
-        run: npm ci
-
-      - name: Generate Static Files
+      - name: Clean Install
         run: |
-          mkdir -p ./public
-          hexo generate
+          npm ci --ignore-scripts
+          npm config set unsafe-perm true
+          npm rebuild
+          
+      - name: Build Hexo Site
+        run: |
+          npx hexo clean
+          npx hexo generate
 
       - name: Deploy to GitHub Pages
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | tee ~/.ssh/id_rsa > /dev/null
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          cd public
-          git init
-          git config --global user.name "guduyili"
-          git config --global user.email "LZY3376163189@163.com"
-          git add .
-          git commit -m "Update site: ${{ github.sha }}"
-          git push -f git@github.com:guduyili/GDYL-Blog.git main
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
+          publish_dir: ./public
+          user_name: "github-actions[bot]"
+          user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          commit_message: "Deploy: ${{ github.sha }}"
 
   sync_to_gitee:
-    name: Sync to Gitee Repository
+    name: Sync to Gitee
     needs: build_and_deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Bare Repository
-        run: git clone --bare git@github.com:guduyili/GDYL-Blog.git
+      - name: Mirror to Gitee
+        uses: wearerequired/git-mirror-action@master
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+        with:
+          source-repo: git@github.com:guduyili/GDYL-Blog.git
+          destination-repo: git@gitee.com:Absolutelynothing/GDYL-Blog.git
 
-      - name: Push to Gitee Mirror
-        working-directory: GDYL-Blog.git
-        run: git push --mirror git@gitee.com:Absolutelynothing/GDYL-Blog.git
-
-  build_gitee_pages:
-    name: Trigger Gitee Pages Build
+  trigger_gitee_pages:
+    name: Build Gitee Pages
     needs: sync_to_gitee
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to Gitee Pages
-        uses: yanglbme/gitee-pages-action@main
+      - name: Trigger Pages
+        uses: mizuka-wu/gitee-pages-action@v2.0
         with:
           gitee-username: 后藤一里
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          gitee-repo: 后藤一里/GDYL-Blog
-          branch: master
+          repo: 后藤一里/GDYL-Blog
+          branch: main
