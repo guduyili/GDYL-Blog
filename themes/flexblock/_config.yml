@@ -124,3 +124,7 @@ social_icon:
     prependRoot: true
     postAsset: true
 
+deploy:
+  type: git
+  repo: git@github.com:guduyili/guduyili.github.io.git  # GitHub Pages 仓库地址
+  branch: gh-pages  # 部署分支（与 GitHub Pages 配置一致）
