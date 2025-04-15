@@ -70,15 +70,15 @@ jobs:
           # 目标仓库
           destination-repo: git@gitee.com:Absolutelynothing/GDYL-Blog.git
 
-  build_gitee_pages:
-    name: Trigger Gitee Pages Build
-    needs: sync_to_gitee
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to Gitee Pages
-        uses: yanglbme/gitee-pages-action@main
-        with:
-          gitee-username: "后藤一里"
-          gitee-password: ${{ secrets.GITEE_TOKEN }}
-          gitee-repo: "后藤一里/GDYL - Blog"
-          branch: gh-pages  # 与 GitHub 部署分支保持一致（若 Gitee Pages 使用 gh-pages）
+  # build_gitee_pages:
+  #   name: Trigger Gitee Pages Build
+  #   needs: sync_to_gitee
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Deploy to Gitee Pages
+  #       uses: yanglbme/gitee-pages-action@main
+  #       with:
+  #         gitee-username: "后藤一里"
+  #         gitee-password: ${{ secrets.GITEE_TOKEN }}
+  #         gitee-repo: "后藤一里/GDYL - Blog"
+  #         branch: gh-pages  # 与 GitHub 部署分支保持一致（若 Gitee Pages 使用 gh-pages）
