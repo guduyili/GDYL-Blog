@@ -32,7 +32,7 @@ jobs:
           npm ci --ignore-scripts
           npm config set unsafe-perm true  # 修正拼写
           npm rebuild
-          npm uninstall hexo-site  # 确认是否需要此步骤，通常不需要
+          # npm uninstall hexo-site  # 确认是否需要此步骤，通常不需要
           
       - name: Build Hexo Site
         run: |
