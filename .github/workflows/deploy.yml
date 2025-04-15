@@ -32,6 +32,7 @@ jobs:
           npm ci --ignore-scripts
           npm config set unsafe-perm true
           npm rebuild
+          npm uninstall hexo-site
           
       - name: Build Hexo Site
         run: |
