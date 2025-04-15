@@ -15,52 +15,53 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # 升级到最新版本
         with:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Use Node.js 18
+      - name: Setup Node.js 20.x  # 使用 LTS 版本
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20.x
+          cache: 'npm'
 
-      - name: Install Hexo CLI
-        run: npm install -g hexo-cli@latest
-
-      - name: Install Project Dependencies
-        run: npm ci
+      - name: Install Dependencies
+        run: |
+          npm ci --ignore-scripts
+          npm config set unsafe-perm true  # 修复权限问题
 
       - name: Generate Static Files
         run: |
-          mkdir -p ./public
+          hexo clean
           hexo generate
+
       - name: Deploy to GitHub Pages
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # 改用标准 Token
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | tee ~/.ssh/id_rsa > /dev/null
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
           cd public
           git init
-          git config --global user.name "guduyili"
-          git config --global user.email "LZY3376163189@163.com"
+          git checkout -b gh-pages  # 强制切换到 gh-pages 分支
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Update site: ${{ github.sha }}"
-          git push -f git@github.com:guduyili/GDYL-Blog.git main
+          git commit -m "Deploy: ${{ github.sha }}"
+          git remote add origin https://github.com/guduyili/GDYL-Blog.git
+          git push -f origin gh-pages
+
   sync_to_gitee:
     name: Sync to Gitee Repository
     needs: build_and_deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Bare Repository
-        run: git clone --bare git@github.com:guduyili/GDYL-Blog.git
-
-      - name: Push to Gitee Mirror
-        working-directory: GDYL-Blog.git
-        run: git push --mirror git@gitee.com:Absolutelynothing/GDYL-Blog.git
+      - name: Mirror Repository
+        uses: wearerequired/git-mirror-action@v1  # 标准化镜像工具
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+        with:
+          source-repo: "git@github.com:guduyili/GDYL-Blog.git"
+          destination-repo: "git@gitee.com:Absolutelynothing/GDYL-Blog.git"
 
   build_gitee_pages:
     name: Trigger Gitee Pages Build
@@ -73,4 +74,4 @@ jobs:
           gitee-username: 后藤一里
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
           gitee-repo: 后藤一里/GDYL-Blog
-          branch: main
+          branch: gh-pages  # 与 GitHub 分支保持一致
