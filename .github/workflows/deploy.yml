@@ -60,14 +60,15 @@ jobs:
     needs: build_and_deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Clone Bare Repository
+      - name: Sync to Gitee
+        uses: wearerequired/git-mirror-action@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
-        run: git clone --bare git@github.com:guduyili/GDYL-Blog.git
-
-      - name: Push to Gitee Mirror
-        working-directory: GDYL-Blog.git
-        run: git push --mirror git@gitee.com:Absolutelynothing/GDYL-Blog.git
+        with:
+          # 源仓库
+          source-repo: git@github.com:guduyili/GDYL-Blog.git
+          # 目标仓库
+          destination-repo: git@gitee.com:Absolutelynothing/GDYL-Blog.git
 
   build_gitee_pages:
     name: Trigger Gitee Pages Build
