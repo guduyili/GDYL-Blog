@@ -27,7 +27,11 @@ jobs:
 
       - name: Install Hexo CLI
         run: npm install -g hexo-cli@latest
-
+        
+      # 下载   hexo-deployer-git
+      - name: Install  hexo-deployer-git
+        run: npm install hexo-deployer-git --save
+      
       - name: Install Project Dependencies
         run: npm ci
 
