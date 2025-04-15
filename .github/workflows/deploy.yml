@@ -78,7 +78,7 @@ jobs:
       - name: Deploy to Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
-          gitee-username: 后藤一里
+          gitee-username: "后藤一里"
           gitee-password: ${{ secrets.GITEE_TOKEN }}
-          gitee-repo: 后藤一里/GDYL-Blog
+          gitee-repo: "后藤一里/GDYL - Blog"
           branch: gh-pages  # 与 GitHub 部署分支保持一致（若 Gitee Pages 使用 gh-pages）
