@@ -13,63 +13,68 @@ jobs:
   build_and_deploy:
     name: Build Hexo Site & Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    environment: github-pages
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # 升级到最新版
         with:
           submodules: recursive
           fetch-depth: 0
 
-      - name: Setup Node.js 20.x
+      - name: Setup Node.js 20.x  # 推荐使用 LTS 版本
         uses: actions/setup-node@v4
         with:
           node-version: 20.x
-          cache: 'npm'
+          cache: 'npm'  # 启用缓存加速依赖安装
 
-      - name: Clean Install
+      - name: Install Dependencies
         run: |
           npm ci --ignore-scripts
-          npm config set unsafe-perm true  # 修正拼写
-          npm rebuild
-          # npm uninstall hexo-site  # 确认是否需要此步骤，通常不需要
-          
-      - name: Build Hexo Site
+          npm config set unsafe-perm true  # 解决权限问题
+
+      - name: Generate Static Files
         run: |
-          npx hexo clean
-          npx hexo generate
+          hexo clean
+          hexo generate
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.HEXO_DEPLOY_KEY }}
-          publish_dir: ./public
-          user_name: "github-actions[bot]"
-          user_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          commit_message: "Deploy: ${{ github.sha }}"
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+          cd public
+          git init -b main  # 强制初始化 main 分支
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy: ${{ github.sha }}"
+          git push -f git@github.com:guduyili/GDYL-Blog.git main:gh-pages  # 推送到 gh-pages 分支
 
   sync_to_gitee:
-    name: Sync to Gitee
+    name: Sync to Gitee Repository
     needs: build_and_deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Mirror to Gitee
-        uses: wearerequired/git-mirror-action@master
+      - name: Mirror Repository
+        uses: wearerequired/git-mirror-action@v1  # 使用标准化镜像工具
         env:
           SSH_PRIVATE_KEY: ${{ secrets.HEXO_DEPLOY_KEY }}
         with:
           source-repo: git@github.com:guduyili/GDYL-Blog.git
           destination-repo: git@gitee.com:Absolutelynothing/GDYL-Blog.git
 
-  trigger_gitee_pages:
-    name: Build Gitee Pages
+  build_gitee_pages:
+    name: Trigger Gitee Pages Build
     needs: sync_to_gitee
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Pages
-        uses: mizuka-wu/gitee-pages-action@v2.0
+      - name: Deploy to Gitee Pages
+        uses: yanglbme/gitee-pages-action@main
         with:
           gitee-username: 后藤一里
-          gitee-password: ${{ secrets.GITEE_PASSWORD }}  # 注意检查密码字段拼写
-          repo: 后藤一里/GDYL-Blog
-          branch: main
+          gitee-password: ${{ secrets.GITEE_PASSWORD }}
+          gitee-repo: 后藤一里/GDYL-Blog
+          branch: gh-pages  # 保持与 GitHub 分支一致
