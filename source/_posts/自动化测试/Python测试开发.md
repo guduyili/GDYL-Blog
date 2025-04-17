@@ -999,3 +999,58 @@ print([[x for x in range(1, 100)] [i:i+3] for i in range(0, 100, 3)])
 | **内存使用** | 按需生成值，内存友好           | 一次性加载所有返回值，占用内存 |
 | **状态保持** | 保留函数执行状态（如变量值）   | 不保留状态，函数结束后状态重置 |
 | **适用场景** | 大数据处理、流式数据、迭代场景 | 普通函数返回单一结果           |
+
+# 系统编程
+
+进程：程序运行再操作系统上的一个实例，就称之为进程，进程需要相应的系统资源：内存，时间片，pid
+
+创建进程：
+
+首先要导入multiprocessing中的Process：
+
+创建一个Process对象：
+
+创建Process对象时，可以传递参数
+
+```python
+p = Process(target=XXX,args=(tuple,),kwargs={key:value})
+targer = xxx 指定的任务函数，不用加(),
+args=(tuple,)kwargs = {key:value}给任务函数传递的参数
+```
+
+使用start()启动进程
+
+结束进程
+
+给子进程指定函数传递参数Demo
+
+```python
+import os
+from multiprocessing import Process
+import time
+def pro_func(name,age,**kwargs):
+    for i in range(5):
+        print("子进程正在运行中，name=%s,age=%d,pid=%d"%(name,age,os.getpid()))
+        print(kwargs)
+        time.sleep(0.2)
+if __name__ == "__main__":
+    # 创建Process对象
+    p = Process(target=pro_func,args=('姜维',114),kwargs = {'m':20})
+    # 启动进程
+    p.start()
+    time.sleep(1)
+    #1秒钟之后，立刻结束子进程
+    p.terminate()
+    p.join()
+```
+
+注意：进程间不共享全局变量
+
+进程之间的通信 -Queue
+
+在初始化`Queue()`对象时(例如`q = Queue()`，若在括号中没有指定最大可接受的消息数量，或数量为负值时，那么就代表可接受的消息数量没有上限，一直到内存尽头)
+
+- `Queue.qsize():`返回当前队列包含的消息数量
+- `Queue.empty():`如果队列为空，返回 `True`，反之 `False`
+- `Queue.full(): ` 如果队列满了，返回 `True`，反之 `False`
+- `Queue.get([block[,timeout]]):`获取队列中的一条消息，然后将其从队列中移除。block默认值为True。如果block使用默认值，且没有设置timeout（单位：秒），消息队列如果为空，此时程序将被阻塞（停在读状态）
