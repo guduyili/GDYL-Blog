@@ -1053,4 +1053,5 @@ if __name__ == "__main__":
 - `Queue.qsize():`返回当前队列包含的消息数量
 - `Queue.empty():`如果队列为空，返回 `True`，反之 `False`
 - `Queue.full(): ` 如果队列满了，返回 `True`，反之 `False`
-- `Queue.get([block[,timeout]]):`获取队列中的一条消息，然后将其从队列中移除。block默认值为True。如果block使用默认值，且没有设置timeout（单位：秒），消息队列如果为空，此时程序将被阻塞（停在读状态）
+- `Queue.get([block[,timeout]]):`获取队列中的一条消息，然后将其从队列中移除。block默认值为True。如果block使用默认值，且没有设置timeout（单位：秒），消息队列如果为空，此时程序将被阻塞（停在读状态），
+
