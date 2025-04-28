@@ -49,3 +49,69 @@ adb [-d|-e|-s <serial-number>] <command>
 |                              -s                              | <serial-number>指定相应设备序列号的设备/模拟器为命令目标 |
 | 在多个设备/模拟器连接的情况下比较常用的是-s <serial-number>参数。serial-number是指设备的设备序列号，可以通过adb devices命令获取 |                                                          |
 
+# 案例学习
+
+```python
+import time
+from appium import webdriver
+from appium.webdriver.common.appiumby import AppiumBy
+from appium.webdriver.common.touch_action import TouchAction
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.actions import interaction
+from selenium.webdriver.common.actions.action_builder import ActionBuilder
+from selenium.webdriver.common.actions.pointer_input import PointerInput
+
+
+
+# 配置Appium连接参数
+desired_caps = {
+    "platformName": "Android",
+    "platformVersion": "你的系统版本",
+    "deviceName": "你的设备名称",
+    "appPackage": "com.ss.android.ugc.aweme",
+    "appActivity": ".main.MainActivity",
+    "noReset": True
+}
+
+# 连接Appium服务器
+# driver = webriver.Remote('',desired_caps)
+driver = webdriver.Chrome()
+try:
+    # 等待应用加载
+    time.sleep(10)
+
+    # 1. ID定位
+    try:
+        #
+        element_by_id = driver.find_element(AppiumBy.ID,"com.ss.android.ugc/aweme:id/.")
+        print("通过ID，定位成功")
+    except Exception as e:
+        print(f"通过ID定位失败：{e}")
+
+    # 2. 类名定位
+    try:
+        element_by_class = driver.find_elements(AppiumBy.CLASS_NAME,"android.widget.TextView")
+        print(f"通过类名定位到{len(element_by_class)}个元素")
+    except Exception as e:
+        print(f"通过类名定位失败：{e}")
+
+    # 3. XPath定位
+    try:
+        element_by_xpath = driver.find_element(AppiumBy.XPath,'//android.widget.TextView[@text="你的文本"]')
+        print(f"通过XPath定位成功")
+    except Exception as e:
+        print(f"通过XPath定位失败：{e}")
+
+    #4. Accessibility ID定位
+    try:
+        element_by_accessibility_id = driver.find_element(AppiumBy.ACCESSIBILITY_ID,"your_accessibility_id")
+        print(f"通过ACCESSIBILITY ID定位成功")
+    except Exception as e:
+        print(f"通过ACCESSIBILITY ID定位失败：{e}")
+
+    #5. UIAutomator 定位（Android）
+    try:
+        element_by_uiautomator = driver.find_element(AppiumBy.ANDROID_UIAUTOMATOR,'new UiSelector().text("你的文本")')
+        
+```
+
