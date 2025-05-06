@@ -259,6 +259,19 @@ select 字段列表 from 表名 [where 条件] [group by 分组字段名 having 
 2. 分页查询是数据库的方言，不同数据库有不同的实现，MYSQL中是LIMIT。
 3. 如果起始索引为0，起始索引可以省略，直接简写为limit 10。
 
+## 优先顺序
+
+where>group by>having>order by
+
+## 连接查询
+
+- 左联查询（LEFT JOIN）
+- 右联查询（RIGHT JOIN）
+- 内联查询（INNER JOIN）
+- 全外连接（FULL OUTER JOIN）
+
+
+
 ## Case函数
 
 ```sql
