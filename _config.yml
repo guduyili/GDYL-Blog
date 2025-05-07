@@ -167,7 +167,7 @@ social_icon:
 
 # Markdown 解析器配置
 marked:
-  prependRoot: true
+  prependRoot: true  # 自动为相对路径添加根目录前缀（如 /img/example.jpg）
   postAsset: true
 
 # Lazyload 图片懒加载
