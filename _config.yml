@@ -7,7 +7,6 @@ title: GuDu-Blog
 subtitle: ''
 description: ''
 keywords:
-# author: John Doe
 language: en
 timezone: ''
 
@@ -39,7 +38,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: true  # ✅ 唯一定义 post_asset_folder
+post_asset_folder: false  # ✅ 关闭独立资源文件夹（全局管理图片）
 relative_link: false
 future: true
 syntax_highlighter: prismjs
@@ -127,7 +126,7 @@ comments:
     website:
     error: 如果你看不到评论，那么就真的看不到评论 w(゜Д゜)w
 
-# dplayer 视频播放器
+# DPlayer 视频播放器
 dplayer:
   enable: true
   theme: "#b7daff"
@@ -135,7 +134,7 @@ dplayer:
   loop: false
   mutex: true
 
-# aplayer 音频播放器
+# APlayer 音频播放器
 aplayer:
   enable: true
   theme: "#b7daff"
@@ -147,14 +146,12 @@ aplayer:
 # 国内备案信息
 beian: 
 
-# 谷歌分析
+# 分析统计
 google_analytics: UA-165681463-1
-# gauges 分析
 gauges_analytics: 
-# 百度分析
 baidu_analytics: 77cce6624f1114785af5e77d00cbf93c
-# 腾讯分析
 tencent_analytics: 66537616
+
 # 站点图标
 favicon: /favicon.ico
 
@@ -173,9 +170,13 @@ marked:
   prependRoot: true
   postAsset: true
 
-# Lazyload (圖片懶加載)
+# Lazyload 图片懒加载
 lazyload:
   enable: true
   field: post
   loadingImg: /img/friend_404.gif
   preloadRatio: 1
+
+# 插件配置：hexo-asset-image
+asset_image:
+  path: img  # ✅ 全局图片目录为 source/img
