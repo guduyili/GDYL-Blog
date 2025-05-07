@@ -208,3 +208,6 @@ DI = 10 * 致命bug个数 + 3 * 严重bug个数 + 0.2 * 一般bug个数 + 0.1 * 
    - 枚举值，选项值选中，是否每个能被选中，支持单选并填充到文本框
    - 默认显示，默认选中
 3. 
+
+![1](E:/Gdyl_learning/GDYL-Blog/source/images/1.png)
+
