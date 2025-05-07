@@ -209,5 +209,5 @@ DI = 10 * 致命bug个数 + 3 * 严重bug个数 + 0.2 * 一般bug个数 + 0.1 * 
    - 默认显示，默认选中
 3. 
 
-![1](E:/Gdyl_learning/GDYL-Blog/source/images/1.png)
+![1](source/images/1.png)
 
