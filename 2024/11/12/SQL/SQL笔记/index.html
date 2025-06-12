@@ -1,0 +1,1087 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6">
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="[object Object]">
+  
+
+  
+
+  
+
+  <title>SQL笔记 | GuDu-Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha256-TThEtR+XalhWKkfF383YLOrI50NGNeIqrzS+q08afrY=" crossorigin="anonymous"><!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://imgs.aixifan.com/o_1dj1ntbbl13km9jpf9j9a49ag2k.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          GuDu-Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">Home</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">Archives</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">Links</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">SQL笔记</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Guduyili</strong>
+            <span>发布于</span>
+            <time class="article-date" datetime="2024-11-12T00:00:00.000Z" itemprop="datePublished">2024-11-12</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time class="article-updated" datetime="2024-11-29T00:00:00.000Z" itemprop="dateUpdated">2024-11-29</time>
+            </h2>
+          
+          
+            <h2 id="/2024/11/12/SQL/SQL%E7%AC%94%E8%AE%B0/" class="title-sub-wrap leancloud_visitors" data-flag-title="SQL笔记">
+              <em>文章访问量</em>
+              <i class="leancloud-visitors-count"></i>
+            </h2>
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/SQL/">📒 SQL</a></li>
+    
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/learning/">🏷️ learning</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <!-- toc -->
+
+<ul>
+<li><a href="#ddl-%E6%95%B0%E6%8D%AE%E5%BA%93">DDL-数据库</a><ul>
+<li><a href="#ddl-%E8%A1%A8%E7%BB%93%E6%9E%84-%E5%88%9B%E5%BB%BA">DDL-表结构-创建</a></li>
+<li><a href="#ddl-%E8%A1%A8%E7%BB%93%E6%9E%84">DDL-表结构</a></li>
+<li><a href="#ddl-%E8%A1%A8%E7%BB%93%E6%9E%84-%E6%9F%A5%E8%AF%A2%E4%BF%AE%E6%94%B9%E5%88%A0%E9%99%A4">DDL-表结构-查询，修改，删除</a></li>
+</ul>
+</li>
+<li><a href="#dml">DML</a><ul>
+<li><a href="#dml-insert">DML-insert</a></li>
+<li><a href="#dml-update">DML-update</a></li>
+<li><a href="#dml-delete">DML-delete</a></li>
+</ul>
+</li>
+<li><a href="#dql">DQL</a><ul>
+<li><a href="#dql-%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2">DQL-基本查询</a></li>
+<li><a href="#dql-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2">DQL-条件查询</a></li>
+<li><a href="#dql-%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2">DQL-分组查询</a></li>
+<li><a href="#dql-%E6%8E%92%E5%BA%8F%E6%9F%A5%E8%AF%A2">DQL-排序查询</a></li>
+<li><a href="#dql-%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2">DQL-分页查询</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BC%98%E5%85%88%E9%A1%BA%E5%BA%8F">优先顺序</a></li>
+<li><a href="#%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2">连接查询</a></li>
+<li><a href="#case%E5%87%BD%E6%95%B0">Case函数</a></li>
+<li><a href="#if%E5%87%BD%E6%95%B0">if函数</a></li>
+<li><a href="#%E5%B0%81%E8%A3%85%E5%9B%9E%E6%98%BE">封装回显</a></li>
+<li><a href="#jdbcs">JDBCs</a></li>
+<li><a href="#mybatis">MyBatis</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E6%B1%A0">数据库连接池</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7-delete">删除用户-delete</a></li>
+<li><a href="#%E6%96%B0%E5%A2%9E%E7%94%A8%E6%88%B7-insert">新增用户-insert</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7-update">修改用户-update</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E7%94%A8%E6%88%B7-select">查询用户-select</a></li>
+<li><a href="#xml">XML</a></li>
+<li><a href="#applicationproperties">application.properties</a></li>
+<li><a href="#applicationxml">application.xml</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>[toc]</p>
+<ul>
+<li><p>SQL：一门操作关系型数据库的编辑语言，定义操作所有关系型数据库的统一标准</p>
+</li>
+<li><p>分类：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>全程</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DDL</td>
+<td>Data Definition Language</td>
+<td>数据定义语言，用于定义数据库对象（数据库，表，字段）</td>
+</tr>
+<tr>
+<td>DML</td>
+<td>Data Manipulation Language</td>
+<td>数据操作语言，用来对数据库表中的数据进行增删改</td>
+</tr>
+<tr>
+<td>DQL</td>
+<td>Data Query Language</td>
+<td>数据查询语言，用来查询数据库中表的记录</td>
+</tr>
+<tr>
+<td>DCL</td>
+<td>Data Control Language</td>
+<td>数据控制语言，用来创建数据库用户，控制数据库的访问权限</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h2><span id="ddl-数据库">DDL-数据库</span></h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">--查询所有数据库</span>
+<span class="token keyword">show</span> <span class="token keyword">databases</span><span class="token punctuation">;</span>
+
+<span class="token comment">--查询当前数据库</span>
+<span class="token keyword">select</span> <span class="token keyword">database</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">--使用/切换数据库</span>
+<span class="token keyword">use</span> 数据库名<span class="token punctuation">;</span>
+
+<span class="token comment">--创建数据库</span>
+<span class="token keyword">create</span> <span class="token keyword">database</span> <span class="token punctuation">[</span><span class="token keyword">if</span> <span class="token operator">not</span> <span class="token keyword">exists</span><span class="token punctuation">]</span> 数据库名 <span class="token punctuation">[</span><span class="token keyword">default</span> <span class="token keyword">charset</span> utf8mb4<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">--删除数据库</span>
+<span class="token keyword">drop</span> <span class="token keyword">database</span> <span class="token punctuation">[</span><span class="token keyword">if</span> <span class="token keyword">exists</span><span class="token punctuation">]</span> 数据库名<span class="token punctuation">;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>创建表的语法：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> tablename{
+	字段<span class="token number">1</span> 字段类型 <span class="token punctuation">[</span>约束<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">comment</span> 字段<span class="token number">1</span>注释<span class="token punctuation">]</span>
+	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+	字段<span class="token number">2</span> 字段类型 <span class="token punctuation">[</span>约束<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">comment</span> 字段<span class="token number">2</span>注释<span class="token punctuation">]</span>
+}<span class="token punctuation">[</span><span class="token keyword">comment</span> 表注释<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 创建表格</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> <span class="token keyword">user</span><span class="token punctuation">(</span>
+		id <span class="token keyword">INT</span> <span class="token keyword">COMMENT</span> <span class="token string">'ID,唯一标识'</span><span class="token punctuation">,</span>
+		username <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户名'</span><span class="token punctuation">,</span>
+		NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">COMMENT</span> <span class="token string">'姓名'</span><span class="token punctuation">,</span>
+		age <span class="token keyword">INT</span> <span class="token keyword">COMMENT</span> <span class="token string">'年龄'</span><span class="token punctuation">,</span>
+		gender <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">COMMENT</span> <span class="token string">'性别'</span>
+<span class="token punctuation">)</span><span class="token keyword">COMMENT</span> <span class="token string">'用户信息表'</span><span class="token punctuation">;</span>
+
+<span class="token comment">-- 创建表（约束）</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> user1<span class="token punctuation">(</span>
+		id <span class="token keyword">INT</span>  <span class="token keyword">PRIMARY</span> <span class="token keyword">KEY</span> <span class="token keyword">auto_increment</span> <span class="token keyword">COMMENT</span> <span class="token string">'ID,唯一标识'</span><span class="token punctuation">,</span><span class="token comment">-- 主键约束 auto_increment表示为自动增长</span>
+		username <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">not</span> <span class="token boolean">null</span> <span class="token keyword">UNIQUE</span> <span class="token keyword">COMMENT</span> <span class="token string">'用户名'</span><span class="token punctuation">,</span> <span class="token comment">-- 非空 唯一</span>
+		NAME <span class="token keyword">VARCHAR</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>  <span class="token operator">not</span> <span class="token boolean">NULL</span> <span class="token keyword">COMMENT</span><span class="token string">'姓名'</span><span class="token punctuation">,</span> <span class="token comment">-- 非空</span>
+		age <span class="token keyword">INT</span> <span class="token keyword">COMMENT</span> <span class="token string">'年龄'</span><span class="token punctuation">,</span>
+		gender <span class="token keyword">CHAR</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">DEFAULT</span> <span class="token string">'男'</span> <span class="token keyword">COMMENT</span> <span class="token string">'性别'</span> <span class="token comment">-- 默认</span>
+<span class="token punctuation">)</span><span class="token keyword">COMMENT</span> <span class="token string">'用户信息表'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3><span id="ddl-表结构-创建">DDL-表结构-创建</span></h3><ul>
+<li>约束： 约束是作用于表中字段上的规则，用于限制存储在表中的数据。</li>
+<li>目的： 保证数据库中数据的正确性，有效性和完整性。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>描述</th>
+<th>关键字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>非空约束</td>
+<td>限制该字段值不能为null</td>
+<td>not null</td>
+</tr>
+<tr>
+<td>唯一约束</td>
+<td>保证字段的所有数据都是唯一，不重复的</td>
+<td>unique</td>
+</tr>
+<tr>
+<td>主键约束</td>
+<td>主键是一行数据的唯一标识，则采用默认值</td>
+<td>primary key</td>
+</tr>
+<tr>
+<td>默认约束</td>
+<td>保存数据时，如果未指定该字段值，则采用默认值</td>
+<td>default</td>
+</tr>
+<tr>
+<td>外键约束</td>
+<td>让两张表的数据建立连接，保证数据的一致性和完整性</td>
+<td>foreign key</td>
+</tr>
+</tbody></table>
+<h3><span id="ddl-表结构">DDL-表结构</span></h3><ul>
+<li><p>数据类型</p>
+<p>MySQL中的数据类型有很多，主要分为三类：数值类型，字符串类型，日期时间类型。</p>
+</li>
+</ul>
+<ol>
+<li>数值类型在定义的时候，后面加了unsigned关键字是什么意思<ul>
+<li>unsigned表示无符号类型，表示只能取0及正数</li>
+<li>不加默认是signed，表示可以取复数</li>
+</ul>
+</li>
+</ol>
+<h3><span id="ddl-表结构-查询修改删除">DDL-表结构-查询，修改，删除</span></h3><ul>
+<li><p>表结构的查询，修改，删除相关语法如下：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">show</span> <span class="token keyword">tables</span><span class="token punctuation">;</span> <span class="token comment">-- 查询当前数据库的所有表</span>
+<span class="token keyword">desc</span> 表名<span class="token punctuation">;</span> <span class="token comment">-- 查询表结构</span>
+<span class="token keyword">show</span> <span class="token keyword">create</span> <span class="token keyword">table</span> 表名<span class="token punctuation">;</span> <span class="token comment">-- 查询建表语句</span>
+
+
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名 <span class="token keyword">add</span> 字段名 类型（长度）<span class="token punctuation">[</span><span class="token keyword">comment</span> 注释<span class="token punctuation">]</span><span class="token punctuation">[</span>约束<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">-- 添加字段</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名 <span class="token keyword">modify</span> 字段名 新数据类型（长度）<span class="token punctuation">;</span> <span class="token comment">-- 修改字段类型</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名 change 旧字段名 新字段名 类型（长度）<span class="token punctuation">[</span><span class="token keyword">comment</span> 注释<span class="token punctuation">]</span><span class="token punctuation">[</span>约束<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">-- 修改字段名字与字段类型</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名 <span class="token keyword">drop</span> <span class="token keyword">column</span> <span class="token punctuation">;</span> <span class="token comment">-- 删除字段</span>
+<span class="token keyword">alter</span> <span class="token keyword">table</span> 表名 <span class="token keyword">rename</span> <span class="token keyword">to</span> 新表名<span class="token punctuation">;</span> <span class="token comment">-- 修改表名</span>
+
+<span class="token keyword">drop</span> <span class="token keyword">table</span> <span class="token punctuation">[</span><span class="token keyword">if</span> <span class="token keyword">exists</span><span class="token punctuation">]</span> 表名<span class="token punctuation">;</span> <span class="token comment">-- 删除表</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2><span id="dml">DML</span></h2><ul>
+<li>DEL英文全称Data Manipulation Language(数据操作语言)，用来对数据库中表的数据记录进行增，删，改。</li>
+</ul>
+<h3><span id="dml-insert">DML-insert</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 指定字段添加数据</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> 表名（字段名<span class="token number">1</span>，字段名<span class="token number">2</span>） <span class="token keyword">values</span> （值<span class="token number">1</span>，值<span class="token number">2</span>）<span class="token punctuation">;</span>
+
+<span class="token comment">-- 全部字段添加数据</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> 表名 <span class="token keyword">values</span> （值<span class="token number">1</span>，值<span class="token number">2.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>）<span class="token punctuation">;</span>
+
+<span class="token comment">-- 批量删除数据（指定字段）</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> 表名（字段名<span class="token number">1</span>，字段名<span class="token number">2</span>） <span class="token keyword">values</span> （值<span class="token number">1</span>，值<span class="token number">2</span>）<span class="token punctuation">,</span> （值<span class="token number">1</span>，值<span class="token number">2</span>）<span class="token punctuation">;</span>
+
+<span class="token comment">-- 批量添加数据（全部字段）</span>
+<span class="token keyword">insert</span> <span class="token keyword">into</span> 表名 <span class="token keyword">values</span> （值<span class="token number">1</span>，值<span class="token number">2.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>）<span class="token punctuation">,</span>（值<span class="token number">1</span>，值<span class="token number">2.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>）<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="dml-update">DML-update</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 修改数据</span>
+<span class="token keyword">update</span> 表名 <span class="token keyword">set</span> 字段名<span class="token number">1</span> <span class="token operator">=</span> 值<span class="token number">1</span><span class="token punctuation">,</span>字段名<span class="token number">2</span> <span class="token operator">=</span> 值<span class="token number">2</span><span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">[</span><span class="token keyword">where</span> 条件<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3><span id="dml-delete">DML-delete</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 删除数据</span>
+<span class="token keyword">delete</span> <span class="token keyword">from</span> 表名 <span class="token punctuation">[</span><span class="token keyword">where</span> 条件<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h2><span id="dql">DQL</span></h2><ul>
+<li><p>DQL英文全称为Data Query Language (数据查询语言)，用来查询数据库表中的记录</p>
+</li>
+<li><p>关键字：SELECT</p>
+</li>
+<li><p>完整的DQL语句语法：</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span>		字段列表
+
+<span class="token keyword">from</span>		表名列表
+
+<span class="token keyword">where</span>		条件列表
+
+<span class="token keyword">group</span> <span class="token keyword">by</span>	分组字段列表
+
+<span class="token keyword">having</span>		分组后条件列表
+
+<span class="token keyword">order</span> <span class="token keyword">by</span>	排序字段列表
+
+<span class="token keyword">limit</span>		分页参数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h3><span id="dql-基本查询">DQL-基本查询</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 查询多个字段</span>
+<span class="token keyword">select</span> 字段<span class="token number">1</span><span class="token punctuation">,</span>字段<span class="token number">2</span><span class="token punctuation">,</span>字段<span class="token number">3</span><span class="token punctuation">,</span> <span class="token keyword">from</span> 表名<span class="token punctuation">;</span>
+
+<span class="token comment">-- 查询所有字段（通配符）</span>
+<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> 表名<span class="token punctuation">;</span>
+
+<span class="token comment">-- 为查询字段设置别名，as关键字可以省略</span>
+<span class="token keyword">select</span> 字段<span class="token number">1</span> <span class="token punctuation">[</span><span class="token keyword">as</span> 别名<span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> 字段<span class="token number">2</span> <span class="token punctuation">[</span><span class="token keyword">as</span> 别名<span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">from</span> 表名<span class="token punctuation">;</span>
+
+<span class="token comment">-- 去除重复记录</span>
+<span class="token keyword">select</span> <span class="token keyword">distinct</span> 字段列表 <span class="token keyword">from</span> 表名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="dql-条件查询">DQL-条件查询</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 条件查询</span>
+<span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表名 <span class="token keyword">where</span> 条件列表<span class="token punctuation">;</span>
+
+<span class="token operator">is</span> <span class="token boolean">null</span><span class="token punctuation">,</span> <span class="token operator">is</span> <span class="token operator">not</span> <span class="token boolean">null</span>
+<span class="token operator">&lt;&gt;</span> <span class="token operator">=</span><span class="token operator">=</span> <span class="token operator">!=</span>
+_: 单个字段；
+<span class="token operator">%</span>： 任意个字符
+多个查询条件：<span class="token operator">and</span><span class="token operator">/</span><span class="token operator">or</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="dql-分组查询">DQL-分组查询</span></h3><ul>
+<li>聚合函数：将一列数据作为一个整体，进行纵向计算。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>count</td>
+<td>统计数量</td>
+</tr>
+<tr>
+<td>max</td>
+<td>最大值</td>
+</tr>
+<tr>
+<td>min</td>
+<td>最小值</td>
+</tr>
+<tr>
+<td>avg</td>
+<td>平均值</td>
+</tr>
+<tr>
+<td>sum</td>
+<td>求和</td>
+</tr>
+</tbody></table>
+<ol>
+<li>null值不参与所有聚合函数的运算。</li>
+<li>统计数量可以使用：count(<em>)  count(字段) count(常量) ，推荐使用count(</em>)。</li>
+</ol>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 分组查询</span>
+<span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表名 <span class="token punctuation">[</span><span class="token keyword">where</span> 条件列表<span class="token punctuation">]</span> <span class="token keyword">group</span> <span class="token keyword">by</span> 分组字段名 <span class="token punctuation">[</span><span class="token keyword">having</span> 分组后过滤条件<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>where 和 having的区别：<ol>
+<li>执行时机不同：where是分组之前进行过滤，不满足where条件，不参与分组；而having是分组之后对结果进行过滤。</li>
+<li>判断条件不同：where不能对聚合函数进行判断，而having可以。</li>
+</ol>
+</li>
+</ul>
+<h3><span id="dql-排序查询">DQL-排序查询</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 排序查询</span>
+<span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表名 <span class="token punctuation">[</span><span class="token keyword">where</span> 条件列表<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">group</span> <span class="token keyword">by</span> 分组字段名 <span class="token keyword">having</span> 分组后过滤条件<span class="token punctuation">]</span> <span class="token keyword">order</span> <span class="token keyword">by</span> 排序字段 排序方式<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>排序方式：升序（asc），降序（desc）；默认为升序asc，是可以不写的。</p>
+<p>如果是多字段排序，当第一个字段值相同时，才会根据第二个字段进行排序。</p>
+</li>
+</ul>
+<h3><span id="dql-分页查询">DQL-分页查询</span></h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 排序查询</span>
+<span class="token keyword">select</span> 字段列表 <span class="token keyword">from</span> 表名 <span class="token punctuation">[</span><span class="token keyword">where</span> 条件<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">group</span> <span class="token keyword">by</span> 分组字段名 <span class="token keyword">having</span> 过滤条件<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token keyword">order</span> <span class="token keyword">by</span> 排序字段<span class="token punctuation">]</span> <span class="token keyword">limit</span> 起始索引<span class="token punctuation">,</span>查询记录数<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ol>
+<li>起始索引从0开始。</li>
+<li>分页查询是数据库的方言，不同数据库有不同的实现，MYSQL中是LIMIT。</li>
+<li>如果起始索引为0，起始索引可以省略，直接简写为limit 10。</li>
+</ol>
+<h2><span id="优先顺序">优先顺序</span></h2><p>where&gt;group by&gt;having&gt;order by</p>
+<h2><span id="连接查询">连接查询</span></h2><ul>
+<li>左联查询（LEFT JOIN）</li>
+<li>右联查询（RIGHT JOIN）</li>
+<li>内联查询（INNER JOIN）</li>
+<li>全外连接（FULL OUTER JOIN）</li>
+</ul>
+<h2><span id="case函数">Case函数</span></h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 1.case 函数： case 表达式 when val1 then res1</span>
+<span class="token comment">--                       when val2 then res2</span>
+<span class="token comment">--                       else ...  end,</span>
+<span class="token keyword">SELECT</span> 
+     <span class="token punctuation">(</span><span class="token keyword">CASE</span> job <span class="token keyword">when</span> <span class="token number">1</span> <span class="token keyword">then</span> <span class="token string">'学工部'</span>
+			<span class="token keyword">when</span> <span class="token number">2</span> <span class="token keyword">then</span> <span class="token string">'创新部'</span>
+			<span class="token keyword">when</span> <span class="token number">3</span> <span class="token keyword">then</span> <span class="token string">'咨询部'</span>
+			<span class="token keyword">when</span> <span class="token number">4</span> <span class="token keyword">then</span> <span class="token string">'就业部'</span>
+			<span class="token keyword">when</span> <span class="token number">5</span> <span class="token keyword">then</span> <span class="token string">'人事部'</span>
+			<span class="token keyword">else</span> <span class="token string">'其他'</span> <span class="token keyword">end</span><span class="token punctuation">)</span> pos<span class="token punctuation">,</span>
+		 <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> num
+<span class="token keyword">from</span> emp <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> job <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> num<span class="token punctuation">;</span>
+
+
+
+<span class="token comment">-- 2.case 函数： case 表达式 when 条件表达式1 then res1</span>
+<span class="token comment">--                        when 条件表达式1 then res2</span>
+<span class="token comment">--                        else ...  end,</span>
+
+<span class="token keyword">SELECT</span> 
+     <span class="token punctuation">(</span><span class="token keyword">CASE</span>  <span class="token keyword">when</span> job<span class="token operator">=</span><span class="token number">1</span> <span class="token keyword">then</span> <span class="token string">'学工部'</span>
+			<span class="token keyword">when</span> job<span class="token operator">=</span><span class="token number">2</span> <span class="token keyword">then</span> <span class="token string">'创新部'</span>
+			<span class="token keyword">when</span> job<span class="token operator">=</span><span class="token number">3</span> <span class="token keyword">then</span> <span class="token string">'咨询部'</span>
+			<span class="token keyword">when</span> job<span class="token operator">=</span><span class="token number">4</span> <span class="token keyword">then</span> <span class="token string">'就业部'</span>
+			<span class="token keyword">when</span> job<span class="token operator">=</span><span class="token number">5</span> <span class="token keyword">then</span> <span class="token string">'人事部'</span>
+			<span class="token keyword">else</span> <span class="token string">'其他'</span> <span class="token keyword">end</span><span class="token punctuation">)</span> pos<span class="token punctuation">,</span>
+		 <span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> num
+<span class="token keyword">from</span> emp <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> job <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> num<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2><span id="if函数">if函数</span></h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- if(expr,val1,val2): 如果表达式expr成立，取val1，否则去val2</span>
+
+<span class="token comment">-- ifnull(expr,val1): 如果expr不为null，取自身，否则取val1</span>
+
+<span class="token keyword">SELECT</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>gender<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">'男'</span><span class="token punctuation">,</span><span class="token string">'女'</span><span class="token punctuation">)</span><span class="token keyword">as</span> name<span class="token punctuation">,</span>
+<span class="token function">COUNT</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">as</span> <span class="token keyword">VALUE</span>
+<span class="token keyword">from</span> emp <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> gender<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2><span id="封装回显">封装回显</span></h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token operator">&lt;</span>result <span class="token keyword">column</span><span class="token operator">=</span><span class="token string">"entry_date"</span> property<span class="token operator">=</span><span class="token string">"entryDate"</span><span class="token operator">/</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li><strong><code>column</code>属性：</strong><ul>
+<li>这里的<code>column="entryDate"</code>指的是SQL查询结果中的列名。这个列名应该与数据库表中的列名匹配，或者是SQL查询中指定的别名。</li>
+<li>在SQL查询中，如果使用了<code>SELECT e.entryDate AS entryDate</code>，那么<code>entryDate</code>就是列名。</li>
+</ul>
+</li>
+<li><strong><code>property</code>属性：</strong><ul>
+<li><code>property="entryDate"</code>指的是Java对象中的属性名。MyBatis会将数据库中的<code>entryDate</code>列的值设置到Java对象的<code>entryDate</code>属性中。</li>
+<li>这个属性名应该与Java对象（比如<code>Emp</code>类）中的字段名一致，并且该字段应该有对应的getter和setter方法。</li>
+</ul>
+</li>
+</ul>
+<h2><span id="jdbcs">JDBCs</span></h2><ul>
+<li>连接和操作数据库的一种API</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> jdbcTest <span class="token punctuation">{</span>
+    <span class="token comment">/**
+     * JDBC入门程序
+      */</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">{</span>
+        <span class="token comment">//1.注册驱动</span>
+        <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.mysql.cj.jdbc.Driver"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//2.获取数据库的链接</span>
+        <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">"jdbc:mysql://localhost:3306/db1"</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> username <span class="token operator">=</span> <span class="token string">"root"</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> password <span class="token operator">=</span> <span class="token string">"1412"</span><span class="token punctuation">;</span>
+        <span class="token class-name">Connection</span> connection <span class="token operator">=</span> <span class="token class-name">DriverManager</span><span class="token punctuation">.</span><span class="token function">getConnection</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span>username<span class="token punctuation">,</span>password<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//3.获取SQL语句执行对象</span>
+        <span class="token class-name">Statement</span> statement <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createStatement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//4.执行SQL</span>
+        <span class="token keyword">int</span> tmp <span class="token operator">=</span> statement<span class="token punctuation">.</span><span class="token function">executeUpdate</span><span class="token punctuation">(</span><span class="token string">"update employee set NAME = \"姜维伯约\" WHERE id= 1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//DML</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"SQL执行记录"</span> <span class="token operator">+</span> tmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">//5.释放资源</span>
+        statement<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connection<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--pom.xml--&gt;</span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependencies</span><span class="token punctuation">&gt;</span></span>
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>mysql-connector-j<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>8.0.33<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.junit.jupiter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>junit-jupiter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>5.11.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>scope</span><span class="token punctuation">&gt;</span></span>test<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>scope</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+
+
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.projectlombok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>lombok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.18.36<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependencies</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2><span id="mybatis">MyBatis</span></h2><h3><span id="数据库连接池">数据库连接池</span></h3><ul>
+<li>容器，负责分配，管理数据库连接（Connection）</li>
+<li>优势：资源复用，提升系统响应速度</li>
+<li>接口：DataSource</li>
+</ul>
+<h3><span id="删除用户-delete">删除用户-delete</span></h3><table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="left">说明</th>
+<th align="center">场景</th>
+<th align="right">优缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>#{}</strong></td>
+<td align="left"><code>#</code> 用于将参数作为<strong>预编译的占位符</strong>处理，底层会将参数值绑定为 SQL 语句中的参数</td>
+<td align="center">将参数值安全地插入到 SQL 语句中，MyBatis 会在执行时将 <code>#{}</code> 替换为对应的占位符（如 <code>?</code>），然后通过 JDBC 将实际的值绑定进去。</td>
+<td align="right">这种方式能够有效防止 SQL 注入问题</td>
+</tr>
+<tr>
+<td align="center"><strong><code>${}</code></strong></td>
+<td align="left">参数会以字符串形式直接拼接到 SQL 中</td>
+<td align="center">动态传递表名、列名等非值的 SQL 片段</td>
+<td align="right">不安全，容易导致 SQL 注入</td>
+</tr>
+</tbody></table>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Delete</span><span class="token punctuation">(</span><span class="token string">"delete from user where id = #{id}"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3><span id="新增用户-insert">新增用户-insert</span></h3><ul>
+<li>添加新用户</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Insert</span><span class="token punctuation">(</span><span class="token string">"insert into user(id, username, NAME, age,gender) VALUE (#{id},#{username},#{name},#{age},#{gender})"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h3><span id="修改用户-update">修改用户-update</span></h3><ul>
+<li>根据id更新用户信息</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Update</span><span class="token punctuation">(</span><span class="token string">"update user set username = #{username} , NAME = #{name} ,age = #{age} where id = #{id}"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3><span id="查询用户-select">查询用户-select</span></h3><ul>
+<li>根据用户名和密码查询用户信息</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Select</span><span class="token punctuation">(</span><span class="token string">"select * from user where username = #{username} and name = #{name}"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> <span class="token class-name">User</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token annotation punctuation">@Param</span><span class="token punctuation">(</span><span class="token string">"username"</span><span class="token punctuation">)</span><span class="token class-name">String</span> username<span class="token punctuation">,</span><span class="token annotation punctuation">@Param</span><span class="token punctuation">(</span><span class="token string">"name"</span><span class="token punctuation">)</span><span class="token class-name">String</span> name<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>@Param注解的作用是为接口的方法形参起名字</li>
+<li>基于官方骨架创建的springboot项目中，接口编译时会保留方法形参名，@Param注解可以省略</li>
+</ul>
+<h3><span id="xml">XML</span></h3><ul>
+<li><p>在Mybatis中，既可以通过配置SQL语句，也可以通过XML配置文件配置SQL语句</p>
+</li>
+<li><p>默认规则：</p>
+<ol>
+<li>XML映射文件的名称和Mapper接口名称一致，并且将XML映射文件和Mapper接口放置在想同包下（<strong>同包同名</strong>）</li>
+<li>XML映射文件的namespace属性为Mapper接口全限定名一致</li>
+<li>XML映射文件中sql语句的id与Mapper接口中的方法名一致，并保持返回类型一致</li>
+</ol>
+</li>
+</ul>
+<h3><span id="applicationproperties">application.properties</span></h3><pre class="line-numbers language-properties" data-language="properties"><code class="language-properties"><span class="token key attr-name">spring.application.name</span><span class="token punctuation">=</span><span class="token value attr-value">spring-boot-mybatis-quickstart</span>
+
+
+<span class="token comment">#配置数据库连接信息</span>
+<span class="token key attr-name">spring.datasource.url</span><span class="token punctuation">=</span><span class="token value attr-value">jdbc:mysql://localhost:3306/db1</span>
+<span class="token key attr-name">spring.datasource.driver-class-name</span><span class="token punctuation">=</span><span class="token value attr-value">com.mysql.cj.jdbc.Driver</span>
+<span class="token key attr-name">spring.datasource.username</span> <span class="token punctuation">=</span><span class="token value attr-value">root</span>
+<span class="token key attr-name">spring.datasource.password</span> <span class="token punctuation">=</span> <span class="token value attr-value">1412</span>
+
+
+<span class="token comment">#配置mybatis的日志输出</span>
+<span class="token key attr-name">mybatis.configuration.log-impl</span><span class="token punctuation">=</span><span class="token value attr-value">org.apache.ibatis.logging.stdout.StdOutImpl</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="applicationxml">application.xml</span></h3><pre class="line-numbers language-java" data-language="java"><code class="language-java">spring<span class="token operator">:</span>
+  application<span class="token operator">:</span>
+    name<span class="token operator">:</span> spring<span class="token operator">-</span>boot<span class="token operator">-</span>mybatis<span class="token operator">-</span>quickstart
+
+
+
+  datasource<span class="token operator">:</span>
+    type<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>zaxxer<span class="token punctuation">.</span>hikari<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>DriverDataSource</span>
+    url<span class="token operator">:</span> jdbc<span class="token operator">:</span>mysql<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>localhost<span class="token operator">:</span><span class="token number">3306</span><span class="token operator">/</span>db1
+    driver<span class="token operator">-</span><span class="token keyword">class</span><span class="token operator">-</span>name<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">com<span class="token punctuation">.</span>mysql<span class="token punctuation">.</span>cj<span class="token punctuation">.</span>jdbc<span class="token punctuation">.</span></span>Driver</span>
+    username<span class="token operator">:</span> root
+    password<span class="token operator">:</span> <span class="token number">1412</span>
+
+#<span class="token class-name">Mybatis</span>
+mybatis<span class="token operator">:</span>
+  configuration<span class="token operator">:</span>
+    log<span class="token operator">-</span>impl<span class="token operator">:</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>ibatis<span class="token punctuation">.</span>logging<span class="token punctuation">.</span>stdout<span class="token punctuation">.</span></span>StdOutImpl</span>
+  mapper<span class="token operator">-</span>locations<span class="token operator">:</span> classpath<span class="token operator">:</span>mapper<span class="token comment">/*.xml
+</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/11/12/HCIA/ICT%E9%A2%98%E5%BA%93/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">ICT题库</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/11/10/Linux/Linux%E7%9A%84%E5%86%85%E5%AD%98%E5%92%8C%E7%A1%AC%E7%9B%98%E7%AE%A1%E7%90%86/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux的内存和硬盘管理</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img class="soft-size--round soft-style--box lazy" alt="Guduyili" data-src="/img/friend_404.gif" data-original="https://img.touxiangkong.com/uploads/allimg/2023030421/rtgow00dcop.jpg">
+    
+    
+      <h2>Guduyili</h2>
+    
+    
+      <p>The persistence of an ordinary person</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>59</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        20
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        6
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>Warning! Warning!</p>
+  </div>
+</section>
+
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li class="categories-list-item">
+          <a href="/categories/SQL/">
+            SQL (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/git/">
+            git (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/HCIA/">
+            HCIA (11)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Hexo/">
+            Hexo (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/JAVA/">
+            JAVA (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Linux/">
+            Linux (7)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/My-Project/">
+            My Project (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Spring-boot/">
+            Spring-boot (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Redis/">
+            Redis (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Unity/">
+            Unity (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+            软件测试 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/">
+            生活感想 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%AE%97%E6%B3%95/">
+            算法 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">
+            自动化测试 (6)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%A4%A7%E7%89%A9/">
+            大物 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+            操作系统 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+            数据库 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%A6%82%E7%BB%9F/">
+            概统 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
+            线性代数 (4)
+          </a>
+        </li>
+        
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/JAVA/" style="font-size: 13.33px;" class="tags-cloud-3">JAVA</a> <a href="/tags/blog/" style="font-size: 10px;" class="tags-cloud-0">blog</a> <a href="/tags/learning/" style="font-size: 20px;" class="tags-cloud-10">learning</a> <a href="/tags/music/" style="font-size: 10px;" class="tags-cloud-0">music</a> <a href="/tags/%E5%B8%A6%E7%A0%96%E7%94%9F%E7%9A%84%E9%80%9F%E6%88%90/" style="font-size: 16.67px;" class="tags-cloud-7">带砖生的速成</a> <a href="/tags/%E6%84%9F%E6%83%B3/" style="font-size: 10px;" class="tags-cloud-0">感想</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/guduyili" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>© 2025 <a href="/" target="_blank">Guduyili</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/guduyili" target="_blank" rel="noopener noreferrer author">GDYL-Blog</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+<script type="text/javascript">
+	(function () {
+		// todo
+	})();
+</script>
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<script>document.addEventListener("DOMContentLoaded", function() {
+  var lazyloadImages;
+
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.src = image.dataset.src;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+        });
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
+    }
+
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
+})
+</script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>(r=>{r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,o=r.imageLazyLoadSetting.preloadRatio||1,d=i();function i(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=i());for(var e,n=0;n<d.length;n++)0<=(e=(e=d[n]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*o||document.documentElement.clientHeight*o)&&(()=>{var t,e,a,o,i=d[n];e=function(){d=d.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,o=t.getAttribute("data-original"),a.onload=function(){t.src=o,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=o},t.src!==o&&(a.src=o)))})()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)})(this);</script></body></html>
