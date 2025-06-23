@@ -134,7 +134,7 @@ def collect_api(cls, mode: str) -> list:
 
 创建 `unit_run_dict` 用于存放主项目下需要执行的用例集合。
 
-- 函数定义与入参处理
+### 函数定义与入参处理
 
 ```python
 def collect(item, main=True):
@@ -147,7 +147,7 @@ def collect(item, main=True):
 
 
 
-- 项目路径与初始化相关
+### 项目路径与初始化相关
 
 ```python
  # 暂时使用单个配置读取方式
@@ -176,29 +176,28 @@ def collect(item, main=True):
 
 
 
-- 解析`main.xmind`
+### 解析`main.xmind`
 
-  ```python
-  try:
-      x = xmindparser.xmind_to_dict(f'{project_path}/main.xmind')
-      content = x
-      for item in x:
-          if item['title'] == 'SETTING':
-              setting_data = item['topic']
-          elif item['title'] == 'VARS':
-              vars_data = item['topic']
-  except Exception as e:
-      raise Exception(f'\n项目{item}配置读取失败{e}，请检查main.xmind文件')
-  ```
+```python
+try:
+    x = xmindparser.xmind_to_dict(f'{project_path}/main.xmind')
+    content = x
+    for item in x:
+        if item['title'] == 'SETTING':
+            setting_data = item['topic']
+        elif item['title'] == 'VARS':
+            vars_data = item['topic']
+except Exception as e:
+    raise Exception(f'\n项目{item}配置读取失败{e}，请检查main.xmind文件')
+```
 
-  1. 使用`xmindparser`读取`main.xmind`并转为字典
-  2. `SETTING`为项目配置，配置所用的服务器和测试用例
-  3. `VARS`为自定义变量
-
-  
+1. 使用`xmindparser`读取`main.xmind`并转为字典
+2. `SETTING`为项目配置，配置所用的服务器和测试用例
+3. `VARS`为自定义变量
 
 
-- 初始化配置变量
+
+### 初始化配置变量
 
 ```python
 setting = {}
@@ -209,85 +208,85 @@ run_env = None
 
 `run_env` 表示运行的环境名称（如 SIT、UAT 等）。
 
-- 读取SETTING页信息
+### 读取SETTING页信息
 
-  ```python
-  for st in setting_data['topics']:
-      name = st['title']
-      if name == '环境配置':
-          if 'env' in os.environ:
-              run_env = os.environ['env']
-          for env in st['topics']:
-              if run_env:
-                  if env['title'] == run_env:
-                      setting.update({'env': xtodict(env)[run_env]})
-                      GCache.setting.update({'host': setting['env']['server']})
-              else:
-                  if 'makers' in env:
-                      if 'task-done' in env['makers']:
-                          run_env = env['title']
-                          setting.update({'env': xtodict(env)[run_env]})
-                          GCache.setting.update({'host': setting['env']['server']})
-                          break
-          if main:
-              cls.env = run_env
-          else:
-              run_env = cls.env
-  ```
+```python
+for st in setting_data['topics']:
+    name = st['title']
+    if name == '环境配置':
+        if 'env' in os.environ:
+            run_env = os.environ['env']
+        for env in st['topics']:
+            if run_env:
+                if env['title'] == run_env:
+                    setting.update({'env': xtodict(env)[run_env]})
+                    GCache.setting.update({'host': setting['env']['server']})
+            else:
+                if 'makers' in env:
+                    if 'task-done' in env['makers']:
+                        run_env = env['title']
+                        setting.update({'env': xtodict(env)[run_env]})
+                        GCache.setting.update({'host': setting['env']['server']})
+                        break
+        if main:
+            cls.env = run_env
+        else:
+            run_env = cls.env
+```
 
-  遍历 `SETTING` 页的各节点，根据节点标题判断含义。
+遍历 `SETTING` 页的各节点，根据节点标题判断含义。
 
-  “环境配置”：
+“环境配置”：
 
-  - 如果环境变量 `env` 已指定，直接使用；否则寻找带 “task-done” 标记的子节点作为默认环境。
-  - `setting['env']` 记录该环境的配置（服务器、数据库等），并同步到 `GCache.setting`。
-  - 主项目保存到 `cls.env`，否则从主项目继承。
+- 如果环境变量 `env` 已指定，直接使用；否则寻找带 “task-done” 标记的子节点作为默认环境。
+- `setting['env']` 记录该环境的配置（服务器、数据库等），并同步到 `GCache.setting`。
+- 主项目保存到 `cls.env`，否则从主项目继承。
 
-  继续读取其他配置
+继续读取其他配置
 
-  ```python
-      elif name == '场景配置':
-          if 'topics' in st:
-              for sdata in st['topics']:
-                  if 'makers' in sdata and 'task-done' in sdata['makers']:
-                      setting.update({'suit': xtodict_li(sdata)})
-                      break
-      elif name == '标签配置':
-          setting.update({'tag': xtodict_li(st)})
-          if 'topics' in st:
-              for tdata in st['topics']:
-                  if tdata['title'] == 'greylist':
-                      if 'topics' in tdata:
-                          for g in tdata['topics']:
-                              if 'makers' in g:
-                                  if 'flag-gray' in g['makers'] or 'flag-dark-gray' in g['makers']:
-                                      cls.tag_grey['da'].append(g['title'])
-                                      continue
-                              cls.tag_grey['ea'].append(g['title'])
-      elif name == 'cicd':
-          setting.update({'cicd': xtodict(st)[st['title']]})
-      elif name == '请求头配置':
-          setting.update({'headers': xtodict(st)[st['title']]})
-      elif name == '令牌配置':
-          setting.update({'token_cfg': xtodict(st)[st['title']]})
-      elif name == '设备配置':
-          setting.update({'device': xtodict(st)[st['title']]})
-      elif name == '端口映射配置':
-          setting.update({'port_mapping': xtodict(st, alt_list=True)[st['title']]})
-          cls.port_mapping.update(setting['port_mapping'])
-      elif name == '构建参数配置':
-          setting.update({'ext_vars': xtodict(st, alt_list=True)[st['title']]})
-      elif name == '设备控制机配置':
-          if 'topics' in st:
-              from utils.misc import mdvr_api_url
-              utils.misc.mdvr_api_url = st['topics'][0]['title']
-  ```
+```python
+    elif name == '场景配置':
+        if 'topics' in st:
+            for sdata in st['topics']:
+                if 'makers' in sdata and 'task-done' in sdata['makers']:
+                    setting.update({'suit': xtodict_li(sdata)})
+                    break
+    elif name == '标签配置':
+        setting.update({'tag': xtodict_li(st)})
+        if 'topics' in st:
+            for tdata in st['topics']:
+                if tdata['title'] == 'greylist':
+                    if 'topics' in tdata:
+                        for g in tdata['topics']:
+                            if 'makers' in g:
+                                if 'flag-gray' in g['makers'] or 'flag-dark-gray' in g['makers']:
+                                    cls.tag_grey['da'].append(g['title'])
+                                    continue
+                            cls.tag_grey['ea'].append(g['title'])
+    elif name == 'cicd':
+        setting.update({'cicd': xtodict(st)[st['title']]})
+    elif name == '请求头配置':
+        setting.update({'headers': xtodict(st)[st['title']]})
+    elif name == '令牌配置':
+        setting.update({'token_cfg': xtodict(st)[st['title']]})
+    elif name == '设备配置':
+        setting.update({'device': xtodict(st)[st['title']]})
+    elif name == '端口映射配置':
+        setting.update({'port_mapping': xtodict(st, alt_list=True)[st['title']]})
+        cls.port_mapping.update(setting['port_mapping'])
+    elif name == '构建参数配置':
+        setting.update({'ext_vars': xtodict(st, alt_list=True)[st['title']]})
+    elif name == '设备控制机配置':
+        if 'topics' in st:
+            from utils.misc import mdvr_api_url
+            utils.misc.mdvr_api_url = st['topics'][0]['title']
+```
 
-  - 场景配置” ：找到带 `task-done` 的场景节点并解析。
-  - “标签配置” ：解析标签列表，灰名单节点下分为允许/禁止两组。
-  - “cicd”等其他配置均用 `xtodict` 转换为字典。
-  - 端口映射和构建参数也存入对应属性；端口映射同时更新到 `cls.port_mapping`。
-  - “设备控制机配置” 将设备控制机地址写入 `utils.misc.mdvr_api_url`。
+- 场景配置” ：找到带 `task-done` 的场景节点并解析。
+- “标签配置” ：解析标签列表，灰名单节点下分为允许/禁止两组。
+- “cicd”等其他配置均用 `xtodict` 转换为字典。
+- 端口映射和构建参数也存入对应属性；端口映射同时更新到 `cls.port_mapping`。
+- “设备控制机配置” 将设备控制机地址写入 `utils.misc.mdvr_api_url`。
 
 - 处理VARS页及环境变量
 
@@ -319,7 +318,7 @@ for k, v in var_dict_raw.items():
 
 
 
-- 决定需要加载的测试套件（suits）
+### 决定需要加载的测试套件（suits）
 
 ```python
 if 'scene' in os.environ and os.environ['scene'].upper() != 'NULL':
@@ -365,7 +364,7 @@ else:
 
 若都没有指定，则默认只读 `main.xmind`。
 
-- 生成每个用例文件的路径列表
+### 生成每个用例文件的路径列表
 
 ```python
 if locals().get("suits") or locals().get('scene'):
@@ -406,7 +405,7 @@ if locals().get("suits") or locals().get('scene'):
 3. 如果`suits`中含有字典，则说明指定了需要读取的sheet名称，写入`cls.sheet_mapping`
 4. 若没有找到任何文件则抛出异常
 
-- 处理标签配置
+### 处理标签配置
 
 ```python
 if 'tag' in os.environ:
@@ -426,7 +425,7 @@ elif 'tag' in setting:
 1. 运行时可通过`tag`环境变量覆盖`SETTING`中的标签
 2. 如果环境变量未定义，则使用配置文件里的标签
 
-- 读取公共配置与环境变量
+### 读取公共配置与环境变量
 
 ```python
 try:
@@ -476,7 +475,7 @@ if 'env' in setting:
 
 然后依次尝试获取更多可选配置（HTTP 端口、端口映射、SSH、MySQL、Mongo、Redis、设备、Kafka、CI/CD等），若缺失则记录日志并设置为 `None`。
 
-- 处理Jenkins构建参数覆盖
+### 处理Jenkins构建参数覆盖
 
 ```python
 if 'ext_vars' in setting and main:
@@ -501,7 +500,7 @@ else:
 1. 若`SETTING`中配置了构建参数映射（`ext_vars`），主项目会根据环境变量将其覆盖到内部变量字典，并记录
 2. `taskCode`特殊处理：若映射项包含该字段就更新全局的`taskCode`
 
-- 整理端口映射及服务器地址
+### 整理端口映射及服务器地址
 
 ```python
 if cls.port_mapping:
@@ -522,7 +521,7 @@ cls.server = server
 
 
 
-- 处理变量字典
+### 处理变量字典
 
 ```python
 for k, v in var_dict.items():
@@ -561,7 +560,7 @@ cls.var_dict.update(cls.environ_vars_dict)
 2. 普通变量则直接进行替换（`renew`）后召回
 3. 最终合并到`cls.var_dicr`，同时将构建参数覆盖（`environ.vars_dict`）加入
 
-- 构建`cfg_dict`和`project_dict`
+### 构建`cfg_dict`和`project_dict`
 
 ```python
 cls.cfg_dict.update({
@@ -593,11 +592,11 @@ cls.project_dict.update({cls.project_name: {'case_path': case_path, 'run_mode': 
 
 
 
-- 结束`collect()`内部函数
+### 结束`collect()`内部函数
 
 `collect()`函数到此结束，剩余注释到`.svn`过滤没有启用
 
-- 加载项目与用例
+### 加载项目与用例
 
 ```python
 def load_unit_cases(project, data):
@@ -617,7 +616,7 @@ def load_unit_cases(project, data):
 1. `load_unit_cases()`为每个项目解析用例文件并合并到全局字典
 2. 主项目的用例另存入`unit_run_dict`用于返回
 
-- 执行流程
+### 执行流程
 
 ```python
 if not cls.api_dict:
@@ -632,7 +631,7 @@ if cls.project_dict:
 1. 若尚未解析过项目，遍历`run_list` 调用`collect()`
 2. 然后根据`project_dict`加载各项目的用例
 
-- 准备返回结果并写入环境文件
+### 准备返回结果并写入环境文件
 
 ```python
 out_res = ["empty"]
