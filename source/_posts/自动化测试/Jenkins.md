@@ -96,3 +96,94 @@ if jk.has_job(job_name):
 # Finished
 # build_num:12
 ```
+
+## Xmind_autointerface 自动化全流程
+
+摘要：docker拉取jenkins需要开梯子
+
+### 环境配置
+
+- 宿主机安装java和allure，
+
+- ```shell
+  ## 初始化jenkins
+  docker pull jenkins/jenkins:lts-jdk21
+  
+  
+  mkdir -p /opt/jenkins_home
+  chown -R 1000:1000 /opt/jenkins_home
+  
+  
+  docker run -d \
+    --name jenkins \
+    -p 8082:8080 \
+    -p 50000:50000 \
+    -v /opt/jenkins_home:/var/jenkins_home \
+    -e JAVA_OPTS="-Dhudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION=true" \
+    jenkins/jenkins:lts-jdk21
+  ## 绕过CSRF方便后续配置gihubhook
+  
+  cat /opt/jenkins_home/secrets/initialAdminPassword
+  ```
+
+- ```shell
+  ## allure环境配置
+  docker exec -it jenkins bash
+  
+  docker cp /opt/allure-2.34.1.tgz jenkins:/usr/local/src
+  
+  tar -zxvf allure-2.34.1.tgz -C /usr/local
+  
+  chmod -R 777 allure-2.34.1/
+  
+  vim /etc/profile 
+  export PATH=$PATH:/usr/local/src/allure-2.34.1/bin
+  source /etc/profile
+  vim ~/.bashrc
+  source /etc/profile
+  
+  ## 建立软链
+  ln -s /usr/local/src/allure-2.34.1/bin/allure /usr/bin/allure
+  
+  
+  
+  
+  打开 Jenkins → 【Manage Jenkins】→ 【Global Tool Configuration】
+  
+  找到 Allure Commandline
+  
+  点击 Add Allure Commandline：
+  
+  Name：allure2
+  
+  Installation：选择 Install manually
+  
+  Path to Allure：/usr/local/src/allure-2.24.1
+  
+  ⚠️ 如果你使用了软链接 /usr/bin/allure，也可只填 /usr/bin，不过推荐使用解压路径。
+  ```
+
+- ```shell
+  ## github ssh配置
+  ssh-keygen -t rsa -b 4096 -C "LZY3376163189@163.com"
+  ...
+  
+  添加类型的凭据，Username with password和Secret text(填的token) 还有ssh的凭证
+  Username with password是github登录的用户名和密码，Secret text填的github生成的token
+  ```
+
+- Github hook配置
+
+​	![image-20250728150424889](../../img/image-20250728150424889.png)
+
+
+
+### 详细配置
+
+​	![image-20250728145948652](../../img/image-20250728145948652.png)
+
+![image-20250728150005738](../../img/image-20250728150005738.png)
+
+![image-20250728150500070](../../img/image-20250728150500070.png)
+
+![image-20250728150519263](../../img/image-20250728150519263.png)

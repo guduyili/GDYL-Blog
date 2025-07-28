@@ -86,7 +86,10 @@ theme: flexblock
 
 # 部署
 deploy:
-  type: ''
+    type: git
+    repo: git@SERVER:/home/git/blog.git     # 用户名@服务器Ip:git仓库位置
+    branch: master      # 分支
+
 
 # 页头
 menu:
