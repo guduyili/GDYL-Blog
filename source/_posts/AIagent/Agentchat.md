@@ -2,9 +2,9 @@
 title: AIagent_Learning
 date: 2026-01-04
 categories: 
-- 计组
+- AI
 tag:
-- 带砖生的速成
+- AI
 ---
 
 <!-- toc -->
