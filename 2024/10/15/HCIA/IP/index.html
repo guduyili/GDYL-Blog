@@ -1,0 +1,791 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6">
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="[object Object]">
+  
+
+  
+
+  
+
+  <title>IP | GuDu-Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha256-TThEtR+XalhWKkfF383YLOrI50NGNeIqrzS+q08afrY=" crossorigin="anonymous"><!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://imgs.aixifan.com/o_1dj1ntbbl13km9jpf9j9a49ag2k.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          GuDu-Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">Home</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">Archives</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">Links</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">IP</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Guduyili</strong>
+            <span>发布于</span>
+            <time class="article-date" datetime="2024-10-15T00:00:00.000Z" itemprop="datePublished">2024-10-15</time>
+          </h2>
+          
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time class="article-updated" datetime="2024-10-30T00:00:00.000Z" itemprop="dateUpdated">2024-10-30</time>
+            </h2>
+          
+          
+            <h2 id="/2024/10/15/HCIA/IP/" class="title-sub-wrap leancloud_visitors" data-flag-title="IP">
+              <em>文章访问量</em>
+              <i class="leancloud-visitors-count"></i>
+            </h2>
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/HCIA/">📒 HCIA</a></li>
+    
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/learning/">🏷️ learning</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E5%9C%B0%E5%9D%80">地址</a></li>
+<li><a href="#ipv4">IPV4</a><ul>
+<li><a href="#a%E7%B1%BB%E5%9C%B0%E5%9D%80">A类地址</a></li>
+<li><a href="#b%E7%B1%BB%E5%9C%B0%E5%9D%80">B类地址</a></li>
+<li><a href="#c%E7%B1%BB%E5%9C%B0%E5%9D%80">C类地址</a></li>
+<li><a href="#a%E7%B1%BB%E7%A7%81%E6%9C%89ip%E5%9C%B0%E5%9D%80">A类私有IP地址</a></li>
+<li><a href="#b%E7%B1%BB%E7%A7%81%E6%9C%89ip%E5%9C%B0%E5%9D%80">B类私有IP地址</a></li>
+<li><a href="#c%E7%B1%BB%E7%A7%81%E6%9C%89ip%E5%9C%B0%E5%9D%80">C类私有IP地址</a></li>
+</ul>
+</li>
+<li><a href="#ipv6">IPV6</a><ul>
+<li><a href="#1-%E5%8D%95%E6%92%AD%E5%9C%B0%E5%9D%80unicast-address">1. <strong>单播地址（Unicast Address）</strong></a></li>
+<li><a href="#2-%E5%A4%9A%E6%92%AD%E5%9C%B0%E5%9D%80multicast-address">2. <strong>多播地址（Multicast Address）</strong></a></li>
+<li><a href="#3-%E4%BB%BB%E6%92%AD%E5%9C%B0%E5%9D%80anycast-address">3. <strong>任播地址（Anycast Address）</strong></a></li>
+<li><a href="#%E7%89%B9%E6%AE%8A%E7%94%A8%E9%80%94%E5%9C%B0%E5%9D%80">特殊用途地址</a></li>
+</ul>
+</li>
+<li><a href="#ospf">OSPF</a><br>- <a href="#1-%E9%93%BE%E8%B7%AF%E7%8A%B6%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE">1. <strong>链路状态路由协议</strong></a><br>- <a href="#2-%E5%8C%BA%E5%9F%9F%E5%92%8C%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84">2. <strong>区域和层次结构</strong></a><br>- <a href="#3-ospf%E6%8A%A5%E6%96%87%E7%B1%BB%E5%9E%8B">3. <strong>OSPF报文类型</strong></a><br>- <a href="#4-%E8%B7%AF%E7%94%B1%E8%AE%A1%E7%AE%97">4. <strong>路由计算</strong></a><br>- <a href="#5-%E5%BF%AB%E9%80%9F%E6%94%B6%E6%95%9B">5. <strong>快速收敛</strong></a><br>- <a href="#6-%E5%AE%89%E5%85%A8%E6%80%A7">6. <strong>安全性</strong></a><br>- <a href="#7ospf%E5%8D%8F%E8%AE%AE%E5%9C%A8%E7%BD%91%E7%BB%9C%E5%B1%82%E5%AF%B9%E5%BA%94%E7%9A%84%E5%8D%8F%E8%AE%AE%E5%8F%B7">7.OSPF协议在网络层对应的协议号</a></li>
+<li><a href="#ipv6-ipv4%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98">IPV6 IPV4常见问题</a><ul>
+<li><a href="#ipv6%E6%8A%A5%E6%96%87%E5%A4%B4%E5%AD%97%E6%AE%B5%E6%A6%82%E8%A7%88">IPv6报文头字段概览</a></li>
+<li><a href="#ipv4%E6%8A%A5%E6%96%87%E5%A4%B4%E7%9A%84%E5%AD%97%E6%AE%B5">IPv4报文头的字段</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p><strong>私有（内部）IP地址</strong> （Private IP Address）是一种在本地网络（比如家庭、公司局域网等）内部使用的IP地址，它不在互联网上使用。私有IP地址的主要目的是在局部网络中标识主机设备，而不在全球唯一标识。这意味着，同一个私有IP地址可以在不同的局域网中重复使用，但在互联网上是无法直接访问的，必须通过网络地址转换（NAT，通常在路由器上实现）或代理才能访问外部网络。</p>
+<p>内网IP地址有以下几个保留的IP地址范围：</p>
+<ul>
+<li><p>10.0.0.0 - 10.255.255.255（10.0.0.0/8）</p>
+</li>
+<li><p><code>/8</code>的意思是在32位的IP地址中，前8位是<strong>网络位</strong>，剩下的24位是<strong>主机位</strong></p>
+</li>
+<li><p><strong>可用IP数量</strong> ：<code>16,777,216</code> 个地址。计算方式为：</p>
+</li>
+<li><p>2^(32−8)=2^24=16,777,216</p>
+</li>
+<li><p>172.16.0.0 - 172.31.255.255（172.16.0.0/12）</p>
+</li>
+<li><p><strong>可用IP数量</strong> ：<code>1,048,576</code> 个地址</p>
+</li>
+<li><p>192.168.0.0 - 192.168.255.255（192.168.0.0/16）</p>
+</li>
+<li><p><strong>可用IP数量</strong> ：<code>65,536</code> 个地址</p>
+</li>
+</ul>
+<h1><span id="地址">地址</span></h1><ul>
+<li><strong>网络地址</strong>： 网络号 + 子网号 + 主机号（全为0）</li>
+<li><strong>广播地址</strong>： 网络号 + 子网号 + 主机号（全为1）</li>
+<li><strong>子网掩码</strong>： 网络号（全为1） + 子网号（全为1） + 主机号（全为0）</li>
+</ul>
+<h1><span id="ipv4">IPV4</span></h1><p>IP地址通常分为A、B、C、D、E五类，其中A、B、C三类是用于普通的网络通信。每一类具有不同的网络容量和适用范围。</p>
+<h3><span id="a类地址">A类地址</span></h3><ul>
+<li><strong>范围</strong>: 1.0.0.0 到 126.255.255.255</li>
+<li><strong>默认子网掩码</strong>: 255.0.0.0 (/8)</li>
+<li><strong>特点</strong>: A类地址通常用于非常大的网络。第一个字节用来表示网络，剩下的三个字节用来表示主机。</li>
+</ul>
+<h3><span id="b类地址">B类地址</span></h3><ul>
+<li><strong>范围</strong>: 128.0.0.0 到 191.255.255.255</li>
+<li><strong>默认子网掩码</strong>: 255.255.0.0 (/16)</li>
+<li><strong>特点</strong>: B类地址用于中型网络，前两个字节用于表示网络，后两个字节用于表示主机。</li>
+</ul>
+<h3><span id="c类地址">C类地址</span></h3><ul>
+<li><strong>范围</strong>: 192.0.0.0 到 223.255.255.255</li>
+<li><strong>默认子网掩码</strong>: 255.255.255.0 (/24)</li>
+<li><strong>特点</strong>: C类地址通常用于小型网络，前三个字节用于表示网络，最后一个字节用于表示主机。</li>
+</ul>
+<p>私有IP地址（Private IP Addresses）用于本地网络（如家庭、办公室或企业网络）中，不在公共互联网中路由。这些地址由IANA（Internet Assigned Numbers Authority）在RFC 1918中定义。以下是私有IP地址的范围：</p>
+<h3><span id="a类私有ip地址">A类私有IP地址</span></h3><ul>
+<li><strong>范围</strong>: 10.0.0.0 到 10.255.255.255</li>
+<li><strong>数量</strong>: 总共16,777,216个地址</li>
+</ul>
+<h3><span id="b类私有ip地址">B类私有IP地址</span></h3><ul>
+<li><strong>范围</strong>: 172.16.0.0 到 172.31.255.255</li>
+<li><strong>数量</strong>: 总共1,048,576个地址</li>
+</ul>
+<h3><span id="c类私有ip地址">C类私有IP地址</span></h3><ul>
+<li><strong>范围</strong>: 192.168.0.0 到 192.168.255.255</li>
+<li><strong>数量</strong>: 总共65,536个地址</li>
+</ul>
+<p>这些私有地址不能直接通过互联网访问，因此通常需要通过网络地址转换（NAT, Network Address Translation）技术来实现本地网络与互联网的连接。私有IP地址的使用非常广泛，因为它们允许多个设备在同一网络中使用相同的IP地址，而不需要在全球范围内唯一标识。</p>
+<h1><span id="ipv6">IPV6</span></h1><h3><span id="1-单播地址unicast-address">1. <strong>单播地址（Unicast Address）</strong></span></h3><p>单播地址用于标识单个网络接口。数据包发送到单播地址时，将传递给该地址指定的单个接口。</p>
+<ul>
+<li><strong>全球单播地址（Global Unicast Address）</strong>：<ul>
+<li>类似于IPv4的公有地址，可以在全球范围内唯一标识一个设备。</li>
+<li><strong>通常以<code>2000::/3</code>为前缀。</strong></li>
+</ul>
+</li>
+<li><strong>链路本地地址（Link-Local Address）</strong>：<ul>
+<li>仅在同一链路（或网络段）上有效，用于自动地址配置和邻居发现。</li>
+<li><strong>前缀为<code>FE80::/10</code>。</strong></li>
+<li>不会被路由器转发，因此只适用于局部网络通信。</li>
+</ul>
+</li>
+<li><strong>唯一本地地址（Unique Local Address, ULA）</strong>：<ul>
+<li>用于本地通信且不与全球单播地址冲突。</li>
+<li>前缀为<code>FC00::/7</code>，但在实际应用中通常以<code>FD00::/8</code>开头。</li>
+<li>类似于IPv4的私有地址。</li>
+</ul>
+</li>
+</ul>
+<h3><span id="2-多播地址multicast-address">2. <strong>多播地址（Multicast Address）</strong></span></h3><p>多播地址用于标识一组接口。发送到多播地址的数据包将传递给属于该组的所有接口。</p>
+<ul>
+<li><strong>前缀</strong>：<code>FF00::/8</code>。</li>
+<li>多播地址用于在网络中进行高效的数据广播，例如视频流传输和路由协议更新。</li>
+</ul>
+<h3><span id="3-任播地址anycast-address">3. <strong>任播地址（Anycast Address）</strong></span></h3><p>任播地址分配给多个接口，但数据包将传递给距离发送者最近的一个接口。</p>
+<ul>
+<li>任播地址没有特定的前缀，通常从单播地址空间中分配。</li>
+<li>主要用于提高服务的可靠性和响应速度，例如DNS请求。</li>
+</ul>
+<h3><span id="特殊用途地址">特殊用途地址</span></h3><ul>
+<li><strong>未指定地址（Unspecified Address）</strong>：<ul>
+<li>表示“无特定地址”，相当于IPv4的<code>0.0.0.0</code>。</li>
+<li>表示为<code>::</code>或<code>::/128</code>，通常用于表示主机尚未获得有效地址。</li>
+</ul>
+</li>
+<li><strong>回环地址（Loopback Address）</strong>：<ul>
+<li>用于主机自我通信，相当于IPv4的<code>127.0.0.1</code>。</li>
+<li>表示为<code>::1</code>或<code>::1/128</code>。</li>
+</ul>
+</li>
+</ul>
+<h1><span id="ospf">OSPF</span></h1><p>OSPF是一种基于<strong>链路状态</strong>的路由协议，主要特点和功能如下：</p>
+<h4><span id="1-链路状态路由协议">1. <strong>链路状态路由协议</strong></span></h4><ul>
+<li>OSPF使用Dijkstra算法（最短路径优先算法）来计算到每个网络的最短路径。</li>
+<li>它通过链路状态数据库（LSDB）维护整个网络的拓扑视图，每个路由器都有一个完整的网络拓扑图。</li>
+</ul>
+<h4><span id="2-区域和层次结构">2. <strong>区域和层次结构</strong></span></h4><ul>
+<li>OSPF支持多区域配置，可以将一个大的自治系统分成多个区域，以减少路由表的大小和链路状态更新的传播范围。</li>
+<li>区域0（称为骨干区域）是所有其他区域必须连接的区域。</li>
+</ul>
+<h4><span id="3-ospf报文类型">3. <strong>OSPF报文类型</strong></span></h4><p>OSPF使用多种报文类型来完成其功能：</p>
+<ul>
+<li><strong>Hello报文</strong>：用于发现和维护邻居关系。</li>
+<li><strong>DBD（Database Description）报文</strong>：用于描述LSDB的内容，帮助路由器同步数据库。</li>
+<li><strong>LSR（Link State Request）报文</strong>：用于请求特定的LSA（Link State Advertisement，链路状态广告）。</li>
+<li><strong>LSU（Link State Update）报文</strong>：用于发送LSA，传播链路状态信息。</li>
+<li><strong>LSACK（Link State Acknowledgment）报文</strong>：用于确认接收到的LSU报文。</li>
+</ul>
+<h4><span id="4-路由计算">4. <strong>路由计算</strong></span></h4><ul>
+<li>OSPF计算路由时会考虑各个链路的成本（通常基于带宽），并选择具有最低总成本的路径。</li>
+<li>OSPF支持等价多路径（ECMP），可以在多个具有相同成本的路径之间进行负载均衡。</li>
+</ul>
+<h4><span id="5-快速收敛">5. <strong>快速收敛</strong></span></h4><ul>
+<li>由于OSPF基于链路状态，它能够快速响应网络拓扑的变化，提供快速收敛特性。</li>
+</ul>
+<h4><span id="6-安全性">6. <strong>安全性</strong></span></h4><ul>
+<li>OSPF支持对所有交换的报文进行身份验证，以确保只有授权的路由器才能参与OSPF路由。</li>
+</ul>
+<p>OSPF因其灵活性和高效性，广泛应用于各种企业和服务提供商网络中，是一种非常重要的路由协议。</p>
+<h4><span id="7ospf协议在网络层对应的协议号">7.OSPF协议在网络层对应的协议号</span></h4><p><strong>89</strong></p>
+<p>OSPF使用<strong>IP协议</strong>来封装和传输其路由更新数据包</p>
+<p>OSPF（Open Shortest Path First，开放最短路径优先）是一种广泛使用的内部网关协议（IGP），用于在单一自治系统内路由IP数据包。OSPF在IP数据包中的协议号为89，这是用于标识OSPF协议的专用IP协议号。</p>
+<h1><span id="ipv6-ipv4常见问题">IPV6 IPV4常见问题</span></h1><p>IPv6基本报文头部固定长度为40字节</p>
+<p>IPv4的为20字节</p>
+<p>类似于IPv4中TTL字段的IPv6字段是Hop Limit</p>
+<p>IPv4地址长度为32位（4字节）</p>
+<p>IPv6地址长度为128位（16字节）</p>
+<p><strong>IPV6比IPV4多引入了：</strong></p>
+<p><strong>Flow Label（流标签）</strong>：这是IPv6报文头中新增的字段，占用20位，用于标识数据流。Flow Label的设计目的是支持流量工程和服务质量（QoS），使得数据包在经过网络时可以被识别为属于同一个流，从而实现更好的流量管理和处理。</p>
+<h3><span id="ipv6报文头字段概览">IPv6报文头字段概览</span></h3><p>IPv6报文头的字段包括：</p>
+<ol>
+<li><strong>Version（版本）</strong>：4位，标识IP协议的版本号（IPv6的值为6）。</li>
+<li><strong>Traffic Class（流量类别）</strong>：8位，用于区分不同类型的流量，以支持服务质量（QoS）。</li>
+<li><strong>Flow Label（流标签）</strong>：20位，用于标识数据流。</li>
+<li><strong>Payload Length（有效载荷长度）</strong>：16位，表示紧随头部的有效载荷的长度（不包括头部）。</li>
+<li><strong>Next Header（下一个头部）</strong>：8位，指示在IPv6头部之后的下一个扩展头部或上层协议（类似于IPv4的协议字段）。</li>
+<li><strong>Hop Limit（跳数限制）</strong>：8位，类似于IPv4的TTL字段，限制数据包在网络中可以经过的最大跳数。</li>
+<li><strong>Source Address（源地址）</strong>：128位，数据包的发送者地址。</li>
+<li><strong>Destination Address（目的地址）</strong>：128位，数据包的接收者地址。</li>
+</ol>
+<h3><span id="ipv4报文头的字段">IPv4报文头的字段</span></h3><ul>
+<li><strong>Version（版本）</strong>：4位，指定IP协议的版本号（IPv4的值为4）。</li>
+<li><strong>IHL（Internet Header Length，头部长度）</strong>：4位，表示IP头部的长度，以32位字为单位。最小值是5，表示20字节，最大值是15，表示60字节。</li>
+<li><strong>Type of Service（服务类型）</strong>：8位，用于指定数据包的优先级和QoS要求。现已被重定义为“Differentiated Services”。</li>
+<li><strong>Total Length（总长度）</strong>：16位，表示整个IP数据包（包括数据和头部）的长度，以字节为单位。</li>
+<li><strong>Identification（标识）</strong>：16位，用于唯一标识主机发送的每一个数据包，通常用于数据包分片。</li>
+<li><strong>Flags（标志）</strong>：3位，其中包含控制分片的标志位，包括DF（Don’t Fragment，不分片）和MF（More Fragments，还有分片）。</li>
+<li><strong>Fragment Offset（片偏移）</strong>：13位，表示数据包分片在原始数据包中的位置。</li>
+<li><strong>Time to Live（生存时间，TTL）</strong>：8位，表示数据包在网络中的最大跳数，防止数据包在网络中无限循环。</li>
+<li><strong>Protocol（协议）</strong>：8位，指示数据包所承载的上层协议（例如，ICMP、TCP、UDP）。</li>
+<li><strong>Header Checksum（头部校验和）</strong>：16位，用于校验IP头部的完整性。</li>
+<li><strong>Source Address（源地址）</strong>：32位，表示数据包发送方的IP地址。</li>
+<li><strong>Destination Address（目的地址）</strong>：32位，表示数据包接收方的IP地址。</li>
+<li><strong>Options（可选项）</strong>：可变长度，提供额外的控制信息，具体长度由IHL字段决定。</li>
+<li><strong>Padding（填充）</strong>：使头部长度达到32位的整数倍。</li>
+</ul>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/10/15/Git/GitBranch/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Git Branch</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/10/15/HCIA/MAC/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">MAC</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img class="soft-size--round soft-style--box lazy" alt="Guduyili" data-src="/img/friend_404.gif" data-original="/../../img/9c0e14447527992b401a1827d37127cd.png">
+    
+    
+      <h2>Guduyili</h2>
+    
+    
+      <p>我心匪石，不可轉也。我心匪席，不可卷也</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>68</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        26
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        7
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>Warning! Warning!</p>
+  </div>
+</section>
+
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li class="categories-list-item">
+          <a href="/categories/SQL/">
+            SQL (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/AI/">
+            AI (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Go/">
+            Go (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/git/">
+            git (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/HCIA/">
+            HCIA (11)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Hexo/">
+            Hexo (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/JAVA/">
+            JAVA (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Linux/">
+            Linux (7)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/My-Project/">
+            My Project (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Spring-boot/">
+            Spring-boot (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Redis/">
+            Redis (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Unity/">
+            Unity (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87/">
+            学习目标 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+            软件测试 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/">
+            生活感想 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%AE%97%E6%B3%95/">
+            算法 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">
+            自动化测试 (8)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%97%A5%E8%AF%AD/">
+            日语 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%A4%A7%E7%89%A9/">
+            大物 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+            数据库 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%A6%82%E7%BB%9F/">
+            概统 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
+            线性代数 (4)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+            图形学 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%AE%A1%E7%BB%84/">
+            计组 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+            操作系统 (2)
+          </a>
+        </li>
+        
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;" class="tags-cloud-3">AI</a> <a href="/tags/JAVA/" style="font-size: 13.33px;" class="tags-cloud-3">JAVA</a> <a href="/tags/blog/" style="font-size: 10px;" class="tags-cloud-0">blog</a> <a href="/tags/learning/" style="font-size: 20px;" class="tags-cloud-10">learning</a> <a href="/tags/music/" style="font-size: 10px;" class="tags-cloud-0">music</a> <a href="/tags/%E5%B8%A6%E7%A0%96%E7%94%9F%E7%9A%84%E9%80%9F%E6%88%90/" style="font-size: 16.67px;" class="tags-cloud-7">带砖生的速成</a> <a href="/tags/%E6%84%9F%E6%83%B3/" style="font-size: 10px;" class="tags-cloud-0">感想</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/guduyili" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>© 2026 <a href="/" target="_blank">Guduyili</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/guduyili" target="_blank" rel="noopener noreferrer author">GDYL-Blog</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+<script type="text/javascript">
+	(function () {
+		// todo
+	})();
+</script>
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<script>document.addEventListener("DOMContentLoaded", function() {
+  var lazyloadImages;
+
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.src = image.dataset.src;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+        });
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
+    }
+
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
+})
+</script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>(r=>{r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,o=r.imageLazyLoadSetting.preloadRatio||1,d=i();function i(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=i());for(var e,n=0;n<d.length;n++)0<=(e=(e=d[n]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*o||document.documentElement.clientHeight*o)&&(()=>{var t,e,a,o,i=d[n];e=function(){d=d.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,o=t.getAttribute("data-original"),a.onload=function(){t.src=o,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=o},t.src!==o&&(a.src=o)))})()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)})(this);</script></body></html>

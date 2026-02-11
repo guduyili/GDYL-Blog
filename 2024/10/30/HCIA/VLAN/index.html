@@ -1,0 +1,960 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6">
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="[object Object]">
+  
+
+  
+
+  
+
+  <title>VLAN | GuDu-Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha256-TThEtR+XalhWKkfF383YLOrI50NGNeIqrzS+q08afrY=" crossorigin="anonymous"><!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://imgs.aixifan.com/o_1dj1ntbbl13km9jpf9j9a49ag2k.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          GuDu-Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">Home</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">Archives</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">Links</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">VLAN</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Guduyili</strong>
+            <span>发布于</span>
+            <time class="article-date" datetime="2024-10-30T00:00:00.000Z" itemprop="datePublished">2024-10-30</time>
+          </h2>
+          
+          
+            <h2 id="/2024/10/30/HCIA/VLAN/" class="title-sub-wrap leancloud_visitors" data-flag-title="VLAN">
+              <em>文章访问量</em>
+              <i class="leancloud-visitors-count"></i>
+            </h2>
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/HCIA/">📒 HCIA</a></li>
+    
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/learning/">🏷️ learning</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <!-- toc -->
+
+<ul>
+<li><a href="#vlan%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3">VLAN原理详解</a><ul>
+<li><a href="#1%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81vlan">1.为什么需要VLAN</a><ul>
+<li><a href="#11-%E4%BB%80%E4%B9%88%E6%98%AFvlan"><strong>1.1 什么是VLAN？</strong></a></li>
+<li><a href="#12-%E6%9C%AA%E5%88%86%E5%89%B2%E5%B9%BF%E6%92%AD%E5%9F%9F%E6%97%B6"><strong>1.2 未分割广播域时……</strong></a></li>
+<li><a href="#13-%E5%B9%BF%E6%92%AD%E4%BF%A1%E6%81%AF%E6%98%AF%E9%82%A3%E4%B9%88%E7%BB%8F%E5%B8%B8%E5%8F%91%E5%87%BA%E7%9A%84%E5%90%97"><strong>1.3 广播信息是那么经常发出的吗？</strong></a></li>
+<li><a href="#14-%E5%B9%BF%E6%92%AD%E5%9F%9F%E7%9A%84%E5%88%86%E5%89%B2%E4%B8%8Evlan%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><strong>1.4 广播域的分割与VLAN的必要性</strong></a></li>
+</ul>
+</li>
+<li><a href="#2%E5%AE%9E%E7%8E%B0vlan%E7%9A%84%E6%9C%BA%E5%88%B6"><strong>2.实现VLAN的机制</strong></a><ul>
+<li><a href="#21-%E5%AE%9E%E7%8E%B0vlan%E7%9A%84%E6%9C%BA%E5%88%B6"><strong>2.1 实现VLAN的机制</strong></a></li>
+<li><a href="#22-%E7%9B%B4%E8%A7%82%E5%9C%B0%E6%8F%8F%E8%BF%B0vlan"><strong>2.2 直观地描述VLAN</strong></a></li>
+<li><a href="#23-%E9%9C%80%E8%A6%81vlan%E9%97%B4%E9%80%9A%E4%BF%A1%E6%97%B6%E6%80%8E%E4%B9%88%E5%8A%9E"><strong>2.3 需要VLAN间通信时怎么办</strong></a></li>
+</ul>
+</li>
+<li><a href="#3vlan%E7%9A%84%E8%AE%BF%E9%97%AE%E9%93%BE%E6%8E%A5access-link"><strong>3.VLAN的访问链接（Access Link）</strong></a><ul>
+<li><a href="#31-%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E7%AB%AF%E5%8F%A3%E7%B1%BB%E5%9E%8B"><strong>3.1 交换机的端口类型</strong></a></li>
+<li><a href="#32-%E8%AE%BF%E9%97%AE%E9%93%BE%E6%8E%A5"><strong>3.2 访问链接</strong></a></li>
+</ul>
+</li>
+<li><a href="#4vlan%E7%9A%84%E6%B1%87%E8%81%9A%E9%93%BE%E6%8E%A5trunk-link"><strong>4.VLAN的汇聚链接（Trunk Link）</strong></a><ul>
+<li><a href="#41-%E9%9C%80%E8%A6%81%E8%AE%BE%E7%BD%AE%E8%B7%A8%E8%B6%8A%E5%A4%9A%E5%8F%B0%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84vlan%E6%97%B6"><strong>4.1 需要设置跨越多台交换机的VLAN时……</strong></a></li>
+<li><a href="#42-%E4%BD%95%E8%B0%93%E6%B1%87%E8%81%9A%E9%93%BE%E6%8E%A5"><strong>4.2 何谓汇聚链接？</strong></a></li>
+<li><a href="#43-%E8%AE%BF%E9%97%AE%E9%93%BE%E6%8E%A5%E7%9A%84%E6%80%BB%E7%BB%93"><strong>4.3 访问链接的总结</strong></a></li>
+</ul>
+</li>
+<li><a href="#5vlan%E7%9A%84%E6%B1%87%E8%81%9A%E6%96%B9%E5%BC%8Fieee8021q%E4%B8%8Eisl">5.VLAN的汇聚方式——IEEE802.1Q与ISL</a><ul>
+<li><a href="#51-%E6%B1%87%E8%81%9A%E6%96%B9%E5%BC%8F"><strong>5.1 汇聚方式</strong></a></li>
+<li><a href="#52-ieee-8021q"><strong>5.2 [IEEE 802.1Q]</strong></a></li>
+<li><a href="#53-islinter-switch-link"><strong>5.3 ISL（Inter Switch Link）</strong></a></li>
+</ul>
+</li>
+<li><a href="#6vlan%E9%97%B4%E8%B7%AF%E7%94%B1"><strong>6.VLAN间路由</strong></a><ul>
+<li><a href="#61-vlan%E9%97%B4%E8%B7%AF%E7%94%B1%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><strong>6.1 VLAN间路由的必要性</strong></a></li>
+<li><a href="#62-%E4%BD%BF%E7%94%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E8%BF%9B%E8%A1%8Cvlan%E9%97%B4%E8%B7%AF%E7%94%B1"><strong>6.2 使用路由器进行VLAN间路由</strong></a></li>
+<li><a href="#63-%E5%90%8C%E4%B8%80vlan%E5%86%85%E7%9A%84%E9%80%9A%E4%BF%A1"><strong>6.3 同一VLAN内的通信</strong></a></li>
+<li><a href="#64-%E4%B8%8D%E5%90%8Cvlan%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1"><strong>6.4 不同VLAN间的通信</strong></a></li>
+</ul>
+</li>
+<li><a href="#7%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BA"><strong>7.三层交换机</strong></a><ul>
+<li><a href="#71-%E4%BD%BF%E7%94%A8%E8%B7%AF%E7%94%B1%E5%99%A8%E8%BF%9B%E8%A1%8Cvlan%E9%97%B4%E8%B7%AF%E7%94%B1%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98"><strong>7.1 使用路由器进行VLAN间路由时的问题</strong></a></li>
+<li><a href="#72-%E4%B8%89%E5%B1%82%E4%BA%A4%E6%8D%A2%E6%9C%BAlayer-3-switch"><strong>7.2 三层交换机（Layer 3 Switch）</strong></a></li>
+</ul>
+</li>
+<li><a href="#8%E5%8A%A0%E9%80%9Fvlan%E9%97%B4%E9%80%9A%E4%BF%A1%E7%9A%84%E6%89%8B%E6%AE%B5"><strong>8.加速VLAN间通信的手段</strong></a><ul>
+<li><a href="#81-%E6%B5%81flow"><strong>8.1 流（Flow）</strong></a></li>
+<li><a href="#82-%E5%8A%A0%E9%80%9Fvlan%E9%97%B4%E8%B7%AF%E7%94%B1%E7%9A%84%E6%9C%BA%E5%88%B6"><strong>8.2 加速VLAN间路由的机制</strong></a></li>
+</ul>
+</li>
+<li><a href="#9%E4%BC%A0%E7%BB%9F%E5%9E%8B%E8%B7%AF%E7%94%B1%E5%99%A8%E5%AD%98%E5%9C%A8%E7%9A%84%E6%84%8F%E4%B9%89"><strong>9.传统型路由器存在的意义</strong></a><ul>
+<li><a href="#91-%E8%B7%AF%E7%94%B1%E5%99%A8%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><strong>9.1 路由器的必要性</strong></a></li>
+<li><a href="#92-%E8%B7%AF%E7%94%B1%E5%99%A8%E5%92%8C%E4%BA%A4%E6%8D%A2%E6%9C%BA%E9%85%8D%E5%90%88%E6%9E%84%E5%BB%BAlan%E7%9A%84%E5%AE%9E%E4%BE%8B"><strong>9.2 路由器和交换机配合构建LAN的实例</strong></a></li>
+</ul>
+</li>
+<li><a href="#10%E4%BD%BF%E7%94%A8vlan%E8%AE%BE%E8%AE%A1%E5%B1%80%E5%9F%9F%E7%BD%91"><strong>10.使用VLAN设计局域网</strong></a><ul>
+<li><a href="#101-%E4%BD%BF%E7%94%A8vlan%E8%AE%BE%E8%AE%A1%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E7%89%B9%E7%82%B9"><strong>10.1 使用VLAN设计局域网的特点</strong></a></li>
+<li><a href="#102-%E4%B8%8D%E4%BD%BF%E7%94%A8vlan%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%AD%E7%BD%91%E7%BB%9C%E6%9E%84%E6%88%90%E7%9A%84%E6%94%B9%E5%8F%98"><strong>10.2 不使用VLAN的局域网中网络构成的改变</strong></a></li>
+<li><a href="#103-%E4%BD%BF%E7%94%A8vlan%E7%9A%84%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%AD%E7%BD%91%E7%BB%9C%E6%9E%84%E6%88%90%E7%9A%84%E6%94%B9%E5%8F%98"><strong>10.3 使用VLAN的局域网中网络构成的改变</strong></a></li>
+<li><a href="#104-%E5%88%A9%E7%94%A8vlan%E8%80%8C%E5%AF%BC%E8%87%B4%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E5%A4%8D%E6%9D%82%E5%8C%96"><strong>10.4 利用VLAN而导致的网络结构复杂化</strong></a></li>
+<li><a href="#105-%E7%BD%91%E7%BB%9C%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><strong>10.5 网络的逻辑结构与物理结构</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<h1><span id="vlan原理详解">VLAN原理详解</span></h1><h3><span id="1为什么需要vlan">1.为什么需要VLAN</span></h3><h4><span id="11-什么是vlan"><strong>1.1 什么是VLAN？</strong></span></h4><p> VLAN（Virtual LAN），翻译成中文是“虚拟局域网”。LAN可以是由少数几台家用计算机构成的网络，也可以是数以百计的计算机构成的企业网络。VLAN所指的LAN特指使用路由器<strong>分割</strong>的网络——也就是广播域。</p>
+<p> 在此让我们先复习一下广播域的概念。<strong>广播域</strong>，指的是广播帧（目标MAC地址全部为1）所能传递到的范围，亦即能够直接通信的范围。严格地说，并不仅仅是广播帧，多播帧（Multicast Frame）和目标不明的单播帧（Unknown Unicast Frame）也能在同一个广播域中畅行无阻。</p>
+<p> 本来，二层交换机只能构建单一的广播域，不过使用VLAN功能后，它能够<strong>将网络分割成多个广播域</strong>。</p>
+<h4><span id="12-未分割广播域时"><strong>1.2 未分割广播域时……</strong></span></h4><p> 那么，为什么需要分割广播域呢？那是因为，如果仅有一个广播域，有可能会影响到网络整体的传输性能。具体原因，请参看附图加深理解。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174341921 ) -->
+
+
+
+<p> 图中，是一个由5台二层交换机（交换机1～5）连接了大量客户机构成的网络。假设这时，计算机A需要与计算机B通信。在基于以太网的通信中，必须在数据帧中指定目标MAC地址才能正常通信，因此计算机A必须先广播“ARP请求（ARP Request）信息”，来尝试获取计算机B的MAC地址。</p>
+<p> 交换机1收到广播帧（ARP请求）后，会将它<strong>转发</strong>给除接收端口外的其他所有端口，也就是Flooding了。接着，交换机2收到广播帧后也会Flooding。交换机3、4、5也还会Flooding。最终ARP请求会被转发到同一网络中的<strong>所有</strong>客户机上。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174436734 ) -->
+
+
+
+<p> 请大家注意一下，这个ARP请求原本是为了获得计算机B的MAC地址而发出的。也就是说：只要计算机B能收到就万事大吉了。可是事实上，数据帧却传遍整个网络，导致所有的计算机都收到了它。如此一来，一方面广播信息消耗了网络整体的带宽，另一方面，收到广播信息的计算机还要消耗一部分CPU时间来对它进行处理。造成了网络带宽和CPU运算能力的大量<strong>无谓消耗</strong>。</p>
+<h4><span id="13-广播信息是那么经常发出的吗"><strong>1.3 广播信息是那么经常发出的吗？</strong></span></h4><p> 读到这里，您也许会问：广播信息真是那么频繁出现的吗？</p>
+<p> 答案是：是的！实际上广播帧会非常频繁地出现。利用TCP/IP协议栈通信时，除了前面出现的ARP外，还有可能需要发出DHCP、RIP等很多其他类型的广播信息。</p>
+<p> ARP广播，是在需要与其他主机通信时发出的。当客户机请求DHCP服务器分配IP地址时，就必须发出DHCP的广播。而使用<strong>RIP</strong>作为路由协议时，每隔30秒路由器都会对邻近的其他路由器广播一次路由信息。RIP以外的其他路由协议使用多播传输路由信息，这也会被交换机转发（Flooding）。除了TCP/IP以外，NetBEUI、IPX和Apple Talk等协议也经常需要用到广播。例如在Windows下双击打开“网络计算机”时就会发出广播（多播）信息。（Windows XP除外……）</p>
+<p> 总之，广播就在我们身边。下面是一些常见的广播通信：</p>
+<p> （1）ARP请求：建立IP地址和MAC地址的映射关系。</p>
+<p> （2）RIP：一种路由协议。</p>
+<p> （3）DHCP：用于自动设定IP地址的协议。</p>
+<p> （4）NetBEUI：Windows下使用的网络协议。</p>
+<p> （5）IPX：NovellNetware使用的网络协议。</p>
+<p> （6）Apple Talk：苹果公司的Macintosh计算机使用的网络协议。</p>
+<p> 如果整个网络只有一个广播域，那么一旦发出广播信息，就会传遍整个网络，并且对网络中的主机带来额外的负担。因此，在设计LAN时，需要注意如何才能有效地<strong>分割</strong>广播域。</p>
+<h4><span id="14-广播域的分割与vlan的必要性"><strong>1.4 广播域的分割与VLAN的必要性</strong></span></h4><p> 分割广播域时，一般都<strong>必须</strong>使用到路由器。使用路由器后，可以以路由器上的网络接口（LAN Interface）为<strong>单位</strong>分割广播域。</p>
+<p> 但是，通常情况下路由器上不会有太多的网络接口，其数目多在1～4个左右。随着宽带连接的普及，宽带路由器（或者叫IP共享器）变得较为常见，但是需要注意的是，它们上面虽然带着多个（一般为4个左右）连接LAN一侧的网络接口，但那实际上是路由器<strong>内置</strong>的交换机，并不能分割广播域。</p>
+<p> 况且使用路由器分割广播域的话，所能分割的个数完全取决于路由器的网络接口个数，使得用户无法自由地根据实际需要分割广播域。</p>
+<p> 与路由器相比，二层交换机一般带有多个网络接口。因此如果能使用它分割广播域，那么无疑运用上的灵活性会大大提高。</p>
+<p> 用于在二层交换机上分割广播域的技术，就是<strong>VLAN</strong>。通过利用VLAN，我们可以自由设计广播域的构成，提高网络设计的自由度。</p>
+<h3><span id="2实现vlan的机制"><strong>2.实现VLAN的机制</strong></span></h3><h4><span id="21-实现vlan的机制"><strong>2.1 实现VLAN的机制</strong></span></h4><p> 在理解了“为什么需要VLAN”之后，接下来让我们来了解一下交换机是如何使用VLAN分割广播域的。</p>
+<p> 首先，在一台未设置任何VLAN的二层交换机上，任何广播帧都会被转发给除接收端口外的所有其他端口（Flooding）。例如，计算机A发送广播信息后，会被转发给端口2、3、4。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174726312 ) -->
+
+
+
+<p>  这时，如果在交换机上生成红、蓝两个VLAN；同时设置端口1、2属于红色VLAN、端口3、4属于蓝色VLAN。再从A发出广播帧的话，交换机就<strong>只会</strong>把它转发给同属于一个VLAN的其他端口——也就是同属于红色VLAN的端口2，<strong>不会</strong>再转发给属于蓝色VLAN的端口。</p>
+<p> 同样，C发送广播信息时，只会被转发给其他属于蓝色VLAN的端口，不会被转发给属于红色VLAN的端口。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174753812 ) -->
+
+
+
+<p> 就这样，VLAN通过<strong>限制</strong>广播帧转发的范围<strong>分割</strong>了广播域。上图中为了便于说明，以红、蓝两色识别不同的VLAN，在实际使用中则是用“<strong>VLAN ID</strong>”来区分的。</p>
+<h4><span id="22-直观地描述vlan"><strong>2.2 直观地描述VLAN</strong></span></h4><p> 如果要更为直观地描述VLAN的话，我们可以把它理解为将一台交换机在<strong>逻辑上分割成了数台交换机</strong>。在一台交换机上生成红、蓝两个VLAN，也可以看作是将一台交换机换做一红一蓝两台虚拟的交换机。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174827609 ) -->
+
+
+
+<p> 在红、蓝两个VLAN之外生成新的VLAN时，可以想象成又添加了新的交换机。</p>
+<p> 但是，VLAN生成的<strong>逻辑</strong>上的交换机是<strong>互不相通</strong>的。因此，在交换机上设置VLAN后，如果未做其他处理，VLAN间是无法通信的。</p>
+<p> 明明接在同一台交换机上，但却偏偏无法通信——这个事实也许让人难以接受。但它既是VLAN方便易用的特征，又是使VLAN令人难以理解的原因。</p>
+<h4><span id="23-需要vlan间通信时怎么办"><strong>2.3 需要VLAN间通信时怎么办</strong></span></h4><p> 那么，当我们需要在不同的VLAN间通信时又该如何是好呢？</p>
+<p> 请大家再次回忆一下：VLAN是广播域。而通常两个广播域之间由路由器连接，广播域之间来往的数据包都是由<strong>路由器中继</strong>的。因此，VLAN间的通信也需要路由器提供中继服务，这被称作“<strong>VLAN间路由</strong>”。</p>
+<p> VLAN间路由，可以使用普通的路由器，也可以使用三层交换机。其中的具体内容，等有机会再细说吧。在这里希望大家先记住不同VLAN间互相通信时需要用到路由功能。</p>
+<h3><span id="3vlan的访问链接access-link"><strong>3.VLAN的访问链接（Access Link）</strong></span></h3><h4><span id="31-交换机的端口类型"><strong>3.1 交换机的端口类型</strong></span></h4><p> 交换机的端口，可以分为以下两种：</p>
+<p> （1）访问链接（Access Link）</p>
+<p> （2）汇聚链接（Trunk Link）</p>
+<p> 接下来就让我们来依次学习这两种不同端口的特征。这一讲，首先学习“访问链接”。</p>
+<h4><span id="32-访问链接"><strong>3.2 访问链接</strong></span></h4><p> 访问链接，指的是“只属于一个VLAN，且仅向该VLAN转发数据帧”的端口。在大多数情况下，访问链接所连的是客户机。</p>
+<p> 通常设置VLAN的顺序是：</p>
+<p> （1）生成VLAN</p>
+<p> （2）设定访问链接（决定各端口<strong>属于</strong>哪一个VLAN）</p>
+<p> 设定访问链接的手法，可以是事先固定的、也可以是根据所连的计算机而动态改变设定。前者被称为“静态VLAN”、后者自然就是“动态VLAN”了。</p>
+<p> <strong>3.2.1 静态VLAN——基于端口</strong></p>
+<p> 静态VLAN又被称为基于端口的VLAN（PortBased VLAN）。顾名思义，就是明确指定各端口属于哪个VLAN的设定方法。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174909406 ) -->
+
+
+
+<p> 由于需要一个个端口地指定，因此当网络中的计算机数目超过一定数字（比如数百台）后，设定操作就会变得烦杂无比。并且，客户机每次变更所连端口，都必须同时更改该端口所属VLAN的设定——这显然不适合那些需要频繁改变拓补结构的网络。</p>
+<p> <strong>3.2.2 动态VLAN</strong></p>
+<p> 另一方面，动态VLAN则是根据每个端口所连的计算机，随时改变端口所属的VLAN。这就可以避免上述的更改设定之类的操作。动态VLAN可以大致分为3类：</p>
+<p> （1）基于MAC地址的VLAN（MAC Based VLAN）</p>
+<p> （2）基于子网的VLAN（Subnet Based VLAN）</p>
+<p> （3）基于用户的VLAN（User Based VLAN）</p>
+<p> 其间的差异，主要在于根据OSI参照模型哪一层的信息决定端口所属的VLAN。</p>
+<p> <strong>3.2.2.1 基于MAC地址的VLAN</strong></p>
+<p> <strong>基于MAC地址的VLAN</strong>，就是通过查询并记录端口所连计算机上网卡的MAC地址来决定端口的所属。假定有一个MAC地址“A”被交换机设定为属于VLAN “10”，那么不论MAC地址为“A”的这台计算机连在交换机哪个端口，该端口都会被划分到VLAN 10中去。计算机连在端口1时，端口1属于VLAN 10；而计算机连在端口2时，则是端口2属于VLAN 10。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726174941218 ) -->
+
+
+
+<p> 由于是基于MAC地址决定所属VLAN的，因此可以理解为这是一种在OSI的<strong>第二层设定访问链接</strong>的办法。</p>
+<p> 但是，基于MAC地址的VLAN，在设定时必须调查所连接的所有计算机的MAC地址并加以登录。而且如果计算机交换了网卡，还是需要更改设定。</p>
+<p> <strong>3.2.2.2 基于IP地址的VLAN</strong></p>
+<p> <strong>基于子网的VLAN</strong>，则是通过所连计算机的IP地址，来决定端口所属VLAN的。不像基于MAC地址的VLAN，即使计算机因为交换了网卡或是其他原因导致MAC地址改变，只要它的IP地址不变，就仍可以加入原先设定的VLAN。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726175015406 ) -->
+
+
+
+<p> 因此，与基于MAC地址的VLAN相比，能够更为简便地改变网络结构。IP地址是OSI参照模型中第三层的信息，所以我们可以理解为基于子网的VLAN是一种在OSI的<strong>第三层设定访问链接</strong>的方法。</p>
+<p> 基于用户的VLAN，则是根据交换机各端口所连的计算机上当前登录的用户，来决定该端口属于哪个VLAN。这里的用户识别信息，一般是计算机操作系统登录的用户，比如可以是Windows域中使用的用户名。这些用户名信息，属于OSI第四层以上的信息。</p>
+<p> 总的来说，决定端口所属VLAN时利用的信息在OSI中的层面越高，就越适于构建灵活多变的网络。</p>
+<h3><span id="4vlan的汇聚链接trunk-link"><strong>4.VLAN的汇聚链接（Trunk Link）</strong></span></h3><blockquote>
+</blockquote>
+<h4><span id="41-需要设置跨越多台交换机的vlan时"><strong>4.1 需要设置跨越多台交换机的VLAN时……</strong></span></h4><p> 到此为止，我们学习的都是使用单台交换机设置VLAN时的情况。那么，如果需要设置跨越多台交换机的VLAN时又如何呢？</p>
+<p> 在规划企业级网络时，很有可能会遇到隶属于同一部门的用户分散在同一座建筑物中的不同楼层的情况，这时可能就需要考虑到如何跨越多台交换机设置VLAN的问题了。假设有如下图所示的网络，且需要将不同楼层的A、C和B、D设置为同一个VLAN。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726175059421 ) -->
+
+
+
+<p> 这时最关键的就是“交换机1和交换机2该如何连接才好呢？”</p>
+<p> 最简单的方法，自然是在交换机1和交换机2上各设一个红、蓝VLAN专用的接口并互联了。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726175129312 ) -->
+
+
+
+<p> 但是，这个办法从扩展性和管理效率来看都不好。例如，在现有网络基础上再新建VLAN时，为了让这个VLAN能够互通，就需要在交换机间连接新的网线。建筑物楼层间的纵向布线是比较麻烦的，一般不能由基层管理人员随意进行。并且，VLAN越多，楼层间（严格地说是交换机间）互联所需的端口也越来越多，交换机端口的利用效率低是对资源的一种浪费、也限制了网络的扩展。</p>
+<p> 为了避免这种低效率的连接方式，人们想办法让交换机间互联的网线集中到一根上，这时使用的就是<strong>汇聚链接</strong>（Trunk Link）。</p>
+<h4><span id="42-何谓汇聚链接"><strong>4.2 何谓汇聚链接？</strong></span></h4><p> <strong>汇聚链接</strong>（Trunk Link）指的是能够转发多个不同VLAN的通信的端口。</p>
+<p> 汇聚链路上流通的数据帧，都被附加了用于识别分属于哪个VLAN的特殊信息。</p>
+<p> 现在再让我们回过头来考虑一下刚才那个网络如果采用汇聚链路又会如何呢？用户只需要简单地将交换机间<strong>互联</strong>的端口设定为<strong>汇聚链接</strong>就可以了。这时使用的网线还是普通的UTP线，而不是什么其他的特殊布线。图例中是交换机间互联，因此需要用**[交叉线]**来连接。</p>
+<p> 接下来，让我们具体看看汇聚链接是如何<strong>实现</strong>跨越交换机间的VLAN的。</p>
+<p> A发送的数据帧从交换机1经过汇聚链路到达交换机2时，在数据帧上<strong>附加</strong>了表示属于红色VLAN的<strong>标记</strong>。</p>
+<p> 交换机2收到数据帧后，经过检查VLAN标识发现这个数据帧是属于红色VLAN的，因此<strong>去除</strong>标记后根据需要将复原的数据帧只转发给其他属于红色VLAN的端口。这时的转送，是指经过确认目标MAC地址并与<strong>MAC地址列表</strong>比对后只转发给目标MAC地址所连的端口。只有当数据帧是一个广播帧、多播帧或是目标不明的帧时，它<strong>才会</strong>被转发到所有属于红色VLAN的端口。</p>
+<p> 蓝色VLAN发送数据帧时的情形也与此相同。</p>
+ <!-- ![](https://img-blog.csdn.net/20130726175217593 ) -->
+
+
+
+<p> 通过汇聚链路时<strong>附加的VLAN****识别信息</strong>，有可能支持标准的“IEEE 802.1Q”协议，也可能是Cisco产品独有的“ISL（Inter Switch Link）”。如果交换机支持这些规格，那么用户就能够高效率地构筑横跨多台交换机的VLAN。</p>
+<p> 另外，汇聚链路上流通着多个VLAN的数据，自然负载较重。因此，在设定汇聚链接时，有一个<strong>前提</strong>就是必须支持100Mbps以上的传输速度。</p>
+<p> 另外，默认条件下，汇聚链接会转发交换机上存在的所有VLAN的数据。换一个角度看，可以认为汇聚链接（端口）<strong>同时属于</strong>交换机上<strong>所有</strong>的VLAN。由于实际应用中很可能并不需要转发所有VLAN的数据，因此为了减轻交换机的负载、也为了减少对带宽的浪费，我们可以通过用户设定限制能够经由汇聚链路互联的VLAN。</p>
+<p> 关于IEEE 802.1Q和ISL的具体内容，将在下一讲中提到。</p>
+<h4><span id="43-访问链接的总结"><strong>4.3 访问链接的总结</strong></span></h4><p> 综上所述，设定访问链接的手法有静态VLAN和动态VLAN两种，其中动态VLAN又可以继续细分成几个小类。</p>
+<p> 其中基于子网的VLAN和基于用户的VLAN有可能是网络设备厂商使用独有的协议实现的，不同厂商的设备之间互联有可能出现兼容性问题；因此在选择交换机时，一定要注意事先确认。</p>
+<p> 下表总结了静态VLAN和动态VLAN的相关信息。</p>
+<p> | <strong>种类</strong></p>
+<p> | <strong>解说</strong></p>
+<p> | 静态VLAN（基于端口的VLAN）</p>
+<p> | 将交换机的各端口固定指派给VLAN</p>
+<p> | 动态VLAN</p>
+<p> | 基于MAC地址的VLAN</p>
+<p> | 根据各端口所连计算机的MAC地址设定</p>
+<p> | 基于子网的VLAN</p>
+<p> | 根据各端口所连计算机的IP地址设定</p>
+<p> | 基于用户的VLAN</p>
+<p> | 根据端口所连计算机上登录用户设定</p>
+<h3><span id="5vlan的汇聚方式ieee8021q与isl">5.VLAN的汇聚方式——IEEE802.1Q与ISL</span></h3><h4><span id="51-汇聚方式"><strong>5.1 汇聚方式</strong></span></h4><p> 在交换机的汇聚链接上，可以通过对数据帧附加VLAN信息，构建跨越多台交换机的VLAN。</p>
+<p> 附加VLAN信息的方法，最具有代表性的有：</p>
+<p> （1）IEEE 802.1Q</p>
+<p> （2）ISL</p>
+<p> 现在就让我们看看这两种协议分别如何对数据帧附加VLAN信息。</p>
+<h4><span id="52-ieee-8021q"><strong>5.2 [IEEE 802.1Q]</strong></span></h4><p> IEEE 802.1Q，俗称“Dot One Q”，是经过IEEE认证的对数据帧附加VLAN识别信息的协议。</p>
+<p> 在此，请大家先回忆一下以太网数据帧的标准格式。</p>
+<p> IEEE 802.1Q所附加的VLAN识别信息，位于数据帧中“发送源MAC地址”与“类别域”（Type Field）之间。具体内容为<strong>2字节</strong>的[TPID]（Tag Protocol IDentifier）和<strong>2字节</strong>的TCI（Tag Control Information），共计<strong>4字节</strong>。</p>
+<p> 在数据帧中添加了4字节的内容，那么CRC值自然也会有所变化。这时数据帧上的CRC是插入TPID、TCI后，对包括它们在内的整个数据帧重新计算后所得的值。</p>
+<p> 而当数据帧离开汇聚链路时，TPID和TCI会被去除，这时还会进行一次CRC的重新计算。</p>
+<p> TPID字段在以太网报文中所处位置与不带VLAN Tag的报文中协议类型字段所处位置相同。TPID的值<strong>固定</strong>为<strong>0x8100</strong>，它标示网络帧承载的802.1Q类型，交换机通过它来<strong>确定</strong>数据帧内附加了基于IEEE 802.1Q的VLAN信息。而实质上的<strong>VLAN ID</strong>，是TCI中的12位元。由于总共有12位，因此最多可供识别<strong>4096个VLAN</strong>。</p>
+<p> 基于IEEE 802.1Q附加的VLAN信息，就像在传递物品时附加的<strong>标签</strong>。因此，它也被称作“<strong>标签型VLAN</strong>”（Tagging VLAN）。</p>
+<h4><span id="53-islinter-switch-link"><strong>5.3 ISL（Inter Switch Link）</strong></span></h4><p> ISL，是Cisco产品支持的一种与IEEE 802.1Q类似的、用于在汇聚链路上附加VLAN信息的协议。</p>
+<p> 使用ISL后，每个数据帧头部都会被附加26字节的“ISL包头（ISL Header）”，并且在帧尾带上通过对包括ISL包头在内的整个数据帧进行计算后得到的4字节CRC值。换而言之，就是总共增加了30字节的信息。</p>
+<p> 在使用ISL的环境下，当数据帧<strong>离开</strong>汇聚链路时，只要简单地<strong>去除</strong>ISL包头和新CRC就可以了。由于原先的数据帧及其CRC都被完整保留，因此无需重新计算CRC。</p>
+<p> ISL有如用ISL包头和新CRC将原数据帧整个包裹起来，因此也被称为“<strong>封装型VLAN</strong>”（Encapsulated VLAN）。</p>
+<p> 需要注意的是，不论是IEEE802.1Q的“Tagging VLAN”，还是ISL的“Encapsulated VLAN”，都不是很严密的称谓。不同的书籍与参考资料中，上述词语有可能被混合使用，因此需要大家在学习时格外注意。</p>
+<p> 并且由于ISL是Cisco独有的协议，因此只能用于Cisco网络设备之间的互联。</p>
+<h3><span id="6vlan间路由"><strong>6.VLAN间路由</strong></span></h3><h4><span id="61-vlan间路由的必要性"><strong>6.1 VLAN间路由的必要性</strong></span></h4><p> 根据目前为止学习的知识，我们已经知道两台计算机即使连接在同一台交换机上，只要所属的VLAN不同就无法直接通信。接下来我们将要学习的就是如何在不同的VLAN间进行路由，使分属不同VLAN的主机能够互相通信。</p>
+<p> 首先，先来复习一下为什么不同VLAN间不通过路由就无法通信。在LAN内的通信，必须在数据帧头中指定通信目标的MAC地址。而为了获取MAC地址，TCP/IP协议下使用的是<strong>ARP</strong>。ARP解析MAC地址的方法，则是通过广播。也就是说，如果广播报文无法到达，那么就无从解析MAC地址，亦即无法直接通信。</p>
+<p> 计算机分属不同的VLAN，也就意味着分属不同的广播域，自然<strong>收不到</strong>彼此的广播报文。因此，属于不同VLAN的计算机之间无法直接互相通信。为了能够在VLAN间通信，需要利用OSI参照模型中<strong>更高一层</strong>——网络层的信息（IP地址）来进行<strong>路由</strong>。关于路由的具体内容，以后有机会再详细解说吧。</p>
+<p> 路由功能，一般主要由路由器提供。但在今天的局域网里，我们也经常利用带有路由功能的交换机——<strong>三层交换机</strong>（Layer 3 Switch）来实现。接下来就让我们分别看看使用路由器和三层交换机进行VLAN间路由时的情况。</p>
+<h4><span id="62-使用路由器进行vlan间路由"><strong>6.2 使用路由器进行VLAN间路由</strong></span></h4><p> 在使用路由器进行VLAN间路由时，与构建横跨多台交换机的VLAN时的情况类似，我们还是会遇到“该如何连接路由器与交换机”这个问题。路由器和交换机的接线方式，大致有以下两种：</p>
+<p> （1）将路由器与交换机上的每个VLAN分别连接</p>
+<p> （2）不论VLAN有多少个，路由器与交换机都只用一条网线连接</p>
+<p> 最容易想到的，当然还是“把路由器和交换机以VLAN为单位分别用网线连接”了。将交换机上用于和路由器互联的每个端口设为<strong>访问链接</strong>（Access Link），然后分别用网线与路由器上的独立端口互联。如下图所示，交换机上有2个VLAN，那么就需要在交换机上预留2个端口用于与路由器互联；路由器上同样需要有2个端口；两者之间用2条网线分别连接。</p>
+<p> 如果采用这个办法，大家应该不难想象它的扩展性很成问题。每增加一个新的VLAN，都需要消耗路由器的端口和交换机上的访问链接，而且还需要重新布设一条网线。而路由器，通常不会带有太多LAN接口的。新建VLAN时，为了对应增加的VLAN所需的端口，就必须将路由器升级成带有多个LAN接口的高端产品，这部分成本、还有重新布线所带来的开销，都使得这种接线法成为一种不受欢迎的办法。</p>
+<p> 那么，第二种办法“不论VLAN数目多少，都只用一条网线连接路由器与交换机”呢？当使用一条网线连接路由器与交换机、进行VLAN间路由时，需要用到<strong>汇聚链接</strong>。</p>
+<p> 具体实现过程为：首先将用于连接路由器的交换机端口设为<strong>汇聚链接</strong>（Trunk Link），而路由器上的端口也必须支持汇聚链路。双方用于汇聚链路的协议自然也必须相同。接着在路由器上定义对应各个VLAN的“子接口”（Sub Interface）。尽管实际与交换机连接的物理端口只有一个，但在理论上我们可以把它分割为多个<strong>虚拟端口</strong>。</p>
+<p> VLAN将交换机从<strong>逻辑</strong>上<strong>分割</strong>成了多台，因而用于VLAN间路由的路由器，也必须拥有分别<strong>对应</strong>各个VLAN的<strong>虚拟</strong>接口。</p>
+<p> 采用这种方法的话，即使之后在交换机上新建VLAN，仍只需要一条网线连接交换机和路由器。用户只需要在路由器上新设一个对应新VLAN的子接口就可以了。与前面的方法相比，扩展性要强得多，也不用担心需要升级LAN接口数不足的路由器或是重新布线。</p>
+<h4><span id="63-同一vlan内的通信"><strong>6.3 同一VLAN内的通信</strong></span></h4><p> 接下来，我们继续学习使用汇聚链路连接交换机与路由器时，VLAN间路由是如何进行的。如下图所示，为各台计算机以及路由器的子接口设定IP地址。</p>
+<p> 红色VLAN（VLAN ID=1）的网络地址为192.168.1.0/24，蓝色VLAN（VLAN ID=2）的网络地址为192.168.2.0/24。各计算机的MAC地址分别为A/B/C/D，路由器汇聚链接端口的MAC地址为R。交换机通过对各端口所连计算机MAC地址的学习，生成如下的MAC地址列表。</p>
+<p> | 端口</p>
+<p> | MAC地址</p>
+<p> | VLAN</p>
+<p> 首先考虑计算机A与同一VLAN内的计算机B之间通信时的情形。</p>
+<p> 计算机A发出ARP请求信息，请求解析B的MAC地址。交换机收到数据帧后，检索MAC地址列表中与收信端口同属一个VLAN的表项。结果发现，计算机B连接在端口2上，于是交换机将数据帧转发给端口2，最终计算机B收到该帧。收发信双方同属一个VLAN之内的通信，一切处理均在交换机<strong>内</strong>完成。</p>
+<h4><span id="64-不同vlan间的通信"><strong>6.4 不同VLAN间的通信</strong></span></h4><p> 接下来是这一讲的核心内容，不同VLAN间的通信。让我们来考虑一下计算机A与计算机C之间通信时的情况。</p>
+<p> <strong>计算机</strong>A从通信目标的IP地址（192.168.2.1）得出C与本机不属于同一个网段。因此会向设定的<strong>默认网关</strong>（DefaultGateway，GW）转发数据帧。在发送数据帧之前，需要先用<strong>ARP</strong>获取路由器的MAC地址。</p>
+<p> 得到路由器的MAC地址R后，接下来就是按图中所示的步骤发送往C去的数据帧。①的数据帧中，目标<strong>MAC地址</strong>是路由器的地址R、但内含的<strong>目标IP地址</strong>仍是最终要通信的对象C的地址。这一部分的内容，涉及到局域网内经过路由器转发时的通信步骤，有机会再详细解说吧。</p>
+<p> 交换机在端口1上收到①的数据帧后，检索MAC地址列表中与端口1同属一个VLAN的表项。由于汇聚链路会被看作<strong>属于所有</strong>的VLAN，因此这时交换机的端口6也属于被参照对象。这样交换机就知道往<strong>MAC地址</strong>R发送数据帧，需要经过端口6转发。</p>
+<p> 从端口6发送数据帧时，由于它是<strong>汇聚链接</strong>，因此会被<strong>附加</strong>上VLAN识别信息。由于原先是<strong>来自红色</strong>VLAN的数据帧，因此如图中②所示，会被<strong>加上红色</strong>VLAN的识别信息后进入汇聚链路。路由器收到②的数据帧后，确认其VLAN识别信息，由于它是<strong>属于红色</strong>VLAN的数据帧，因此<strong>交由负责红色</strong>VLAN的子接口接收。</p>
+<p> 接着，根据路由器内部的<strong>路由表</strong>，判断该向哪里中继。</p>
+<p> 由于目标网络192.168.2.0/24是蓝色VLAN，，且该网络通过<strong>子接口</strong>与路由器直连，因此只要从<strong>负责蓝色</strong>VLAN的<strong>子接口转发</strong>就可以了。这时，数据帧的目标MAC地址被<strong>改写</strong>成计算机C的目标地址；并且由于需要<strong>经过汇聚链路转发</strong>，因此被<strong>附加</strong>了属于<strong>蓝色</strong>VLAN的识别信息。这就是图中③的数据帧。</p>
+<p> 交换机收到③的数据帧后，根据VLAN标识信息从MAC地址列表中检索属于蓝色VLAN的表项。由于通信目标——计算机C连接在端口3上、且端口3为普通的访问链接，因此交换机会将数据帧<strong>去除</strong>VLAN识别信息后（数据帧④）转发给端口3，最终计算机C才能成功地收到这个数据帧。</p>
+<p> 进行VLAN间通信时，即使通信双方都连接在同一台交换机上，也必须经过：“发送方——交换机——路由器——交换机——接收方”这样一个流程。</p>
+<h3><span id="7三层交换机"><strong>7.三层交换机</strong></span></h3><blockquote>
+</blockquote>
+<h4><span id="71-使用路由器进行vlan间路由时的问题"><strong>7.1 使用路由器进行VLAN间路由时的问题</strong></span></h4><p> 现在，我们知道只要能提供VLAN间路由，就能够使分属不同VLAN的计算机互相通信。但是，如果使用路由器进行VLAN间路由的话，随着VLAN之间流量的不断增加，很可能导致路由器成为整个网络的<strong>瓶颈</strong>。</p>
+<p> 交换机使用被称为<strong>ASIC</strong>（ApplicationSpecified Integrated Circuit）的专用硬件芯片处理数据帧的交换操作，在很多机型上都能实现以缆线速度（Wired Speed）交换。而路由器，则基本上是基于软件处理的。即使以缆线速度接收到数据包，也无法在不限速的条件下转发出去，因此会成为速度瓶颈。就VLAN间路由而言，流量会<strong>集中</strong>到路由器和交换机<strong>互联</strong>的汇聚链路部分，这一部分尤其特别容易成为速度瓶颈。并且从硬件上看，由于需要分别设置路由器和交换机，在一些空间狭小的环境里可能连设置的场所都成问题。</p>
+<h4><span id="72-三层交换机layer-3-switch"><strong>7.2 三层交换机（Layer 3 Switch）</strong></span></h4><p> 为了解决上述问题，三层交换机应运而生。三层交换机，本质上就是“带有路由功能的（二层）交换机”。路由属于OSI参照模型中第三层网络层的功能，因此带有第三层路由功能的交换机才被称为“三层交换机”。</p>
+<p> 关于三层交换机的内部结构，可以参照下面的简图。</p>
+<p> 在一台本体内，分别设置了交换机模块和路由器模块；而内置的路由模块与交换模块相同，使用ASIC硬件处理路由。因此，与传统的路由器相比，可以实现高速路由。并且，路由与交换模块是汇聚链接的，由于是内部连接，可以确保相当大的带宽。</p>
+<p> <strong>7.2.1 使用三层交换机进行VLAN间路由（VLAN内通信）</strong></p>
+<p> 在三层交换机内部数据究竟是怎样传播的呢？基本上，它和使用汇聚链路连接路由器与交换机时的情形相同。</p>
+<p> 假设有如下图所示的4台计算机与三层交换机互联。当使用路由器连接时，一般需要在LAN接口上设置对应各VLAN的子接口；而三层交换机则是在内部生成“VLAN接口”（VLAN Interface）。<strong>VLAN接口</strong>，是用于各VLAN收发数据的接口。（注：在Cisco的Catalyst系列交换机上，VLAN Interface被称为<strong>SVI</strong>——Switched Virtual Interface）</p>
+<p> 为了与使用路由器进行VLAN间路由对比，让我们同样来考虑一下计算机A与计算机B之间通信时的情况。首先是目标地址为B的数据帧被发到交换机；通过检索<strong>同一VLAN的MAC地址列表</strong>发现计算机B连在交换机的端口2上；因此将数据帧转发给端口2。</p>
+<p> <strong>7.2.2 使用三层交换机进行VLAN间路由（VLAN间通信）</strong></p>
+<p> 接下来设想一下计算机A与计算机C间通信时的情形。针对目标IP地址，计算机A可以判断出通信对象不属于同一个网络，因此向默认网关发送数据（Frame 1）。</p>
+<p> 交换机通过检索MAC地址列表后，经由内部汇聚链接，将数据帧转发给路由模块。在通过内部汇聚链路时，数据帧被<strong>附加</strong>了属于红色VLAN的VLAN识别信息（Frame 2）。</p>
+<p> 路由模块在收到数据帧时，先由数据帧附加的VLAN识别信息分辨出它属于红色VLAN，据此判断由红色VLAN接口负责接收并进行路由处理。因为目标网络192.168.2.0/24是直连路由器的网络、且对应蓝色VLAN；因此，接下来就会从蓝色VLAN接口经由内部汇聚链路<strong>转发</strong>回交换模块。在通过汇聚链路时，这次数据帧被<strong>附加</strong>上属于蓝色VLAN的识别信息（Frame 3）。</p>
+<p> 交换机收到这个帧后，检索蓝色VLAN的MAC地址列表，确认需要将它转发给端口3。由于端口3是通常的访问链接，因此转发前会先将VLAN识别信息<strong>去除</strong>（Frame 4）。最终，计算机C成功地收到交换机转发来的数据帧。</p>
+<p> 整体的流程，与使用外部路由器时的情况十分相似——都需要经过“发送方→交换模块→路由模块→交换模块→接收方”。</p>
+<h3><span id="8加速vlan间通信的手段"><strong>8.加速VLAN间通信的手段</strong></span></h3><blockquote>
+</blockquote>
+<h4><span id="81-流flow"><strong>8.1 流（Flow）</strong></span></h4><p> 根据到此为止的学习，我们已经知道VLAN间路由，必须经过外部的路由器或是三层交换机的<strong>内置</strong>路由模块。但是，有时并不是所有的数据都需要经过路由器（或路由模块）。</p>
+<p> 例如，使用FTP（File Transfer Protocol）传输容量为数MB以上的较大的文件时，由于MTU的限制，IP协议会将数据分割成小块后传输、并在接收方重新组合。这些被分割的数据，“发送的目标”是完全相同的。发送目标相同，也就意味着同样的目标IP地址、目标端口号（注：特别强调一下，这里指的是TCP/UDP端口）。自然，源IP地址、源端口号也应该相同。这样一连串的数据流被称为“流”（Flow）。</p>
+<p> 只要将流最初的数据正确地路由以后，后继的数据理应也会被同样地路由。</p>
+<p> 据此，后继的数据不再需要路由器进行路由处理；通过省略反复进行的路由操作，可以进一步提高VLAN间路由的速度。</p>
+<h4><span id="82-加速vlan间路由的机制"><strong>8.2 加速VLAN间路由的机制</strong></span></h4><p> 接下来，让我们具体考虑一下该如何使用三层交换机进行高速VLAN间路由。</p>
+<p> 首先，整个流的第一块数据，照常由交换机转发→路由器路由→再次由交换机转发到目标所连端口。这时，将第一块数据路由的结果记录到<strong>缓存</strong>里保存下来。需要记录的信息有：</p>
+<p> （1）目标IP地址</p>
+<p> （2）源IP地址</p>
+<p> （3）目标TCP/UDP端口号</p>
+<p> （4）源TCP/UDP端口号</p>
+<p> （5）接收端口号（交换机）</p>
+<p> （6）转发端口号（交换机）</p>
+<p> （7）转发目标MAC地址</p>
+<p> 等等。</p>
+<p> 同一个流的第二块以后的数据到达交换机后，直接通过查询先前保存在缓存中的信息查出“转发端口号”后就可以转发给目标所连端口了。</p>
+<p> 这样一来，就不需要再一次次经由内部路由模块中继，而仅凭交换机内部的<strong>缓存信息</strong>就足以判断应该转发的端口。</p>
+<p> 这时，交换机会对数据帧进行由路由器中继时相似的处理，例如改写MAC地址、IP包头中的TTL和Check Sum校验码信息等。</p>
+<p> 通过在交换机上缓存路由结果，实现了以缆线速度（Wired Speed）接收发送方传输来数据的数据、并且能够全速路由、转发给接收方。</p>
+<p> 需要注意的是，类似的加速VLAN间路由的手法多由各厂商独有的技术所实现，并且该功能的称谓也因厂商而异。例如，在Cisco的Catalyst系列交换机上，这种功能被称为“多层交换”（Multi Layer Switching）。另外，除了三层交换机的内部路由模块，外部路由器中的某些机型也支持类似的高速VLAN间路由机制。</p>
+<h3><span id="9传统型路由器存在的意义"><strong>9.传统型路由器存在的意义</strong></span></h3><blockquote>
+</blockquote>
+<h4><span id="91-路由器的必要性"><strong>9.1 路由器的必要性</strong></span></h4><p> 三层交换机的价格，在问世之初非常昂贵，但是现在它们的价格已经下降了许多。目前国外一些廉价机型的售价，折合成人民币后仅为一万多元，而且还在继续下降中。</p>
+<p> 既然三层交换机能够提供比传统型路由器更为高速的路由处理，那么网络中还有使用路由器的必要吗？</p>
+<p> 答案是：“是”。</p>
+<p> 使用路由器的必要性，主要表现在以下几个方面：</p>
+<p> （1）用于与WAN连接</p>
+<p> 三层交换机终究是“交换机”。也就是说，绝大多数机型只配有LAN（以太网）接口。在少数高端交换机上也有用于连接WAN的串行接口或是ATM接口，但在大多数情况下，连接WAN还是需要用到路由器。</p>
+<p> （2）保证网络安全</p>
+<p> 在三层交换机上，通过数据包过滤也能确保一定程度的网络安全。但是使用路由器所提供的各种网络安全功能，用户可以构建更为安全可靠的网络。</p>
+<p> 路由器提供的网络安全功能中，除了最基本的数据包过滤功能外，还能基于IPSec构建<strong>VPN</strong>（VirtualPrivate Network）、利用RADIUS进行用户认证等等。</p>
+<p> （3）支持除TCP/IP以外的异构网络架构</p>
+<p> 尽管TCP/IP已经成为当前网络协议架构的主流，但还有不少网络利用Novell Netware下的IPX/SPX或Macintosh下的AppleTalk等网络协议。三层交换机中，除了部分高端机型外基本上还只支持TCP/IP。因此，在需要使用除TCP/IP之外其他网络协议的环境下，路由器还是必不可少的。</p>
+<p> 注：在少数高端交换机上，也能支持上述路由器的功能。例如Cisco的Catalyst 6500系列，就可以选择与WAN连接的接口模块；还有可选的基于IPSec实现VPN的模块；并且也能支持TCP/IP以外的其他网络协议。</p>
+<h4><span id="92-路由器和交换机配合构建lan的实例"><strong>9.2 路由器和交换机配合构建LAN的实例</strong></span></h4><p> 下面让我们来看一个路由器和交换机搭配构建LAN的实例。</p>
+<p> 利用在各楼层配置的二层交换机定义VLAN，连接TCP/IP客户计算机。各楼层间的VLAN间通信，利用三层交换机的高速路由加以实现。如果网络环境要求高可靠性，还可以考虑冗余配置三层交换机。</p>
+<p> 与WAN的连接，则通过带有各种网络接口的路由器进行。并且，通过路由器的数据包过滤和VPN等功能实现网络安全。此外，使用路由器还能支持Novell Netware等TCP/IP之外的网络。</p>
+<p> 只有在充分掌握了二层、三层交换机以及传统路由器的基础上，才能做到物竞其用，构筑出高效率、高性价比的网络。</p>
+<h3><span id="10使用vlan设计局域网"><strong>10.使用VLAN设计局域网</strong></span></h3><blockquote>
+</blockquote>
+<h4><span id="101-使用vlan设计局域网的特点"><strong>10.1 使用VLAN设计局域网的特点</strong></span></h4><p> 通过使用VLAN构建局域网，用户能够不受物理链路的限制而自由地分割广播域。</p>
+<p> 另外，通过先前提到的路由器与三层交换机提供的VLAN间路由，能够适应灵活多变的网络构成。</p>
+<p> 但是，由于利用VLAN容易导致网络构成复杂化，因此也会造成整个网络的组成难以把握。</p>
+<p> 可以这样说，在利用VLAN时，除了有“网络构成灵活多变”这个优点外，还搭配着“网络构成复杂化”这个缺点。</p>
+<p> 下面，就让我们来看看具体的实例。</p>
+<h4><span id="102-不使用vlan的局域网中网络构成的改变"><strong>10.2 不使用VLAN的局域网中网络构成的改变</strong></span></h4><p> 假设有如图所示的由1台路由器、2台交换机构成的“不使用VLAN构建”的网络。</p>
+<p> 图中的路由器，带有2个LAN接口。左侧的网络是192.168.1.0/24，右侧是192.168.2.0/24。</p>
+<p> 现在如果想将192.168.1.0/24这个网络上的计算机A转移到192.168.2.0/24上去，就需要改变物理连接、将A接到右侧的交换机上。</p>
+<p> 并且，当需要新增一个地址为192.168.3.0/24的网络时，还要在路由器上再占用一个LAN接口并添置一台交换机。而由于这台路由器上只带了2个LAN接口，因此为了新增网络还必须将路由器升级为带有3个以上LAN接口的产品。</p>
+<h4><span id="103-使用vlan的局域网中网络构成的改变"><strong>10.3 使用VLAN的局域网中网络构成的改变</strong></span></h4><p> 接下来再假设有一个由1台路由器、2台交换机构成的“使用VLAN”的局域网。交换机与交换机、交换机与路由器之间均为<strong>汇聚链路</strong>；并且假设192.168.1.0/24对应红色VLAN、192.168.2.0/24对应蓝色VLAN。</p>
+<p> 需要将连接在交换机1上192.168.1.0/24这个网段的计算机A转属192.168.2.0/24时，无需更改物理布线。只要在交换机上生成蓝色VLAN，然后将计算机A所连的端口1加入到蓝色VLAN中去，使它成为访问链接即可。</p>
+<p> 然后，根据需要设定计算机A的IP地址、默认网关等信息就可以了。如果IP地址相关的设定是由DHCP获取的，那么在客户机方面无需进行任何设定修改，就可以在不同网段间移动。</p>
+<p> 利用VLAN后，我们可以在免于改动任何物理布线的前提下，自由进行网络的<strong>逻辑设计</strong>。如果所处的工作环境恰恰需要经常<strong>改变网络布局</strong>，那么利用VLAN的优势就非常明显了。</p>
+<p> 并且，当需要新增一个地址为192.168.3.0/24的网段时，也只需要在交换机上新建一个对应192.168.3.0/24的VLAN，并将所需的端口加入它的访问链路就可以了。</p>
+<p> 如果网络环境中还需要利用外部路由器，则只要在路由器的汇聚端口上新增一个子接口的设定就可以完成全部操作，而不需要消耗更多的物理接口（LAN接口）。要使用的是三层交换机内部的路由模块，则只需要新设一个VLAN接口即可。</p>
+<p> 网络环境的成长，往往是难以预测的，很可能经常会出现需要分割现有网络或是增加新网络的情况。而充分活用VLAN后，就可以轻易地解决这些问题。</p>
+<h4><span id="104-利用vlan而导致的网络结构复杂化"><strong>10.4 利用VLAN而导致的网络结构复杂化</strong></span></h4><p> 虽然利用VLAN可以灵活地构建网络，但是同时，它也带来了网络结构复杂化的问题。</p>
+<p> 特别是由于数据流纵横交错，一旦发生故障时，准确定位并排除故障会比较困难。</p>
+<p> 为了便于理解数据流向的复杂化，假设有下图所示的网络。计算机A向计算机C发送数据时，数据流的整体走向如下：</p>
+<p> 计算机A→交换机1→路由器→交换机1→交换机2→计算机C</p>
+<p> 首先计算机A向交换机1送出数据（①），其后数据被转发给路由器（②）进行VLAN间路由。路由后的数据，再从汇聚链路返回交换机1（③）。由于通信目标计算机C并不直连在交换机1上，因此还需要经过汇聚链路转发到交换机2（④）。在交换机2上，数据最终被转发到C所连的端口2上，这才完成整个流程（⑤）。</p>
+<p> 在这个例子中，仅由2台交换机构成网络，其数据流已经如此复杂，如果构建横跨多台交换机的VLAN的话，每个数据流的流向显然会更加难以把握。</p>
+<h4><span id="105-网络的逻辑结构与物理结构"><strong>10.5 网络的逻辑结构与物理结构</strong></span></h4><p> 为了对应日渐复杂化的数据流，管理员需要从“逻辑结构”与“物理结构”两方面入手，把握好网络的现状。</p>
+<p> 物理结构，指的是从物理层和数据链路层观察到的网络的现状，表示了网络的物理布线形态和VLAN的设定等等。</p>
+<p> 而逻辑结构，则表示从网络层以上的层面观察到的网络结构。下面我们就试着以路由器为中心分析一个IP网络的逻辑结构。</p>
+<p> 还是先前的那个例子，描绘了布线形态和VLAN设定的“物理结构”如下图所示。</p>
+<p> 分析这个物理结构并转换成以路由器为中心的逻辑结构后，会得到如下的逻辑结构图。当我们需要进行路由或是数据包过滤的设定时，都必须在逻辑结构的基础上进行。</p>
+<p> 把握这两种网络结构图的区别是十分重要的，特别是在VLAN和三层交换机大行其道的现代企业级网络当中。</p>
+<p><strong>参考：</strong> </p>
+<blockquote>
+<p>  <strong>《<a target="_blank" rel="noopener" href="http://net.yesky.com/162/9115662.shtml">跟着尚云学VLAN</a>》</strong></p>
+</blockquote>
+<p> <strong>《<a target="_blank" rel="noopener" href="http://wenku.baidu.com/view/64e63d630b1c59eef8c7b4c9.html">VLAN原理详解</a>》</strong></p>
+<p> 《<a target="_blank" rel="noopener" href="http://wenku.baidu.com/view/d76d011459eef8c75fbfb313.html">VLAN基本原理</a>-ZTE》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://wenku.baidu.com/view/0ce65b56ad02de80d4d840b7.html">VLAN 技术原理</a>-HW》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/8219141">VLAN/Trunk以及三层交换</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://blog.csdn.net/yu_xiaofei/article/details/9335037">虚拟局域网（VLAN）中端口tagged和untagged在多种情况下的作用</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://blog.csdn.net/suiyuan19840208/article/details/8221529">Linux 下VLAN数据包格式及vconfig命令测试</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://blog.csdn.net/dog250/article/details/7354590">Linux实现的IEEE 802.1Q VLAN</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://wenku.baidu.com/view/b684f44fe45c3b3567ec8bf5.html">Linux VLAN知识总结</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://lisa.mindbit.ro/">The LISA Project</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://blog.csdn.net/phunxm/article/details/8811266">WNR3500L+TOMATO网络结构分析</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://bbs.csdn.net/topics/390508832">WC7520如何配置多SSID对应不同VLAN</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lome/archive/2011/04/21/2023345.html">话说WAYOS中所谓利用IP VLAN来实现用户隔离的作用分析</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://www.chinadsl.net/forum.php?mod=viewthread&amp;action=printable&amp;tid=57184">H618C刷OpenWrt并支持IPTV VLAN硬件处理的方法</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://fccjxxw.com/m/3368abe3fc4ffe477fb6bb16.html">无线IPTV无线连接以及无法看直播问题解决</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://service.tp-link.com.cn/detail_article_287.html#_Toc343163211">TL-ER6520G某企业网络配置实例</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://service.tp-link.com.cn/detail_article_290.html">如何设置TP-LINK共享上网一体机（网线接入）</a>》</p>
+<p> 《<a target="_blank" rel="noopener" href="http://service.tp-link.com.cn/detail_article_279.html">TL-SG5428应用——多网段网络规划配置指南</a>》</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/phunxm/article/details/9498829">https://blog.csdn.net/phunxm/article/details/9498829</a></p>
+<p>​                </p>
+<p>​</p>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/10/31/HCIA/WLAN/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">WLAN</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/10/24/Hexo/highlight/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Highlight</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img class="soft-size--round soft-style--box lazy" alt="Guduyili" data-src="/img/friend_404.gif" data-original="/../../img/9c0e14447527992b401a1827d37127cd.png">
+    
+    
+      <h2>Guduyili</h2>
+    
+    
+      <p>我心匪石，不可轉也。我心匪席，不可卷也</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>68</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        26
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        7
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>Warning! Warning!</p>
+  </div>
+</section>
+
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li class="categories-list-item">
+          <a href="/categories/SQL/">
+            SQL (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/AI/">
+            AI (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Go/">
+            Go (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/git/">
+            git (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/HCIA/">
+            HCIA (11)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Hexo/">
+            Hexo (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/JAVA/">
+            JAVA (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Linux/">
+            Linux (7)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/My-Project/">
+            My Project (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Spring-boot/">
+            Spring-boot (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Redis/">
+            Redis (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Unity/">
+            Unity (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87/">
+            学习目标 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+            软件测试 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/">
+            生活感想 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%AE%97%E6%B3%95/">
+            算法 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">
+            自动化测试 (8)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%97%A5%E8%AF%AD/">
+            日语 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%A4%A7%E7%89%A9/">
+            大物 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+            数据库 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%A6%82%E7%BB%9F/">
+            概统 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
+            线性代数 (4)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+            图形学 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%AE%A1%E7%BB%84/">
+            计组 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+            操作系统 (2)
+          </a>
+        </li>
+        
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;" class="tags-cloud-3">AI</a> <a href="/tags/JAVA/" style="font-size: 13.33px;" class="tags-cloud-3">JAVA</a> <a href="/tags/blog/" style="font-size: 10px;" class="tags-cloud-0">blog</a> <a href="/tags/learning/" style="font-size: 20px;" class="tags-cloud-10">learning</a> <a href="/tags/music/" style="font-size: 10px;" class="tags-cloud-0">music</a> <a href="/tags/%E5%B8%A6%E7%A0%96%E7%94%9F%E7%9A%84%E9%80%9F%E6%88%90/" style="font-size: 16.67px;" class="tags-cloud-7">带砖生的速成</a> <a href="/tags/%E6%84%9F%E6%83%B3/" style="font-size: 10px;" class="tags-cloud-0">感想</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/guduyili" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>© 2026 <a href="/" target="_blank">Guduyili</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/guduyili" target="_blank" rel="noopener noreferrer author">GDYL-Blog</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+<script type="text/javascript">
+	(function () {
+		// todo
+	})();
+</script>
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<script>document.addEventListener("DOMContentLoaded", function() {
+  var lazyloadImages;
+
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.src = image.dataset.src;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+        });
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
+    }
+
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
+})
+</script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>(r=>{r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,o=r.imageLazyLoadSetting.preloadRatio||1,d=i();function i(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=i());for(var e,n=0;n<d.length;n++)0<=(e=(e=d[n]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*o||document.documentElement.clientHeight*o)&&(()=>{var t,e,a,o,i=d[n];e=function(){d=d.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,o=t.getAttribute("data-original"),a.onload=function(){t.src=o,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=o},t.src!==o&&(a.src=o)))})()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)})(this);</script></body></html>

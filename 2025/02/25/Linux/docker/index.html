@@ -1,0 +1,735 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6">
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="[object Object]">
+  
+
+  
+
+  
+
+  <title>Docker | GuDu-Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha256-TThEtR+XalhWKkfF383YLOrI50NGNeIqrzS+q08afrY=" crossorigin="anonymous"><!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://imgs.aixifan.com/o_1dj1ntbbl13km9jpf9j9a49ag2k.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          GuDu-Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">Home</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">Archives</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">Links</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">Docker</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Guduyili</strong>
+            <span>发布于</span>
+            <time class="article-date" datetime="2025-02-25T00:00:00.000Z" itemprop="datePublished">2025-02-25</time>
+          </h2>
+          
+          
+            <h2 id="/2025/02/25/Linux/docker/" class="title-sub-wrap leancloud_visitors" data-flag-title="Docker">
+              <em>文章访问量</em>
+              <i class="leancloud-visitors-count"></i>
+            </h2>
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/Linux/">📒 Linux</a></li>
+    
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/learning/">🏷️ learning</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <!-- toc -->
+
+<ul>
+<li><a href="#docker">Docker</a><ul>
+<li><a href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4">名称空间</a></li>
+<li><a href="#cgroups">Cgroups</a></li>
+<li><a href="#%E8%81%94%E5%90%88%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">联合文件系统</a><ul>
+<li><a href="#bootfs%E5%92%8Crootfs">bootfs和rootfs</a></li>
+</ul>
+</li>
+<li><a href="#docker%E9%95%9C%E5%83%8F%E7%BB%93%E6%9E%84">docker镜像结构</a></li>
+<li><a href="#docker%E6%95%B0%E6%8D%AE%E5%8D%B7">Docker数据卷</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>[TOC]</p>
+<p><a href="%22https://blog.csdn.net/u010698107/article/details/122641323%22">参考文献</a></p>
+<h1><span id="docker">Docker</span></h1><h2><span id="名称空间">名称空间</span></h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> run <span class="token parameter variable">-it</span> busybox /bin/sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>-it</code>一般一起使用，实现和docker容器进行交互。 <code>-i</code>标识以交互模式运行容器，<code>-t</code>表示为容器分配一个伪输入终端。<code>/bin/sh</code>是要在Docker中运行该的程序</p>
+<p>容器内<code>/bin/sh</code>命令的进程ID为1，这表明容器里执行的<code>/bin/sh</code> 已经和宿主机”隔离”了，而在宿主机真实的进程空间里，这个进程的 PID 还是真实的数值，这就是Namespace 技术产生的效果，它只是修改了进程视图，容器内只能“看到”某些指定的进程。而对宿主机来说，这个<code>/bin/sh</code> 和其它进程没什么区别，我们可以在宿主机中查看这个<code>/bin/sh</code>进程的ID</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> <span class="token function">ps</span> <span class="token operator">|</span> <span class="token function">grep</span> busybox
+ef0b47c6f9bb   busybox             <span class="token string">"/bin/sh"</span>                <span class="token number">16</span> minutes ago   Up <span class="token number">16</span> minutes             hungry_booth
+$ 
+$ <span class="token function">docker</span> <span class="token function">top</span> ef0b47c6f9bb
+<span class="token environment constant">UID</span>                 PID                 <span class="token environment constant">PPID</span>                C                   STIME               TTY                 TIME                CMD
+root                <span class="token number">8786</span>                <span class="token number">8768</span>                <span class="token number">0</span>                   <span class="token number">11</span>:20               pts/0               00:00:00            /bin/sh
+$ 
+$ <span class="token function">ps</span> ajx <span class="token operator">|</span> <span class="token function">grep</span> /bin/sh <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token function">grep</span>
+  <span class="token number">2453</span>   <span class="token number">2584</span>   <span class="token number">2584</span>   <span class="token number">2584</span> ?            <span class="token parameter variable">-1</span> Ss       <span class="token number">0</span>   <span class="token number">0</span>:00 /usr/bin/ssh-agent /bin/sh <span class="token parameter variable">-c</span> <span class="token builtin class-name">exec</span> <span class="token parameter variable">-l</span> /bin/bash <span class="token parameter variable">-c</span> <span class="token string">"env GNOME_SHELL_SESSION_MODE=classic gnome-session --session gnome-classic"</span>
+  <span class="token number">8367</span>   <span class="token number">8750</span>   <span class="token number">8750</span>   <span class="token number">8367</span> pts/3      <span class="token number">8750</span> Sl+      <span class="token number">0</span>   <span class="token number">0</span>:00 <span class="token function">docker</span> run <span class="token parameter variable">-it</span> busybox /bin/sh
+  <span class="token number">8768</span>   <span class="token number">8786</span>   <span class="token number">8786</span>   <span class="token number">8786</span> pts/0      <span class="token number">8786</span> Ss+      <span class="token number">0</span>   <span class="token number">0</span>:00 /bin/sh
+		<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>上面介绍了进程名称空间（PID Namespace），还有其他类型的名称空间：Mount、UTS、IPC、Network 、User等名称空间。Network Namespace用于实现网络隔离，而有时候容器之间是需要通信的，比如连接数据库。不同Namespace之间的通信是通过Veth 设备对和网桥来实现的，比如你查看安装了docker 的服务器的网络设备会发现叫做 docker0 的网桥和很多随机名称的 veth 设备。</p>
+<p>接下来介绍容器是如何解决限制问题的。</p>
+<h2><span id="cgroups">Cgroups</span></h2><p>使用Namespace技术之后，为什么还需要进行资源限制呢？</p>
+<p>以前面介绍的<code>/bin/sh</code>进程为例，虽然进行了进程隔离，而在宿主机中，PID为8786的进程与其他所有进程之间依然是平等的竞争关系，也就是说，容器中进程使用的资源（CPU、内存等）可能随时被宿主机上的其他进程（或者其他容器的进程）占用。为了保证服务正常运行，需要进行资源限制。</p>
+<p>容器使用 Cgroups 来限制一个进程能够使用的资源，Linux Cgroups （Linux Control Group）可以实现资源调度（资源限制、优先级控制等），限制进程可以使用的资源上限，比如CPU、memory、IO、网络带宽等。</p>
+<p>cgroups 以文件的方式提供应用接口，Cgroups的默认挂载点在<code>/sys/fs/cgroup</code> 路径下:</p>
+<h2><span id="联合文件系统">联合文件系统</span></h2><p>Docker镜像技术是docker的重要创新，其核心就是联合文件系统，大大简化了应用的更新和部署。</p>
+<p><img alt="img" class="lazy" data-src="/img/friend_404.gif" data-original="https://s2.loli.net/2025/02/25/zGCfaXy1ti64ndR.png"></p>
+<h4><span id="bootfs和rootfs">bootfs和rootfs</span></h4><p>一个典型的 Linux 系统至少需要包含bootfs（boot file system）和rootfs（root file system）两个文件系统：</p>
+<ul>
+<li>bootfs包含 boot loader 和 kernel，也就是说相同内核的不同的 Linux 发行版本的bootfs 相同，而rootfs 不同。</li>
+<li>rootfs（根文件系统）是一个操作系统的所有文件和目录，包含典型的目录结构，比如/dev, /proc, /bin, /etc, /lib, /usr等。</li>
+</ul>
+<p>在docker容器技术中，宿主机上的所有容器共享主机系统的 bootfs，也就是共享宿主机的内核。换句话说，如果你配置了内核参数，该机器上的所有容器都会受到影响，这也是容器相比于虚拟机的主要缺陷之一。</p>
+<p>每个容器有自己的 rootfs，也就是容器镜像，它是挂载在容器根目录上，用来为容器进程提供隔离后执行环境的文件系统。</p>
+<p>下面进入Jenkins容器中看看有哪些目录：</p>
+<pre class="line-numbers language-none"><code class="language-none">$ docker exec -it -u root jenkins bash<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>可以看到容器的根目录挂载了一个完整操作系统的文件系统，因此在打包时将应用，以及应用运行所需要的所有依赖都封装在了一起，这保证了容器的“一致性”，部署非常便利。</p>
+<p>结合使用 Mount Namespace 和 rootfs，容器就能够为进程构建出一个完善的文件系统隔离环境。在 rootfs 的基础上，Docker 提出了多个增量 rootfs 联合挂载一个完整 rootfs 的方案，这就是容器镜像中“层”的概念，下面介绍docker的镜像分层系统。</p>
+<p>通常情况下，我们会对已有的镜像进行修改，比如应用升级。Docker 在镜像的设计中，引入了层（layer）的概念。也就是说，用户制作镜像的每一步操作，都会生成一个层，也就是一个增量 rootfs，而修改时不会修改下层镜像（只读层），修改产生的内容会以增量的方式出现在可读写层中，这一层会存放你增、删、改rootfs 后产生的增量。也就是说可读写层只记录对只读层的更改，这样镜像会一层一层的重叠起来。</p>
+<p>这种对容器镜像进行增量式的操作，大大减少了容器镜像占用的空间，比较轻量级，加上它的“一致性”特性，使得docker成为热点项目，Docker 公司在 2014~2016 年间迅猛发展。</p>
+<p>docker 的这种镜像分层思想是通过联合文件系统来实现的，目前docker支持多种联合文件系统，包括AuFS，device mapper，overlayFS，overlayFS2等。</p>
+<h2><span id="docker镜像结构">docker镜像结构</span></h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> image inspect jenkins/jenkins
+<span class="token punctuation">..</span><span class="token punctuation">..</span>.
+<span class="token string">"GraphDriver"</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">"Data"</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+                <span class="token string">"LowerDir"</span><span class="token builtin class-name">:</span> <span class="token string">"/var/lib/docker/overlay2/2831aec4f79dce47c65502d44c3ac7943de8cac3673af33734fe96853b3fa72c/diff:/var/lib/docker/overlay2/06a6068894a4b1003642f81a1c9e621f28c3f658375e1736a05e8decfb35fa74/diff:/var/lib/docker/overlay2/cb8b816fcdc3b2d5ae2ad8d5bd96e77dd0cad7b085f115f9a82cceac0fb5cc21/diff:/var/lib/docker/overlay2/d12760a8287d5556fc7fb8eff16cb0a13be008eb5df9eef6740973acd42c4d75/diff:/var/lib/docker/overlay2/f6ed744b1f83c0aec623b67fd7ad4826d87d9cfbe96b7511ffc10538c551d709/diff:/var/lib/docker/overlay2/f98a07ed1507ee0f85d3d15c49bb2f08317090be9538779cc3be077a7f5d26a0/diff:/var/lib/docker/overlay2/3c47c55df47cb76fe6b0affe44a54b3fc282d9cddc6e8e91ee8d37fee153ad32/diff:/var/lib/docker/overlay2/f590962d115ad3a0b9ce29e3813d07f941ebc978955d3f0e878107873286c6ed/diff:/var/lib/docker/overlay2/4fc791fa5d63311f24c26c4ed099bcad5bdfba21878a62ba3b703584624b52ce/diff:/var/lib/docker/overlay2/71182ef801d593dc0515a1a023f7d806128b626d7a70c28ca8e3954c307c9850/diff:/var/lib/docker/overlay2/bc728058a9fd4473b335266c51f9b17fac47b1caba4611ed22ade419b4f8134c/diff:/var/lib/docker/overlay2/4d177d19504db3444f18b8d7210ee8fcbaf8f3a9e308307764a324ef0e11fa07/diff:/var/lib/docker/overlay2/7987d4111412b1918ef9cb1f9783b13266ffad06db4dc468b8d965f20803cb4e/diff:/var/lib/docker/overlay2/e694ab0894df35db1c9ca8e7e24a7026bbcd349954808b16a7cee8fcb57c73d3/diff:/var/lib/docker/overlay2/94800468c0d78d4b5d25fb0fde1308543b5a82266e941c7292244bd40476b907/diff:/var/lib/docker/overlay2/2700dd307c1887eadc091c2e5e4c0f98cf45b10e84a5d8b4774914d718ee2194/diff:/var/lib/docker/overlay2/1775daf31e9234afec3143d5b902cc6a2d298a5e251e26443dacbb3f27267ed8/diff:/var/lib/docker/overlay2/491b963dedf2f9953afeeda5bb16717ef8a9e9b24eb22f01ba30ea6e8e1f56db/diff:/var/lib/docker/overlay2/4d335a15bbfe5484698feba460f84b8635191cb4c30f5048ae4d23c2b7fa64fe/diff"</span>,
+                <span class="token string">"MergedDir"</span><span class="token builtin class-name">:</span> <span class="token string">"/var/lib/docker/overlay2/cf15ec1cc4c49db1af786f5ddd9a647fe75d14cb9855a045846119b0c1175e98/merged"</span>,
+                <span class="token string">"UpperDir"</span><span class="token builtin class-name">:</span> <span class="token string">"/var/lib/docker/overlay2/cf15ec1cc4c49db1af786f5ddd9a647fe75d14cb9855a045846119b0c1175e98/diff"</span>,
+                <span class="token string">"WorkDir"</span><span class="token builtin class-name">:</span> <span class="token string">"/var/lib/docker/overlay2/cf15ec1cc4c49db1af786f5ddd9a647fe75d14cb9855a045846119b0c1175e98/work"</span>
+            <span class="token punctuation">}</span>,
+            <span class="token string">"Name"</span><span class="token builtin class-name">:</span> <span class="token string">"overlay2"</span>
+        <span class="token punctuation">}</span>,
+        <span class="token string">"RootFS"</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span>
+            <span class="token string">"Type"</span><span class="token builtin class-name">:</span> <span class="token string">"layers"</span>,
+            <span class="token string">"Layers"</span><span class="token builtin class-name">:</span> <span class="token punctuation">[</span>
+                <span class="token string">"sha256:7948c3e5790c6df89fe48041fabd8f1c576d4bb7c869183e03b9e3873a5f33d9"</span>,
+                <span class="token string">"sha256:4d1ab3827f6b69f4e55bd69cc8abe1dde7d7a7f61bd6e32c665f12e0a8efd1c9"</span>,
+                <span class="token string">"sha256:69dfa7bd7a92b8ba12a617ff56f22533223007c5ba6b3a191c91b852320f012e"</span>,
+                <span class="token string">"sha256:01727b1a72df8ba02293a98ab365bb4e8015aefadd661aaf7e6aa76567b706b9"</span>,
+                <span class="token string">"sha256:e43c0c41b833ec88f51b6fdb7c5faa32c76a32dbefdeb602969b74720ecf47c9"</span>,
+                <span class="token string">"sha256:bd76253da83ab721c5f9deed421f66db1406d89f720387b799dfe5503b797a90"</span>,
+                <span class="token string">"sha256:d81d8fa6dfd451a45e0161e76e3475e4e30e87e1cc1e9839509aa7c3ba42b5dd"</span>,
+                <span class="token string">"sha256:5a61379a8e62960bb62dda930787c7050ff63f195437879bccf9c4c28cdb1291"</span>,
+                <span class="token string">"sha256:b5fb418b14f96644594140b4252500fc07425fc7fd5bb9e3cd50ddb6bd3afbd8"</span>,
+                <span class="token string">"sha256:42f827e1a3dded30512b90e3c9a8f8163cabff70a724c4bfa8c79262605cef11"</span>,
+                <span class="token string">"sha256:04b9998735689e24846c57fb5103af52cbebcbe30a0e86bb4457fb980aad39f1"</span>,
+                <span class="token string">"sha256:60863b4a1d35106e2f1eb938a3ce2a895a8e252fadb38b50211d6619cb81c7d6"</span>,
+                <span class="token string">"sha256:aee815dec61e21b5133837d35ac769c9d3cc1a34d04de50ee13c362abf1c0486"</span>,
+                <span class="token string">"sha256:2bab4f9da3e7b9c7ee7000c6aed373bc45b90b4f16eb58c6ffbc2743e9416b46"</span>,
+                <span class="token string">"sha256:c11406ec15d4ad731f734d44863f20915cb373c465a67fa50342f2ea37737e3d"</span>,
+                <span class="token string">"sha256:dfcc6ab2bd0706f88a044072c94204f4a821afca5109d1195b45d61b2ac4a0d0"</span>,
+                <span class="token string">"sha256:4a90843d8f4555c71f9c63f190b3065b082541cc6912d14faf72e046bbe903ff"</span>,
+                <span class="token string">"sha256:4d016378c3c1bba1d3f01f2bb2267b4676fc6168e9c8c47585aec32ac043787e"</span>,
+                <span class="token string">"sha256:f1bd73eaefb0e56fb97382339ffa4d1318210bfc93b0cb04cae8b9c30643993a"</span>,
+                <span class="token string">"sha256:19412a66aaee7b66ea7f49ae2a691afceec0e342a0aa89c9771b8e56ca67773a"</span>
+            <span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>,
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>查看 <code>RootFS</code> 字段可以看到jenkins镜像包含了20层，Docker 把这些rootfs联合挂载在一个统一的挂载点上</p>
+<ul>
+<li><strong>LowerDir</strong> 为只读镜像层。可以有多层，可以看到上面的 jenkins 镜像的 <code>LowerDir</code> 一共有19层。</li>
+<li><strong>WorkDir</strong> 为工作基础目录，和 <code>Upper</code> 层并列， 充当一个中间层的作用，在对 <code>Upper</code> 层里面的副本进行修改时，会先到 <code>WorkDir</code>，然后再从 <code>WorkDir</code> 移动 <code>Upper</code> 层。</li>
+<li><strong>UpperDir</strong> 为可读写层，对容器的更改发生在这一层，包含了对容器的更改，挂载方式为rw，即 read write，采用写时复制（copy-on-write）机制。</li>
+<li><strong>MergedDir</strong> 为 <code>WorkDir</code>、<code>UpperDir</code> 和 <code>LowerDir</code> 的联合挂载点，是呈现给用户的统一视图</li>
+</ul>
+<p><code>/var/lib/docker/image/overlay2/layerdb</code> 存的只是元数据，每层真实的rootfs在<code>/var/lib/docker/overlay2/</code> 目录下，我们需要找到它的cache-id。</p>
+<p>查看<code>/var/lib/docker/image/overlay2/layerdb/sha256/7948c3e5790c6df89fe48041fabd8f1c576d4bb7c869183e03b9e3873a5f33d9/cache-id</code>的值:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">cat</span> cache-id
+4d335a15bbfe5484698feba460f84b8635191cb4c30f5048ae4d23c2b7fa64fe
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><code>/var/lib/docker/overlay2/4d335a15bbfe5484698feba460f84b8635191cb4c30f5048ae4d23c2b7fa64fe</code> 就是当前层的rootfs。</p>
+<p>进入里面可以看到一个完整的系统目录：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token builtin class-name">cd</span> /var/lib/docker/overlay2/4d335a15bbfe5484698feba460f84b8635191cb4c30f5048ae4d23c2b7fa64fe
+$ <span class="token function">ls</span> diff/
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>你在 <code>/var/lib/docker/overlay2/</code> 目录下可能会看到以“-init”结尾的目录，它对应docker的Init 层，位于只读层和读写层之间，专门用来存放 /etc/hosts、/etc/resolv.conf 等信息。在启动容器时写入的一些指定参数（每台机器环境不一样，比如hostname等）通过这一层进行修改，这些修改往往只对当前容器生效，在 <code>docker commit</code> 提交为镜像时不会将init层提交。</p>
+<h2><span id="docker数据卷">Docker数据卷</span></h2><p>默认情况下，在容器内创建的所有文件都存储在可读写容器层，可能会出现以下问题：</p>
+<ul>
+<li>当容器被删除时，数据不会持久存在，也会跟着被删除。</li>
+<li>如果其它容器进程需要此容器的数据，从容器中取数据可能会很困难。</li>
+<li>容器的可读写层与容器运行的宿主机紧密耦合，不方便将数据迁移到其他地方。</li>
+<li>相比直接写入主机文件系统，在可读写容器层进行文件管理可能会降低性能。</li>
+</ul>
+<p>Linux系统中，Docker主要提供了3种方式用于容器的文件存储：<code>volumes</code>、 <code>bind mounts</code> 和 <code>tmpfs</code><img alt="img" class="lazy" data-src="/img/friend_404.gif" data-original="https://s2.loli.net/2025/02/25/nGEXFgyvLlwozhB.png"></p>
+<ul>
+<li><strong>Volume</strong>（数据卷）存储在主机文件系统，由Docker管理，Linux下目录为<code>/var/lib/docker/volumes/</code>。非docker进程不会修改这个目录。Volume是进行Docker数据持久化的最好方法。</li>
+<li><strong>Bind mounts</strong>可以存储在主机系统的任何位置，甚至可能是重要的系统文件或目录。Docker宿主机上的非Docker进程或Docker容器可以随时修改它们。</li>
+<li>**<code>tmpfs</code>**挂载只存储在宿主机的内存中，不会写入宿主机的文件系统。</li>
+</ul>
+<p>我们一般使用Volume机制来进行目录挂载，docker中使用 <code>-v</code> 参数，比如启动jenkins容器时，挂载 <code>/var/jenkins_home</code> 目录：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> run <span class="token parameter variable">--name</span><span class="token operator">=</span>jenkins <span class="token parameter variable">-d</span> <span class="token parameter variable">-p</span> <span class="token number">8080</span>:8080 <span class="token parameter variable">-p</span> <span class="token number">50000</span>:50000 <span class="token parameter variable">-v</span> jenkins_test:/var/jenkins_home jenkins/jenkins<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>其中，jenkins_test是使用<code>docker volume create jenkins_test</code> 命令创建的数据卷。</p>
+<p>目录挂载的语法格式如下：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ <span class="token function">docker</span> run <span class="token parameter variable">-v</span> /var/test:/home <span class="token punctuation">..</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>实现将宿主机目录<code>/var/test</code> 挂载到容器的 <code>/home</code> 目录，在该挂载点 <code>/home</code> 上进行的任何操作，只是发生在被挂载的目录<code>/var/test</code> 上，而原挂载点的内容则会被隐藏起来且不受影响，不会影响容器镜像的内容。</p>
+<p>此外，使用 <code>docker commit</code> 命令提交时，不会将宿主机目录提交，这是由于 Mount Namespace 的隔离作用，宿主机并不知道这个绑定挂载的存在。所以，在宿主机看来，容器中可读写层的 <code>/home</code> 目录始终是空的。但是，新产生的镜像里会多出来一个空的 <code>/home</code> 目录。</p>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2025/02/28/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">接口自动化测试</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2025/01/13/Spring_boot/Spring%E5%B7%A5%E5%85%B7%E7%B1%BB/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Spring工具</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img class="soft-size--round soft-style--box lazy" alt="Guduyili" data-src="/img/friend_404.gif" data-original="/../../img/9c0e14447527992b401a1827d37127cd.png">
+    
+    
+      <h2>Guduyili</h2>
+    
+    
+      <p>我心匪石，不可轉也。我心匪席，不可卷也</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>68</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        26
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        7
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>Warning! Warning!</p>
+  </div>
+</section>
+
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li class="categories-list-item">
+          <a href="/categories/SQL/">
+            SQL (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/AI/">
+            AI (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Go/">
+            Go (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/git/">
+            git (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/HCIA/">
+            HCIA (11)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Hexo/">
+            Hexo (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/JAVA/">
+            JAVA (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Linux/">
+            Linux (7)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/My-Project/">
+            My Project (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Spring-boot/">
+            Spring-boot (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Redis/">
+            Redis (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Unity/">
+            Unity (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87/">
+            学习目标 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+            软件测试 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/">
+            生活感想 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%AE%97%E6%B3%95/">
+            算法 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">
+            自动化测试 (8)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%97%A5%E8%AF%AD/">
+            日语 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%A4%A7%E7%89%A9/">
+            大物 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+            数据库 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%A6%82%E7%BB%9F/">
+            概统 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
+            线性代数 (4)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+            图形学 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%AE%A1%E7%BB%84/">
+            计组 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+            操作系统 (2)
+          </a>
+        </li>
+        
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/AI/" style="font-size: 13.33px;" class="tags-cloud-3">AI</a> <a href="/tags/JAVA/" style="font-size: 13.33px;" class="tags-cloud-3">JAVA</a> <a href="/tags/blog/" style="font-size: 10px;" class="tags-cloud-0">blog</a> <a href="/tags/learning/" style="font-size: 20px;" class="tags-cloud-10">learning</a> <a href="/tags/music/" style="font-size: 10px;" class="tags-cloud-0">music</a> <a href="/tags/%E5%B8%A6%E7%A0%96%E7%94%9F%E7%9A%84%E9%80%9F%E6%88%90/" style="font-size: 16.67px;" class="tags-cloud-7">带砖生的速成</a> <a href="/tags/%E6%84%9F%E6%83%B3/" style="font-size: 10px;" class="tags-cloud-0">感想</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/guduyili" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>© 2026 <a href="/" target="_blank">Guduyili</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/guduyili" target="_blank" rel="noopener noreferrer author">GDYL-Blog</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+<script type="text/javascript">
+	(function () {
+		// todo
+	})();
+</script>
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<script>document.addEventListener("DOMContentLoaded", function() {
+  var lazyloadImages;
+
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.src = image.dataset.src;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+        });
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
+    }
+
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
+})
+</script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>(r=>{r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,o=r.imageLazyLoadSetting.preloadRatio||1,d=i();function i(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=i());for(var e,n=0;n<d.length;n++)0<=(e=(e=d[n]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*o||document.documentElement.clientHeight*o)&&(()=>{var t,e,a,o,i=d[n];e=function(){d=d.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,o=t.getAttribute("data-original"),a.onload=function(){t.src=o,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=o},t.src!==o&&(a.src=o)))})()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)})(this);</script></body></html>
