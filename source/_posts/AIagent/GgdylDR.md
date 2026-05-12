@@ -1,5 +1,5 @@
 ---
-title: AIagent_Learning
+title: DeepResearch_Learning
 date: 2026-05-12
 categories: 
 - AI
