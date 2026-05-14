@@ -1,0 +1,1297 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="theme-color" content="#3367D6">
+  <link rel="apple-touch-icon" href="/icons-192.png">
+  <link rel="manifest" href="/manifest.json">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+
+  
+
+  
+
+  
+    <meta name="author" content="[object Object]">
+  
+
+  
+
+  
+
+  <title>Skill_Learning | GuDu-Blog</title>
+
+  
+
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+
+  
+
+  
+
+  
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css" integrity="sha256-TThEtR+XalhWKkfF383YLOrI50NGNeIqrzS+q08afrY=" crossorigin="anonymous"><!-- hexo injector head_end end --></head>
+<body>
+  <div class="root-container">
+    
+<!-- header container -->
+<header class="header-container post">
+  
+    <div class="post-image" style="background-image: url(https://imgs.aixifan.com/o_1dj1ntbbl13km9jpf9j9a49ag2k.jpg)"></div>
+  
+
+  <!-- navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <!-- logo -->
+    <div class="navbar-logo">
+      <a href="/">
+        
+          GuDu-Blog
+        
+      </a>
+    </div>
+    <!-- link -->
+    <div class="navbar-link">
+      <div class="navbar-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul class="navbar-list">
+        
+          <li class="navbar-list-item"><a href="/">Home</a></li>
+        
+          <li class="navbar-list-item"><a href="/archives">Archives</a></li>
+        
+          <li class="navbar-list-item"><a href="/links">Links</a></li>
+        
+          <li class="navbar-list-item"><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    <div class="header-content">
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">Skill_Learning</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Guduyili</strong>
+            <span>发布于</span>
+            <time class="article-date" datetime="2026-05-14T00:00:00.000Z" itemprop="datePublished">2026-05-14</time>
+          </h2>
+          
+          
+            <h2 id="/2026/05/14/AIagent/Skill_Learning/" class="title-sub-wrap leancloud_visitors" data-flag-title="Skill_Learning">
+              <em>文章访问量</em>
+              <i class="leancloud-visitors-count"></i>
+            </h2>
+          
+          <ul class="wrap-list dark">
+  
+    <li><a href="/categories/AI/">📒 AI</a></li>
+    
+</ul>
+          <ul class="wrap-list dark">
+  
+    <li><a href="/tags/AI/">🏷️ AI</a></li>
+  
+</ul>
+        </div>
+      </div>
+    </div>
+  
+
+  
+  
+  
+</header>
+
+    <!-- 文章 -->
+
+<!-- 文章内容 -->
+<div class="body-container">
+  <article class="content-container layout-block post-container">
+    <div class="article-info">
+      
+      
+      
+      
+      <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
+        <!-- toc -->
+
+<ul>
+<li><a href="#deep-agents-%E5%B7%A5%E5%85%B7%E4%B8%8E-skill-%E5%8A%A0%E8%BD%BD%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97">Deep Agents 工具与 Skill 加载学习指南</a><ul>
+<li><a href="#1-%E5%85%88%E5%BB%BA%E7%AB%8B%E6%95%B4%E4%BD%93%E5%BF%83%E6%99%BA%E6%A8%A1%E5%9E%8B">1. 先建立整体心智模型</a></li>
+<li><a href="#2-shelltool-%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84">2. <code>ShellTool</code> 是怎么做的？</a><ul>
+<li><a href="#21-%E5%88%9B%E5%BB%BA%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%8D%E7%BD%AE">2.1 创建工具的位置</a></li>
+<li><a href="#22-%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E9%93%BE%E8%B7%AF">2.2 工具调用链路</a></li>
+<li><a href="#23-%E7%9C%9F%E6%AD%A3%E6%89%A7%E8%A1%8C-shell-%E7%9A%84%E5%9C%B0%E6%96%B9">2.3 真正执行 shell 的地方</a></li>
+<li><a href="#24-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF%E6%89%80%E6%9C%89-agent-%E9%83%BD%E8%83%BD%E7%94%A8-shell">2.4 为什么不是所有 Agent 都能用 shell？</a></li>
+<li><a href="#25-cli-%E9%87%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%90%AF%E7%94%A8-shell">2.5 CLI 里什么时候启用 shell？</a></li>
+<li><a href="#26-%E5%88%9D%E5%AD%A6%E8%80%85%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%AE%89%E5%85%A8%E7%82%B9">2.6 初学者要注意的安全点</a></li>
+</ul>
+</li>
+<li><a href="#3-filereadtool-%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84">3. <code>FileReadTool</code> 是怎么做的？</a><ul>
+<li><a href="#31-%E5%88%9B%E5%BB%BA%E5%B7%A5%E5%85%B7%E7%9A%84%E4%BD%8D%E7%BD%AE">3.1 创建工具的位置</a></li>
+<li><a href="#32-read_file-%E7%9A%84%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B">3.2 <code>read_file</code> 的执行流程</a></li>
+<li><a href="#33-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89-offset-%E5%92%8C-limit">3.3 为什么要有 <code>offset</code> 和 <code>limit</code>？</a></li>
+<li><a href="#34-%E7%9C%9F%E6%AD%A3%E8%AF%BB%E6%96%87%E4%BB%B6%E7%9A%84%E6%98%AF-backend">3.4 真正读文件的是 Backend</a><ul>
+<li><a href="#statebackend">StateBackend</a></li>
+<li><a href="#filesystembackend">FilesystemBackend</a></li>
+<li><a href="#compositebackend">CompositeBackend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#4-tool-%E6%98%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E6%B3%A8%E5%86%8C%E8%BF%9B-agent-%E7%9A%84">4. Tool 是什么时候注册进 Agent 的？</a></li>
+<li><a href="#5-skill-%E6%98%AF%E4%BB%80%E4%B9%88">5. Skill 是什么？</a></li>
+<li><a href="#6-skill-%E4%BB%80%E4%B9%88%E6%97%B6%E6%9C%BA%E5%8A%A0%E8%BD%BD">6. Skill 什么时机加载？</a><ul>
+<li><a href="#%E9%98%B6%E6%AE%B5%E4%B8%80agent-%E8%BF%90%E8%A1%8C%E5%89%8D%E5%8A%A0%E8%BD%BD%E5%85%83%E6%95%B0%E6%8D%AE">阶段一：Agent 运行前加载元数据</a></li>
+<li><a href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%E6%AF%8F%E6%AC%A1%E6%A8%A1%E5%9E%8B%E8%B0%83%E7%94%A8%E5%89%8D%E6%B3%A8%E5%85%A5-skill-%E5%88%97%E8%A1%A8">阶段二：每次模型调用前注入 skill 列表</a></li>
+</ul>
+</li>
+<li><a href="#7-skill-%E7%9A%84%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD%E6%98%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%9A%84">7. Skill 的动态加载是怎么实现的？</a></li>
+<li><a href="#8-cli-%E9%87%8C-skill-%E6%9D%A5%E6%BA%90%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5">8. CLI 里 Skill 来源从哪里来？</a></li>
+<li><a href="#9-%E4%B8%80%E5%BC%A0%E5%AE%8C%E6%95%B4%E8%B0%83%E7%94%A8%E9%93%BE%E5%9B%BE">9. 一张完整调用链图</a></li>
+<li><a href="#10-%E5%88%9D%E5%AD%A6%E8%80%85%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB%E9%A1%BA%E5%BA%8F">10. 初学者推荐阅读顺序</a><ul>
+<li><a href="#%E7%AC%AC-1-%E6%AD%A5%E7%9C%8B%E6%80%BB%E5%85%A5%E5%8F%A3">第 1 步：看总入口</a></li>
+<li><a href="#%E7%AC%AC-2-%E6%AD%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E5%B7%A5%E5%85%B7">第 2 步：看文件工具</a></li>
+<li><a href="#%E7%AC%AC-3-%E6%AD%A5%E7%9C%8B-backend">第 3 步：看 backend</a></li>
+<li><a href="#%E7%AC%AC-4-%E6%AD%A5%E7%9C%8B-skill">第 4 步：看 skill</a></li>
+<li><a href="#%E7%AC%AC-5-%E6%AD%A5%E7%9C%8B-cli-%E8%A3%85%E9%85%8D">第 5 步：看 CLI 装配</a></li>
+</ul>
+</li>
+<li><a href="#11-%E5%8A%A8%E6%89%8B%E7%BB%83%E4%B9%A0">11. 动手练习</a><ul>
+<li><a href="#%E7%BB%83%E4%B9%A0-1%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7">练习 1：找到所有内置工具</a></li>
+<li><a href="#%E7%BB%83%E4%B9%A0-2%E8%BF%BD%E8%B8%AA-read_file">练习 2：追踪 <code>read_file</code></a></li>
+<li><a href="#%E7%BB%83%E4%B9%A0-3%E8%BF%BD%E8%B8%AA-execute">练习 3：追踪 <code>execute</code></a></li>
+<li><a href="#%E7%BB%83%E4%B9%A0-4%E5%81%9A%E4%B8%80%E4%B8%AA%E6%9C%80%E5%B0%8F-skill">练习 4：做一个最小 Skill</a></li>
+</ul>
+</li>
+<li><a href="#12-%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA">12. 常见误区</a><ul>
+<li><a href="#%E8%AF%AF%E5%8C%BA-1skill-%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%85%A8%E9%83%A8%E5%8A%A0%E8%BD%BD%E8%BF%9B-prompt">误区 1：Skill 会自动全部加载进 prompt</a></li>
+<li><a href="#%E8%AF%AF%E5%8C%BA-2tool-%E8%87%AA%E5%B7%B1%E8%B4%9F%E8%B4%A3%E6%89%80%E6%9C%89%E9%80%BB%E8%BE%91">误区 2：Tool 自己负责所有逻辑</a></li>
+<li><a href="#%E8%AF%AF%E5%8C%BA-3localshellbackend-%E6%98%AF%E5%AE%89%E5%85%A8%E6%B2%99%E7%AE%B1">误区 3：LocalShellBackend 是安全沙箱</a></li>
+<li><a href="#%E8%AF%AF%E5%8C%BA-4execute-%E4%B8%80%E5%AE%9A%E4%BC%9A%E6%9A%B4%E9%9C%B2%E7%BB%99-llm">误区 4：<code>execute</code> 一定会暴露给 LLM</a></li>
+</ul>
+</li>
+<li><a href="#13-%E6%9C%80%E5%B0%8F%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%9C%B0%E5%9B%BE">13. 最小源码阅读地图</a></li>
+<li><a href="#14-%E4%BD%A0%E6%9C%80%E7%BB%88%E5%BA%94%E8%AF%A5%E8%83%BD%E8%AE%B2%E6%B8%85%E6%A5%9A%E7%9A%84%E5%9B%9B%E5%8F%A5%E8%AF%9D">14. 你最终应该能讲清楚的四句话</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>[TOC]</p>
+<h1><span id="deep-agents-工具与-skill-加载学习指南">Deep Agents 工具与 Skill 加载学习指南</span></h1><blockquote>
+<p>面向初学者，围绕 <code>execute</code>（ShellTool）、<code>read_file</code>（FileReadTool）、Skill 加载时机与动态加载机制，理解 Deep Agents 的核心实现。</p>
+</blockquote>
+<hr>
+<h2><span id="1-先建立整体心智模型">1. 先建立整体心智模型</span></h2><p>Deep Agents 不是把所有能力都写在一个 Agent 类里，而是拆成三层：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">create_deep_agent()
+  -&gt; 组装 middleware
+  -&gt; middleware 注册 tools / 修改 system prompt / 拦截 tool result
+  -&gt; backend 负责真正读文件、写文件、执行 shell<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>你可以先记住一句话：</p>
+<blockquote>
+<p>Tool 是给 LLM 看的函数接口，Middleware 负责把 Tool 接进 Agent，Backend 负责真正干活。</p>
+</blockquote>
+<p>对应源码：</p>
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>关键文件</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Agent 总装</td>
+<td><code>libs/deepagents/deepagents/graph.py</code></td>
+<td><code>create_deep_agent()</code> 组装所有 middleware</td>
+</tr>
+<tr>
+<td>文件/Shell 工具</td>
+<td><code>libs/deepagents/deepagents/middleware/filesystem.py</code></td>
+<td>创建 <code>read_file</code>、<code>execute</code> 等工具</td>
+</tr>
+<tr>
+<td>Backend 协议</td>
+<td><code>libs/deepagents/deepagents/backends/protocol.py</code></td>
+<td>定义后端必须实现哪些方法</td>
+</tr>
+<tr>
+<td>本地文件后端</td>
+<td><code>libs/deepagents/deepagents/backends/filesystem.py</code></td>
+<td>直接读写真实磁盘文件</td>
+</tr>
+<tr>
+<td>本地 Shell 后端</td>
+<td><code>libs/deepagents/deepagents/backends/local_shell.py</code></td>
+<td>用 <code>subprocess.run()</code> 执行 shell</td>
+</tr>
+<tr>
+<td>Skill 中间件</td>
+<td><code>libs/deepagents/deepagents/middleware/skills.py</code></td>
+<td>扫描 <code>SKILL.md</code>，把 skill 列表注入 prompt</td>
+</tr>
+<tr>
+<td>CLI 装配</td>
+<td><code>libs/cli/deepagents_cli/agent.py</code></td>
+<td>CLI 下启用 memory、skills、shell、backend</td>
+</tr>
+</tbody></table>
+<hr>
+<h2><span id="2-shelltool-是怎么做的">2. <code>ShellTool</code> 是怎么做的？</span></h2><p>严格说，这个项目里核心工具不叫 <code>ShellTool</code>，而叫 <code>execute</code> tool。</p>
+<h3><span id="21-创建工具的位置">2.1 创建工具的位置</span></h3><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/middleware/filesystem.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_create_execute_tool</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> BaseTool<span class="token punctuation">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> StructuredTool<span class="token punctuation">.</span>from_function<span class="token punctuation">(</span>
+        name<span class="token operator">=</span><span class="token string">"execute"</span><span class="token punctuation">,</span>
+        description<span class="token operator">=</span>tool_description<span class="token punctuation">,</span>
+        func<span class="token operator">=</span>sync_execute<span class="token punctuation">,</span>
+        coroutine<span class="token operator">=</span>async_execute<span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这说明 <code>execute</code> 是通过 LangChain 的 <code>StructuredTool.from_function()</code> 包装出来的。</p>
+<p>LLM 看到的是工具 schema：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">execute(command: str, timeout: int | None)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>LLM 不直接执行 shell，它只是发起一次工具调用。</p>
+<h3><span id="22-工具调用链路">2.2 工具调用链路</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">LLM 调用 execute(command="npm test")
+  -&gt; FilesystemMiddleware._create_execute_tool().sync_execute()
+  -&gt; resolved_backend = self._get_backend(runtime)
+  -&gt; 判断 backend 是否支持执行
+  -&gt; backend.execute(command, timeout=...)
+  -&gt; 返回 stdout / stderr / exit_code<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>关键代码点：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> <span class="token keyword">not</span> _supports_execution<span class="token punctuation">(</span>resolved_backend<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token string">"Error: Execution not available..."</span>
+
+executable <span class="token operator">=</span> cast<span class="token punctuation">(</span><span class="token string">"SandboxBackendProtocol"</span><span class="token punctuation">,</span> resolved_backend<span class="token punctuation">)</span>
+result <span class="token operator">=</span> executable<span class="token punctuation">.</span>execute<span class="token punctuation">(</span>command<span class="token punctuation">,</span> timeout<span class="token operator">=</span>timeout<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="23-真正执行-shell-的地方">2.3 真正执行 shell 的地方</span></h3><p>CLI 本地模式会创建 <code>LocalShellBackend</code>。</p>
+<p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/backends/local_shell.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>核心方法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">execute</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> command<span class="token punctuation">:</span> <span class="token builtin">str</span><span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">,</span> timeout<span class="token punctuation">:</span> <span class="token builtin">int</span> <span class="token operator">|</span> <span class="token boolean">None</span> <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> ExecuteResponse<span class="token punctuation">:</span>
+    result <span class="token operator">=</span> subprocess<span class="token punctuation">.</span>run<span class="token punctuation">(</span>
+        command<span class="token punctuation">,</span>
+        check<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span>
+        shell<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+        capture_output<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+        text<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+        timeout<span class="token operator">=</span>effective_timeout<span class="token punctuation">,</span>
+        env<span class="token operator">=</span>self<span class="token punctuation">.</span>_env<span class="token punctuation">,</span>
+        cwd<span class="token operator">=</span><span class="token builtin">str</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>cwd<span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>也就是说，本地 shell 的本质就是：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">execute tool -&gt; LocalShellBackend.execute() -&gt; subprocess.run(..., shell=True)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3><span id="24-为什么不是所有-agent-都能用-shell">2.4 为什么不是所有 Agent 都能用 shell？</span></h3><p>因为 <code>execute</code> 只在 backend 支持 <code>SandboxBackendProtocol</code> 时才真正可用。</p>
+<p>判断函数：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_supports_execution</span><span class="token punctuation">(</span>backend<span class="token punctuation">:</span> BackendProtocol<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token builtin">bool</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>backend<span class="token punctuation">,</span> CompositeBackend<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>backend<span class="token punctuation">.</span>default<span class="token punctuation">,</span> SandboxBackendProtocol<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token builtin">isinstance</span><span class="token punctuation">(</span>backend<span class="token punctuation">,</span> SandboxBackendProtocol<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>每次模型调用前，<code>FilesystemMiddleware.wrap_model_call()</code> 会检查 backend：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> <span class="token keyword">not</span> backend_supports_execution<span class="token punctuation">:</span>
+    filtered_tools <span class="token operator">=</span> <span class="token punctuation">[</span>
+        tool <span class="token keyword">for</span> tool <span class="token keyword">in</span> request<span class="token punctuation">.</span>tools
+        <span class="token keyword">if</span> tool<span class="token punctuation">.</span>name <span class="token operator">!=</span> <span class="token string">"execute"</span>
+    <span class="token punctuation">]</span>
+    request <span class="token operator">=</span> request<span class="token punctuation">.</span>override<span class="token punctuation">(</span>tools<span class="token operator">=</span>filtered_tools<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">backend 不支持 shell -&gt; execute 工具不会暴露给 LLM
+backend 支持 shell -&gt; execute 工具出现在工具列表里<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h3><span id="25-cli-里什么时候启用-shell">2.5 CLI 里什么时候启用 shell？</span></h3><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/cli/deepagents_cli/agent.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>关键逻辑：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> sandbox <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> enable_shell<span class="token punctuation">:</span>
+        backend <span class="token operator">=</span> LocalShellBackend<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        backend <span class="token operator">=</span> FilesystemBackend<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    backend <span class="token operator">=</span> sandbox<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>含义：</p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>backend</th>
+<th>是否有 shell</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>本地 + <code>enable_shell=True</code></td>
+<td><code>LocalShellBackend</code></td>
+<td>有</td>
+</tr>
+<tr>
+<td>本地 + <code>enable_shell=False</code></td>
+<td><code>FilesystemBackend</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>远程 sandbox</td>
+<td>sandbox backend</td>
+<td>取决于 sandbox 是否实现执行协议</td>
+</tr>
+</tbody></table>
+<h3><span id="26-初学者要注意的安全点">2.6 初学者要注意的安全点</span></h3><p><code>LocalShellBackend</code> 是直接在你的机器上执行命令，不是真沙箱。</p>
+<p>它使用：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">shell<span class="token operator">=</span><span class="token boolean">True</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>因此命令可以：</p>
+<ul>
+<li>读写本机文件</li>
+<li>删除文件</li>
+<li>访问网络</li>
+<li>安装依赖</li>
+<li>执行任意脚本</li>
+</ul>
+<p>所以 CLI 里通常还会配合 Human-in-the-Loop 审批机制，避免危险命令直接执行。</p>
+<hr>
+<h2><span id="3-filereadtool-是怎么做的">3. <code>FileReadTool</code> 是怎么做的？</span></h2><p>核心工具名是 <code>read_file</code>。</p>
+<h3><span id="31-创建工具的位置">3.1 创建工具的位置</span></h3><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/middleware/filesystem.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_create_read_file_tool</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> BaseTool<span class="token punctuation">:</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> StructuredTool<span class="token punctuation">.</span>from_function<span class="token punctuation">(</span>
+        name<span class="token operator">=</span><span class="token string">"read_file"</span><span class="token punctuation">,</span>
+        description<span class="token operator">=</span>tool_description<span class="token punctuation">,</span>
+        func<span class="token operator">=</span>sync_read_file<span class="token punctuation">,</span>
+        coroutine<span class="token operator">=</span>async_read_file<span class="token punctuation">,</span>
+    <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>LLM 看到的是：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">read_file(file_path: str, offset: int = 0, limit: int = 100)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3><span id="32-read_file-的执行流程">3.2 <code>read_file</code> 的执行流程</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">LLM 调用 read_file(file_path="/app/main.py", offset=0, limit=100)
+  -&gt; validate_path(file_path)
+  -&gt; 判断是不是图片
+  -&gt; 如果是图片：download_files + base64 image block
+  -&gt; 如果是文本：backend.read(path, offset, limit)
+  -&gt; 如果结果太大：截断并提示
+  -&gt; 返回内容<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>核心代码结构：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">sync_read_file</span><span class="token punctuation">(</span>file_path<span class="token punctuation">,</span> runtime<span class="token punctuation">,</span> offset<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> limit<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    resolved_backend <span class="token operator">=</span> self<span class="token punctuation">.</span>_get_backend<span class="token punctuation">(</span>runtime<span class="token punctuation">)</span>
+    validated_path <span class="token operator">=</span> validate_path<span class="token punctuation">(</span>file_path<span class="token punctuation">)</span>
+
+    ext <span class="token operator">=</span> Path<span class="token punctuation">(</span>validated_path<span class="token punctuation">)</span><span class="token punctuation">.</span>suffix<span class="token punctuation">.</span>lower<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> ext <span class="token keyword">in</span> IMAGE_EXTENSIONS<span class="token punctuation">:</span>
+        responses <span class="token operator">=</span> resolved_backend<span class="token punctuation">.</span>download_files<span class="token punctuation">(</span><span class="token punctuation">[</span>validated_path<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+    result <span class="token operator">=</span> resolved_backend<span class="token punctuation">.</span>read<span class="token punctuation">(</span>validated_path<span class="token punctuation">,</span> offset<span class="token operator">=</span>offset<span class="token punctuation">,</span> limit<span class="token operator">=</span>limit<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token keyword">return</span> result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="33-为什么要有-offset-和-limit">3.3 为什么要有 <code>offset</code> 和 <code>limit</code>？</span></h3><p>因为 Agent 不能随便把一个几千行文件全部塞进上下文。</p>
+<p>默认分页策略是：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">第一次：read_file(path, limit=100)
+第二次：read_file(path, offset=100, limit=200)
+第三次：read_file(path, offset=300, limit=200)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>这样做的好处：</p>
+<ul>
+<li>控制 token 成本</li>
+<li>避免上下文爆炸</li>
+<li>鼓励 Agent 先看结构，再精准读取</li>
+</ul>
+<h3><span id="34-真正读文件的是-backend">3.4 真正读文件的是 Backend</span></h3><p><code>read_file</code> 工具自己不关心文件在哪里，它只调用：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">resolved_backend<span class="token punctuation">.</span>read<span class="token punctuation">(</span>validated_path<span class="token punctuation">,</span> offset<span class="token operator">=</span>offset<span class="token punctuation">,</span> limit<span class="token operator">=</span>limit<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>不同 backend 有不同实现。</p>
+<h4><span id="statebackend">StateBackend</span></h4><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/backends/state.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>核心：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">files <span class="token operator">=</span> self<span class="token punctuation">.</span>runtime<span class="token punctuation">.</span>state<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"files"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+file_data <span class="token operator">=</span> files<span class="token punctuation">.</span>get<span class="token punctuation">(</span>file_path<span class="token punctuation">)</span>
+<span class="token keyword">return</span> format_read_response<span class="token punctuation">(</span>file_data<span class="token punctuation">,</span> offset<span class="token punctuation">,</span> limit<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>特点：</p>
+<ul>
+<li>文件存在 LangGraph state 里</li>
+<li>适合测试、临时运行</li>
+<li>不直接碰真实磁盘</li>
+</ul>
+<h4><span id="filesystembackend">FilesystemBackend</span></h4><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/backends/filesystem.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>特点：</p>
+<ul>
+<li>文件在真实磁盘上</li>
+<li><code>root_dir</code> 是工作目录</li>
+<li><code>virtual_mode=True</code> 时会限制路径穿越</li>
+</ul>
+<h4><span id="compositebackend">CompositeBackend</span></h4><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/backends/composite.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>它负责按路径路由：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">/large_tool_results/... -&gt; large_results_backend
+/conversation_history/... -&gt; conversation_history_backend
+其他路径 -&gt; default backend<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>所以 <code>read_file("/large_tool_results/xxx")</code> 可能读的是临时目录，而不是项目目录。</p>
+<hr>
+<h2><span id="4-tool-是什么时候注册进-agent-的">4. Tool 是什么时候注册进 Agent 的？</span></h2><p>总入口：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/graph.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>核心函数：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">create_deep_agent<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>主 Agent middleware 栈里会加入：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">FilesystemMiddleware<span class="token punctuation">(</span>backend<span class="token operator">=</span>backend<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><code>FilesystemMiddleware.__init__()</code> 中预创建工具：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">self<span class="token punctuation">.</span>tools <span class="token operator">=</span> <span class="token punctuation">[</span>
+    self<span class="token punctuation">.</span>_create_ls_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    self<span class="token punctuation">.</span>_create_read_file_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    self<span class="token punctuation">.</span>_create_write_file_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    self<span class="token punctuation">.</span>_create_edit_file_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    self<span class="token punctuation">.</span>_create_glob_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    self<span class="token punctuation">.</span>_create_grep_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    self<span class="token punctuation">.</span>_create_execute_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：<code>execute</code> 会先被创建，但是否真正暴露给模型，要看 <code>wrap_model_call()</code> 里 backend 是否支持执行。</p>
+<hr>
+<h2><span id="5-skill-是什么">5. Skill 是什么？</span></h2><p>Skill 是一个目录，里面必须有 <code>SKILL.md</code>。</p>
+<p>典型结构：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">skills/
+└── web-research/
+    ├── SKILL.md
+    └── helper.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>SKILL.md</code> 顶部是 YAML frontmatter：</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token front-matter yaml language-yaml">name: web-research
+description: Structured approach to conducting thorough web research</span>
+<span class="token punctuation">---</span></span>
+
+<span class="token title important"><span class="token punctuation">#</span> Web Research Skill</span>
+
+这里写具体步骤、最佳实践、示例和注意事项。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>核心目的：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">让 Agent 拥有大量领域工作流，但不一次性把所有内容放入上下文。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<hr>
+<h2><span id="6-skill-什么时机加载">6. Skill 什么时机加载？</span></h2><p>Skill 有两个加载阶段。</p>
+<h3><span id="阶段一agent-运行前加载元数据">阶段一：Agent 运行前加载元数据</span></h3><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/middleware/skills.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>方法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">before_agent</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token string">"skills_metadata"</span> <span class="token keyword">in</span> state<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token boolean">None</span>
+
+    backend <span class="token operator">=</span> self<span class="token punctuation">.</span>_get_backend<span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+    all_skills <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+    <span class="token keyword">for</span> source_path <span class="token keyword">in</span> self<span class="token punctuation">.</span>sources<span class="token punctuation">:</span>
+        source_skills <span class="token operator">=</span> _list_skills<span class="token punctuation">(</span>backend<span class="token punctuation">,</span> source_path<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> skill <span class="token keyword">in</span> source_skills<span class="token punctuation">:</span>
+            all_skills<span class="token punctuation">[</span>skill<span class="token punctuation">[</span><span class="token string">"name"</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> skill
+
+    <span class="token keyword">return</span> SkillsStateUpdate<span class="token punctuation">(</span>skills_metadata<span class="token operator">=</span><span class="token builtin">list</span><span class="token punctuation">(</span>all_skills<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>关键点：</p>
+<ul>
+<li>这个阶段只读取 <code>SKILL.md</code> 的 YAML frontmatter。</li>
+<li>只保存 <code>name</code>、<code>description</code>、<code>path</code> 等元数据。</li>
+<li>如果 state 里已经有 <code>skills_metadata</code>，不会重复加载。</li>
+<li>多个 sources 按顺序加载，后面的同名 skill 覆盖前面的。</li>
+</ul>
+<h3><span id="阶段二每次模型调用前注入-skill-列表">阶段二：每次模型调用前注入 skill 列表</span></h3><p>方法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">modify_request</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> request<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    skills_metadata <span class="token operator">=</span> request<span class="token punctuation">.</span>state<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token string">"skills_metadata"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    skills_list <span class="token operator">=</span> self<span class="token punctuation">.</span>_format_skills_list<span class="token punctuation">(</span>skills_metadata<span class="token punctuation">)</span>
+    skills_section <span class="token operator">=</span> self<span class="token punctuation">.</span>system_prompt_template<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+    new_system_message <span class="token operator">=</span> append_to_system_message<span class="token punctuation">(</span>request<span class="token punctuation">.</span>system_message<span class="token punctuation">,</span> skills_section<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> request<span class="token punctuation">.</span>override<span class="token punctuation">(</span>system_message<span class="token operator">=</span>new_system_message<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注入给模型的是类似这样的列表：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">Available Skills:
+
+- web-research: Structured approach to conducting thorough web research
+  -&gt; Read `/skills/web-research/SKILL.md` for full instructions<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意：这时还没有把完整 <code>SKILL.md</code> 塞进 prompt。</p>
+<hr>
+<h2><span id="7-skill-的动态加载是怎么实现的">7. Skill 的动态加载是怎么实现的？</span></h2><p>动态加载的本质不是 Python 自动 import，也不是框架自动展开全文。</p>
+<p>它是靠 prompt 协议实现的：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">1. 系统提示告诉 LLM：你有这些 skills
+2. 每个 skill 只展示 name、description、path
+3. 当你判断需要某个 skill 时，自己调用 read_file 读取 SKILL.md
+4. read_file 返回全文后，Skill 内容进入对话历史
+5. LLM 按照 Skill 指南执行任务<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>系统提示模板在：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/middleware/skills.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>模板叫：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">SKILLS_SYSTEM_PROMPT<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>里面明确写了：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">How to Use Skills (Progressive Disclosure):
+
+1. Recognize when a skill applies
+2. Read the skill's full instructions
+3. Follow the skill's instructions
+4. Access supporting files<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以动态加载链路是：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">用户请求
+  -&gt; LLM 看到 skill 列表
+  -&gt; LLM 判断某 skill 适用
+  -&gt; LLM 调用 read_file(skill_path)
+  -&gt; FilesystemMiddleware 执行 read_file
+  -&gt; Backend 读取 SKILL.md
+  -&gt; SKILL.md 全文进入上下文
+  -&gt; LLM 按 skill 工作流继续执行<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这就是所谓的 Progressive Disclosure。</p>
+<hr>
+<h2><span id="8-cli-里-skill-来源从哪里来">8. CLI 里 Skill 来源从哪里来？</span></h2><p>文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/cli/deepagents_cli/agent.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>当 <code>enable_skills=True</code> 时，会组装 sources：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">sources <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>settings<span class="token punctuation">.</span>get_built_in_skills_dir<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+sources<span class="token punctuation">.</span>extend<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token builtin">str</span><span class="token punctuation">(</span>skills_dir<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>user_agent_skills_dir<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> project_skills_dir<span class="token punctuation">:</span>
+    sources<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>project_skills_dir<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> project_agent_skills_dir<span class="token punctuation">:</span>
+    sources<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>project_agent_skills_dir<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>优先级从低到高：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">built-in skills
+-&gt; user .deepagents skills
+-&gt; user .agents skills
+-&gt; project .deepagents skills
+-&gt; project .agents skills<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>后面的 source 如果有同名 skill，会覆盖前面的。</p>
+<p>这就是“用户技能覆盖内置技能”“项目技能覆盖用户技能”的机制。</p>
+<hr>
+<h2><span id="9-一张完整调用链图">9. 一张完整调用链图</span></h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">启动 CLI
+  -&gt; create_cli_agent()
+    -&gt; 准备 skills sources
+    -&gt; 创建 backend
+    -&gt; create_deep_agent()
+      -&gt; TodoListMiddleware
+      -&gt; MemoryMiddleware
+      -&gt; SkillsMiddleware
+      -&gt; FilesystemMiddleware
+      -&gt; SubAgentMiddleware
+      -&gt; SummarizationMiddleware
+
+Agent 开始运行
+  -&gt; SkillsMiddleware.before_agent()
+    -&gt; 扫描 sources
+    -&gt; 读取各 skill 的 SKILL.md frontmatter
+    -&gt; 写入 state.skills_metadata
+
+每次调用 LLM 前
+  -&gt; SkillsMiddleware.wrap_model_call()
+    -&gt; 把 skill 列表注入 system prompt
+  -&gt; FilesystemMiddleware.wrap_model_call()
+    -&gt; 注入 read_file/write_file/execute 使用规范
+    -&gt; 根据 backend 能力决定是否暴露 execute
+
+LLM 决定使用 skill
+  -&gt; 调用 read_file("/path/to/skill/SKILL.md")
+  -&gt; FilesystemMiddleware.read_file
+  -&gt; Backend.read
+  -&gt; 返回 SKILL.md 全文
+
+LLM 决定执行 shell
+  -&gt; 调用 execute(command="...")
+  -&gt; FilesystemMiddleware.execute
+  -&gt; Backend.execute
+  -&gt; LocalShellBackend / SandboxBackend 执行命令<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h2><span id="10-初学者推荐阅读顺序">10. 初学者推荐阅读顺序</span></h2><p>不要一上来读所有文件。按这个顺序：</p>
+<h3><span id="第-1-步看总入口">第 1 步：看总入口</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/graph.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>重点看：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">create_deep_agent<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>目标：</p>
+<ul>
+<li>明白 middleware 是按什么顺序组装的。</li>
+<li>明白 <code>skills</code>、<code>memory</code>、<code>backend</code> 参数怎么传进去。</li>
+</ul>
+<h3><span id="第-2-步看文件工具">第 2 步：看文件工具</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/middleware/filesystem.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>重点看：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">FilesystemMiddleware<span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+_create_read_file_tool<span class="token punctuation">(</span><span class="token punctuation">)</span>
+_create_execute_tool<span class="token punctuation">(</span><span class="token punctuation">)</span>
+wrap_model_call<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>目标：</p>
+<ul>
+<li>明白工具是怎么通过 <code>StructuredTool.from_function()</code> 创建的。</li>
+<li>明白 <code>execute</code> 为什么要根据 backend 能力动态启用。</li>
+</ul>
+<h3><span id="第-3-步看-backend">第 3 步：看 backend</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/backends/protocol.py
+libs/deepagents/deepagents/backends/filesystem.py
+libs/deepagents/deepagents/backends/local_shell.py
+libs/deepagents/deepagents/backends/state.py<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>目标：</p>
+<ul>
+<li>明白 Tool 不直接操作文件。</li>
+<li>明白 Backend 才是真正执行读写和 shell 的地方。</li>
+</ul>
+<h3><span id="第-4-步看-skill">第 4 步：看 skill</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/deepagents/deepagents/middleware/skills.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>重点看：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">_list_skills<span class="token punctuation">(</span><span class="token punctuation">)</span>
+_alist_skills<span class="token punctuation">(</span><span class="token punctuation">)</span>
+SkillsMiddleware<span class="token punctuation">.</span>before_agent<span class="token punctuation">(</span><span class="token punctuation">)</span>
+SkillsMiddleware<span class="token punctuation">.</span>modify_request<span class="token punctuation">(</span><span class="token punctuation">)</span>
+SkillsMiddleware<span class="token punctuation">.</span>wrap_model_call<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>目标：</p>
+<ul>
+<li>明白“启动前只加载 metadata”。</li>
+<li>明白“全文靠 read_file 动态读取”。</li>
+</ul>
+<h3><span id="第-5-步看-cli-装配">第 5 步：看 CLI 装配</span></h3><pre class="line-numbers language-text" data-language="text"><code class="language-text">libs/cli/deepagents_cli/agent.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>重点看：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">create_cli_agent<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>目标：</p>
+<ul>
+<li>明白 CLI 如何决定是否启用 shell。</li>
+<li>明白 CLI 从哪些目录加载 skills。</li>
+</ul>
+<hr>
+<h2><span id="11-动手练习">11. 动手练习</span></h2><h3><span id="练习-1找到所有内置工具">练习 1：找到所有内置工具</span></h3><p>在 <code>FilesystemMiddleware.__init__()</code> 里找到：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">self<span class="token punctuation">.</span>tools <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>写下每个工具的名字：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">ls
+read_file
+write_file
+edit_file
+glob
+grep
+execute<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>问题：</p>
+<ul>
+<li>哪些工具是读操作？</li>
+<li>哪些工具是写操作？</li>
+<li>哪个工具最危险？</li>
+</ul>
+<p>参考答案：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">读操作：ls, read_file, glob, grep
+写操作：write_file, edit_file
+危险工具：execute<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h3><span id="练习-2追踪-read_file">练习 2：追踪 <code>read_file</code></span></h3><p>从这里开始：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">_create_read_file_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>顺着找：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">sync_read_file()
+  -&gt; self._get_backend(runtime)
+  -&gt; validate_path(file_path)
+  -&gt; resolved_backend.read(...)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后分别看：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">StateBackend.read()
+FilesystemBackend.read()
+CompositeBackend.read()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>你要回答：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">同一个 read_file 工具，为什么可以读 state、磁盘、临时目录？<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>答案：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">因为 read_file 面向的是 BackendProtocol，不依赖具体后端实现。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3><span id="练习-3追踪-execute">练习 3：追踪 <code>execute</code></span></h3><p>从这里开始：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">_create_execute_tool<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>顺着找：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">sync_execute()
+  -&gt; _supports_execution(backend)
+  -&gt; backend.execute(command)
+  -&gt; LocalShellBackend.execute()
+  -&gt; subprocess.run()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>你要回答：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">为什么 StateBackend 不能执行 shell？<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>答案：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">因为 StateBackend 不实现 SandboxBackendProtocol，也没有 execute() 能力。<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3><span id="练习-4做一个最小-skill">练习 4：做一个最小 Skill</span></h3><p>创建目录：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">skills/my-debug-skill/<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>创建文件：</p>
+<pre class="line-numbers language-text" data-language="text"><code class="language-text">skills/my-debug-skill/SKILL.md<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>内容：</p>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown"><span class="token front-matter-block"><span class="token punctuation">---</span>
+<span class="token front-matter yaml language-yaml">name: my-debug-skill
+description: Use this skill when debugging Python errors, tracebacks, failing tests, or import issues.</span>
+<span class="token punctuation">---</span></span>
+
+<span class="token title important"><span class="token punctuation">#</span> My Debug Skill</span>
+
+<span class="token title important"><span class="token punctuation">##</span> When to Use</span>
+
+Use this when the user asks you to debug a Python problem.
+
+<span class="token title important"><span class="token punctuation">##</span> Workflow</span>
+
+<span class="token list punctuation">1.</span> Read the full traceback.
+<span class="token list punctuation">2.</span> Locate the file and line number.
+<span class="token list punctuation">3.</span> Read the relevant function.
+<span class="token list punctuation">4.</span> Reproduce the error with the smallest command.
+<span class="token list punctuation">5.</span> Patch the root cause.
+<span class="token list punctuation">6.</span> Run the smallest useful verification.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>然后观察：</p>
+<ul>
+<li>Agent 启动时只会看到 <code>name</code> 和 <code>description</code>。</li>
+<li>当任务匹配 debugging 时，它应该用 <code>read_file</code> 读取完整 <code>SKILL.md</code>。</li>
+</ul>
+<hr>
+<h2><span id="12-常见误区">12. 常见误区</span></h2><h3><span id="误区-1skill-会自动全部加载进-prompt">误区 1：Skill 会自动全部加载进 prompt</span></h3><p>不会。</p>
+<p>默认只加载元数据。完整内容要靠 LLM 调用 <code>read_file(SKILL.md)</code>。</p>
+<h3><span id="误区-2tool-自己负责所有逻辑">误区 2：Tool 自己负责所有逻辑</span></h3><p>不准确。</p>
+<p>Tool 是接口层。真正读文件、写文件、执行命令的是 backend。</p>
+<h3><span id="误区-3localshellbackend-是安全沙箱">误区 3：LocalShellBackend 是安全沙箱</span></h3><p>不是。</p>
+<p>它直接在本机执行命令。安全边界主要靠用户审批、运行环境隔离和命令 allowlist。</p>
+<h3><span id="误区-4execute-一定会暴露给-llm">误区 4：<code>execute</code> 一定会暴露给 LLM</span></h3><p>不一定。</p>
+<p><code>FilesystemMiddleware.wrap_model_call()</code> 会根据 backend 能力过滤工具。</p>
+<hr>
+<h2><span id="13-最小源码阅读地图">13. 最小源码阅读地图</span></h2><pre class="line-numbers language-text" data-language="text"><code class="language-text">graph.py
+  create_deep_agent()
+    -&gt; 添加 SkillsMiddleware
+    -&gt; 添加 FilesystemMiddleware
+
+filesystem.py
+  FilesystemMiddleware.__init__()
+    -&gt; 创建 read_file
+    -&gt; 创建 execute
+
+  _create_read_file_tool()
+    -&gt; backend.read()
+
+  _create_execute_tool()
+    -&gt; backend.execute()
+
+  wrap_model_call()
+    -&gt; 过滤 execute
+    -&gt; 注入文件工具提示
+
+skills.py
+  before_agent()
+    -&gt; 扫描 skill 元数据
+
+  modify_request()
+    -&gt; 注入 skill 列表
+
+  wrap_model_call()
+    -&gt; 每次 LLM 调用前追加 skill section
+
+local_shell.py
+  LocalShellBackend.execute()
+    -&gt; subprocess.run()<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<hr>
+<h2><span id="14-你最终应该能讲清楚的四句话">14. 你最终应该能讲清楚的四句话</span></h2><ol>
+<li><code>read_file</code> 是 <code>FilesystemMiddleware</code> 创建的 LangChain tool，真正读取动作由 backend 的 <code>read()</code> 完成。</li>
+<li><code>execute</code> 是 shell 工具，只有 backend 实现 <code>SandboxBackendProtocol</code> 时才会暴露给模型，本地 CLI 下由 <code>LocalShellBackend</code> 用 <code>subprocess.run()</code> 执行。</li>
+<li>Skill 在 Agent 运行前通过 <code>before_agent()</code> 加载 metadata，每次模型调用前只把 skill 列表注入 system prompt。</li>
+<li>Skill 全文不是自动加载，而是模型根据描述判断需要后，调用 <code>read_file(SKILL.md)</code> 动态读取，这就是渐进式披露。</li>
+</ol>
+
+      </section>
+
+      
+      
+        <nav class="article-nav">
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2026/05/12/AIagent/GgdylDR/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">DeepResearch_Learning</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
+
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
+    </div>
+    <div class="widget-info">
+      <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-body">
+    
+      <img class="soft-size--round soft-style--box lazy" alt="Guduyili" data-src="/img/friend_404.gif" data-original="/../../img/9c0e14447527992b401a1827d37127cd.png">
+    
+    
+      <h2>Guduyili</h2>
+    
+    
+      <p>我心匪石，不可轉也。我心匪席，不可卷也</p>
+    
+
+    <div class="count-box">
+      <div class="count-box--item">
+        <svg class="icon icon-article" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M240.51564747 647.74217627h196.07203239c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806V165.10332731c0-33.18142087-30.16492806-60.32985613-60.32985612-60.32985611H245.04038668C225.43318342 104.7734712 210.35071939 119.85593522 210.35071939 139.46313845V617.57724821c0 16.59071043 13.57421762 30.16492806 30.16492808 30.16492806z m663.62841731-452.47392089v482.63884894c0 33.18142087-27.14843525 60.32985613-60.32985612 60.32985613H180.18579134c-33.18142087 0-60.32985613-27.14843525-60.32985612-60.32985613V195.26825538c-49.77213131 0-90.49478418 40.72265287-90.49478417 90.49478417v452.4739209c0 49.77213131 40.72265287 90.49478418 90.49478417 90.49478417h286.56681657c16.59071043 0 30.16492806 13.57421762 30.16492807 30.16492807s13.57421762 30.16492806 30.16492805 30.16492806h90.49478418c16.59071043 0 30.16492806-13.57421762 30.16492805-30.16492806s13.57421762-30.16492806 30.16492807-30.16492807h286.56681657c49.77213131 0 90.49478418-40.72265287 90.49478417-90.49478417V285.76303955c0-49.77213131-40.72265287-90.49478418-90.49478417-90.49478417zM587.41232014 647.74217627h191.54729318c19.60720323 0 34.68966726-15.08246403 34.68966729-34.68966727V134.93839925c0-16.59071043-13.57421762-30.16492806-30.16492808-30.16492805H617.57724821c-30.16492806 0-60.32985613 27.14843525-60.32985612 60.32985611v452.4739209c0 16.59071043 13.57421762 30.16492806 30.16492805 30.16492806z" fill="currentColor"></path>
+</svg>
+        <span>70</span>
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+        26
+      </div>
+      <div class="count-box--item">
+        <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+        7
+      </div>
+    </div>
+  </div>
+</section>
+
+      
+
+      
+<section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-notice" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M512 945.02305225v28.15620663a24.27259221 24.27259221 0 0 1-24.27259221 24.27259335H394.0352a48.54518557 48.54518557 0 0 1-41.74885888-23.78714112l-110.68302222-184.47170332a132.04290333 132.04290333 0 0 1-17.47626667-48.54518557h118.4502511a200.97706667 200.97706667 0 0 1 76.21594113 14.56355556l20.38897777 133.49925888a48.54518557 48.54518557 0 0 0 36.40888888 27.67075555l16.01991111 2.91271112a24.27259221 24.27259221 0 0 1 20.38897778 25.72894889zM997.45185223 463.45481443a194.18074112 194.18074112 0 0 1-38.8361489 116.50844445 24.75804445 24.75804445 0 0 1-36.4088889 0l-34.95253333-34.95253333a24.27259221 24.27259221 0 0 1-2.91271111-30.58346667 97.09036999 97.09036999 0 0 0 0-106.79940665 24.27259221 24.27259221 0 0 1 2.91271111-30.58346666l34.95253333-34.95253334a24.75804445 24.75804445 0 0 1 18.93262223-7.28177777 26.2144 26.2144 0 0 1 17.47626667 9.70903665A194.18074112 194.18074112 0 0 1 997.45185223 463.45481443z m-194.18074112-388.36148111v776.72296335a48.54518557 48.54518557 0 0 1-48.54518556 48.54518443h-28.64165888a48.54518557 48.54518557 0 0 1-33.98163001-14.07810332l-145.63555556-143.20829668A291.27111111 291.27111111 0 0 0 342.57730333 657.63555556H172.18370333a145.63555556 145.63555556 0 0 1-145.63555556-145.63555556v-97.09036999a145.63555556 145.63555556 0 0 1 145.63555556-145.63555556h170.3936a291.27111111 291.27111111 0 0 0 206.31703779-85.43952668l145.63555555-143.20829554a48.54518557 48.54518557 0 0 1 33.98162888-14.07810446H754.72592555a48.54518557 48.54518557 0 0 1 48.54518556 48.54518555z" fill="currentColor"></path>
+</svg>
+    <span>NOTICE</span>
+  </div>
+  <div class="widget-body">
+    <p>Warning! Warning!</p>
+  </div>
+</section>
+
+
+      <section class="widget-categories widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-categories" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M900.3614811 257.09082106h-339.81629553l-67.96326003-101.9448889c-19.41807444-29.12711113-48.54518557-43.69066667-82.52681443-43.69066667H123.6385189c-53.39970333 0-97.09036999 43.69066667-97.09037113 97.09036999v582.54222222c0 53.39970333 43.69066667 97.09036999 97.09037113 97.09037002h776.7229622c53.39970333 0 97.09036999-43.69066667 97.09037113-97.09037002V354.18119104c0-53.39970333-43.69066667-97.09036999-97.09037113-97.09036998z m-97.09036999 242.72592554H220.72888889c-24.27259221 0-48.54518557-24.27259221-48.54518556-48.54518556s24.27259221-48.54518557 48.54518556-48.54518444h582.54222222c24.27259221 0 48.54518557 24.27259221 48.54518556 48.54518444s-24.27259221 48.54518557-48.54518556 48.54518556z" fill="currentColor"></path>
+</svg>
+      <span>CATEGORIES</span>
+  </div>
+  <div class="widget-body">
+    <ul class="categories-list">
+      
+        <li class="categories-list-item">
+          <a href="/categories/SQL/">
+            SQL (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/AI/">
+            AI (4)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Go/">
+            Go (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/git/">
+            git (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/HCIA/">
+            HCIA (11)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Hexo/">
+            Hexo (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/JAVA/">
+            JAVA (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Linux/">
+            Linux (7)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/My-Project/">
+            My Project (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Spring-boot/">
+            Spring-boot (3)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Redis/">
+            Redis (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/Unity/">
+            Unity (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%89%8D%E7%AB%AF/">
+            前端 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87/">
+            学习目标 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95/">
+            软件测试 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%94%9F%E6%B4%BB%E6%84%9F%E6%83%B3/">
+            生活感想 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%AE%97%E6%B3%95/">
+            算法 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/">
+            自动化测试 (8)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%97%A5%E8%AF%AD/">
+            日语 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%A4%A7%E7%89%A9/">
+            大物 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
+            操作系统 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+            数据库 (2)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E6%A6%82%E7%BB%9F/">
+            概统 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">
+            线性代数 (4)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/">
+            图形学 (1)
+          </a>
+        </li>
+        
+        <li class="categories-list-item">
+          <a href="/categories/%E8%AE%A1%E7%BB%84/">
+            计组 (1)
+          </a>
+        </li>
+        
+    </ul>
+  </div>
+</section>
+
+      <section class="widget-tags widget-item  layout-margin content-padding--primary soft-size--large soft-style--box">
+  <div class="widget-title">
+    <svg class="icon icon-tags" viewBox="0 0 1098 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M283.42180005 272q0-28.38857157-20.09142843-48.48000001t-48.47999998-20.09142842-48.48000002 20.09142842-20.09142846 48.48000001 20.09142846 48.48 48.48000002 20.09142843 48.47999998-20.09142843 20.09142843-48.48zM855.0332285 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.03999997 263.58857157q-20.9142853 19.81714313-48.75428534 19.81714312-28.38857157 0-48.20571468-19.81714312l-383.04-383.58857157q-20.36571468-19.81714313-34.55999999-54.10285688t-14.19428534-62.6742853l0-222.85714313q0-27.84000002 20.36571469-48.20571469t48.2057147-20.36571466l222.85714313 0q28.38857157 0 62.6742853 14.19428529t54.65142842 34.55999999l383.04000001 382.49142843q19.81714313 20.9142853 19.81714314 48.75428532zM1060.74751475 580.57142843q0 28.38857157-19.81714313 48.2057147l-263.04 263.58857157q-20.9142853 19.81714313-48.75428531 19.81714312-19.26857155 0-31.61142843-7.47428531t-28.38857159-24.13714314l251.79428534-251.7942853q19.81714313-19.81714313 19.81714308-48.20571469 0-27.84000002-19.81714308-48.75428531l-383.04000001-382.49142845q-20.36571468-20.36571468-54.65142842-34.55999999t-62.67428532-14.19428534l120 0q28.38857157 0 62.67428532 14.19428534t54.65142842 34.55999999l383.03999998 382.49142845q19.81714313 20.9142853 19.81714314 48.75428531z" fill="currentColor"></path>
+</svg>
+    <span>TAGS</span>
+  </div>
+  <div class="widget-body">
+    <div class="tags-cloud">
+      <a href="/tags/AI/" style="font-size: 15px;" class="tags-cloud-5">AI</a> <a href="/tags/JAVA/" style="font-size: 12.5px;" class="tags-cloud-3">JAVA</a> <a href="/tags/blog/" style="font-size: 10px;" class="tags-cloud-0">blog</a> <a href="/tags/learning/" style="font-size: 20px;" class="tags-cloud-10">learning</a> <a href="/tags/music/" style="font-size: 10px;" class="tags-cloud-0">music</a> <a href="/tags/%E5%B8%A6%E7%A0%96%E7%94%9F%E7%9A%84%E9%80%9F%E6%88%90/" style="font-size: 17.5px;" class="tags-cloud-8">带砖生的速成</a> <a href="/tags/%E6%84%9F%E6%83%B3/" style="font-size: 10px;" class="tags-cloud-0">感想</a>
+    </div>
+  </div>
+</section>
+    </div>
+  </article>
+</div>
+
+    <!-- footer container -->
+<footer id="footer" class="footer">
+  <div class="footer-container">
+    
+    <div class="social-icons">
+      
+        
+      
+        
+      
+        
+      
+        
+          <a href="https://github.com/guduyili" class="soft-size--primary soft-style--box" target="_blank" rel="noopener noreferrer">
+            <svg class="icon icon-github" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M64.6 512c0 195.6 125.4 361.9 300.1 422.9 23.5 5.9 19.9-10.8 19.9-22.2v-77.6c-135.8 15.9-141.3-74-150.5-89-18.5-31.5-61.9-39.5-49-54.5 31-15.9 62.5 4 98.9 58 26.4 39.1 77.9 32.5 104.1 26 5.7-23.5 17.9-44.5 34.7-60.9-140.7-25.2-199.4-111.1-199.4-213.3 0-49.5 16.4-95.1 48.4-131.8-20.4-60.6 1.9-112.4 4.9-120.1 58.2-5.2 118.5 41.6 123.3 45.3 33.1-8.9 70.8-13.7 112.9-13.7 42.4 0 80.3 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.4-43.9 2.9 7.7 24.7 58.3 5.5 118.1 32.5 36.8 49 82.8 49 132.4 0 102.3-59 188.3-200.2 213.2 23.5 23.3 38.1 55.5 38.1 91.1v112.7c0.8 9 0 17.9 15.1 17.9C832.7 877 960.4 709.4 960.4 512.1c0-247.5-200.6-447.9-447.9-447.9C265 64.1 64.6 264.5 64.6 512z"></path>
+</svg>
+          </a>
+        
+      
+        
+      
+    </div>
+     
+    <p>© 2026 <a href="/" target="_blank">Guduyili</a></p>
+
+    
+
+    <p>Powered by <a href="https://hexo.io" target="_blank" rel="noopener noreferrer">Hexo</a> Theme - <a href="https://github.com/guduyili" target="_blank" rel="noopener noreferrer author">GDYL-Blog</a></p>
+
+    <p>
+      <a href="javascript:;" id="theme-light">🌞 浅色</a>
+      <a href="javascript:;" id="theme-dark">🌛 深色</a>
+      <a href="javascript:;" id="theme-auto">🤖️ 自动</a>
+    </p>
+  </div>
+</footer>
+  </div>
+
+  <div class="back-to-top-fixed soft-size--round soft-style--box">
+    <svg class="icon icon-back-to-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <path d="M725.333333 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8l-213.333333-213.333333c-17.066667-17.066667-17.066667-42.666667 0-59.733333s42.666667-17.066667 59.733333 0l213.333333 213.333333c17.066667 17.066667 17.066667 42.666667 0 59.733333C746.666667 422.4 738.133333 426.666667 725.333333 426.666667z"></path>
+      <path d="M298.666667 426.666667c-12.8 0-21.333333-4.266667-29.866667-12.8-17.066667-17.066667-17.066667-42.666667 0-59.733333l213.333333-213.333333c17.066667-17.066667 42.666667-17.066667 59.733333 0s17.066667 42.666667 0 59.733333l-213.333333 213.333333C320 422.4 311.466667 426.666667 298.666667 426.666667z"></path>
+      <path d="M512 896c-25.6 0-42.666667-17.066667-42.666667-42.666667L469.333333 170.666667c0-25.6 17.066667-42.666667 42.666667-42.666667s42.666667 17.066667 42.666667 42.666667l0 682.666667C554.666667 878.933333 537.6 896 512 896z"></path>
+    </svg>
+  </div>
+
+  
+  
+
+
+
+
+
+
+<!-- copy button  -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+<!-- https://clipboardjs.com/ -->
+
+
+
+
+<script type="text/javascript">
+	(function () {
+		// todo
+	})();
+</script>
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+  
+  <!-- 尾部用户自定义相关内容 -->
+<script>document.addEventListener("DOMContentLoaded", function() {
+  var lazyloadImages;
+
+  if ("IntersectionObserver" in window) {
+    lazyloadImages = document.querySelectorAll(".lazy");
+    var imageObserver = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var image = entry.target;
+          image.src = image.dataset.src;
+          image.classList.remove("lazy");
+          imageObserver.unobserve(image);
+        }
+      });
+    });
+
+    lazyloadImages.forEach(function(image) {
+      imageObserver.observe(image);
+    });
+  } else {  
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll(".lazy");
+    
+    function lazyload () {
+      if(lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }    
+
+      lazyloadThrottleTimeout = setTimeout(function() {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function(img) {
+            if(img.offsetTop < (window.innerHeight + scrollTop)) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+            }
+        });
+        if(lazyloadImages.length == 0) { 
+          document.removeEventListener("scroll", lazyload);
+          window.removeEventListener("resize", lazyload);
+          window.removeEventListener("orientationChange", lazyload);
+        }
+      }, 20);
+    }
+
+    document.addEventListener("scroll", lazyload);
+    window.addEventListener("resize", lazyload);
+    window.addEventListener("orientationChange", lazyload);
+  }
+})
+</script>
+
+
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>(r=>{r.imageLazyLoadSetting.processImages=t;var a=r.imageLazyLoadSetting.isSPA,o=r.imageLazyLoadSetting.preloadRatio||1,d=i();function i(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(t){(a||t)&&(d=i());for(var e,n=0;n<d.length;n++)0<=(e=(e=d[n]).getBoundingClientRect()).bottom&&0<=e.left&&e.top<=(r.innerHeight*o||document.documentElement.clientHeight*o)&&(()=>{var t,e,a,o,i=d[n];e=function(){d=d.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).dataset.loaded||(t.hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(a=new Image,o=t.getAttribute("data-original"),a.onload=function(){t.src=o,t.removeAttribute("data-original"),t.setAttribute("data-loaded",!0),e&&e()},a.onerror=function(){t.removeAttribute("data-original"),t.setAttribute("data-loaded",!1),t.src=o},t.src!==o&&(a.src=o)))})()}function e(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",e),r.addEventListener("resize",e),r.addEventListener("orientationchange",e)})(this);</script></body></html>
